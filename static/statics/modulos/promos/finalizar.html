@@ -1,0 +1,48 @@
+
+		<div>
+			PORTADA
+			<span class="ion-ios-camera links" lauch-foto-portada data-tipoimg='imagenfinal'></span>
+			<img src="||promocion_edit.imagenfinal||" style="width: 100%;" />
+			<div id="dropgeneral">&nbsp;</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-4 col-md-4 col-lg-4 col-xl-4">
+				MINIATURA
+				<span class="ion-ios-camera links" lauch-foto-portada data-tipoimg='minfinal'></span>
+				<img src="||promocion_edit.minfinal||" style="width: 100%;" />
+				<div id="dropgeneral">&nbsp;</div>
+			</div>
+			<div class="col-8 col-lg-8 col-xl-8">
+				<div>
+					<div class="toplabel">Header</div>
+					<input type="text" ng-model="promocion_edit.header_final" class="form-control">
+				</div>
+				<div>
+					<div class="toplabel"> TEXTO ALTERNO</div>
+						<text-angular ta-toolbar="[]" 
+									  class="captions" 
+									  name="textofinal"  
+									  ng-model="promocion_edit.texto_alterno" style="padding:5px;">
+						</text-angular>
+					
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="row">
+			<div class="col-4 col-md-4 col-lg-4 col-xl-4" ng-repeat="g in promocion_edit.galeria">
+				<span class="links" rm-galeria>x</span>
+				<img src="||g.imagen||" style="width: 100%;"  />
+			</div>
+		</div>
+
+		<div>
+			GALERIA
+			<span class="ion-ios-camera links" lauch-foto-final data-tipoimg='galeria'></span>
+		</div>

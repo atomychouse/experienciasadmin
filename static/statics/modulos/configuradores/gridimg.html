@@ -1,0 +1,54 @@
+
+
+        <div style="position: relative;">
+            <div class="tooltipsy" ng-show="r.confiuring" just-draggable>
+
+                <div class="row">
+                      <div class="col-8 col-lg-8 nopad">
+                          Banco de imagenes
+                      </div>
+                      <div class="col-4 col-lg-4" style="text-align: right;padding:0px;">
+                          <span class="links" ng-click="r.confiuring=false;" style="margin:0px 10px; ">
+                              <i class="ion-close-circled"></i>
+                          </span>
+                          <span class="links" close-row-cfg>
+                              <i class="ion-checkmark-circled"></i>
+                          </span>
+
+                      </div>
+                </div>
+
+                <div class="ceparador">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad ">
+                        <label class="inerpad">Columnas</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm"  ng-model="r.cfg.cols" ng-options="key as value for (key , value) in columns"></select>
+                    </div>
+                </div>
+                <div class="row" style="display: none;">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Margen exterior</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.padding">
+                            <option ng-repeat="x in [0,50,95]">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Margen Interior</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.margin">
+                            <option ng-repeat="x in margenes_interiores" value="||x.valr||">||x.tit||</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div> 

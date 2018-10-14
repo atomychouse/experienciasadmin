@@ -1,0 +1,25 @@
+<h4>SOPA DE LETRAS</h4>
+    <ul >
+      <li ng-repeat="t in promocion_edit.dins" >
+        <h5>
+          <input type="text" name="q[]" maxlength="9" style="width:80%;display: inline-block;" placeholder="Palabra" ng-model="t.palabra" class="form-control" blursave-palabras />
+            <span class="links ion-close-circled" style="display: inline-block;" rm-palabra></span>          
+        </h5>
+      </li>
+
+    </ul>
+    <div style="padding:20px;text-align: right;">
+    <span class="links" ng-show="promocion_edit.dins.length<4" add-sopa>agrega pregunta</span>
+    <span class="links" ng-if="promocion_edit.dins.length>3" genera-tablero-sopa>Generar Tablero</span>
+
+   
+
+    <div ng-if="promocion_edit.matrix" style="text-align: center;">
+
+    	<div class="row" ng-repeat="r in promocion_edit.matrix track by $index">
+    		<div style="display: inline-block;width:10%;" ng-repeat='c in r track by $index'>
+    			||c||
+    		</div>
+    	</div>
+
+    </div>

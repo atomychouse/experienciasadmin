@@ -1,0 +1,204 @@
+{% extends 'frontapp/base.html' %}
+
+
+
+
+{% block content %}
+
+
+<div style="height:auto;overflow: hidden;width:90%;margin:auto;"><img src="{{promo.imglg}}" style="width: 100%;"></div>
+
+<div class="row">
+	<div class="col-6 col-md-6 col-lg-6 col-xl-6">
+		{{promo.bases|safe}}
+	</div>
+	<div class="col-6 col-md-6 col-lg-6 col-xl-6">
+		
+		{% if request.user.is_active %}
+
+
+	{% if participo%}
+		<div>GRACIAS POR PARTICIPAR</div>
+		<div>Tu tiempo: {{participo.0.tiempo}}</div>
+		<div>Contestaste correctamente: {{participo.0.nivelanswer}}  de {{participo.0.totalpreg}} Preguntas</div>
+		{% for ps in participo.0.resparticipacion_set.all %}
+			<div>{{ps.pregunta_txt}}  {{ps.respuesta_txt}} </div>
+		{% endfor %}
+
+	{% else %}
+		<span class="links" data-toggle="modal" data-target="#promocionmod" id="participa-btn" participa-din> participa </span>
+	{% endif %}
+
+
+		
+
+
+		{% else %}
+
+		<span class="links" data-toggle="modal" data-target="#promocionmod" participa-din> Registrate </span>
+
+		{% endif %}
+
+		
+
+	</div>
+
+
+</div>
+
+	<div class="fb-share-button" data-href="http://telcel.local/promocion/{{promo.pk}}/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftelcel.local%2Fpromocion%2F20%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+
+{% if request.user.is_active %}
+
+	{% if participo%}
+		
+	
+	{% else %}
+		{% include 'frontapp/participa.html' %}
+	{% endif %}
+
+
+
+
+{% else %}
+
+{% include 'frontapp/login.html' %}
+
+{% endif %}
+
+
+
+
+
+
+{% endblock %}
+
+
+{% block scriptafter %}
+
+<script src="/static/statics/js/gamectr.js"></script>
+
+
+	<script type="text/javascript">
+
+
+	//setInterval
+	var cronometro;
+
+	function detenerse()
+	{
+		clearInterval(cronometro);
+	}
+
+	function carga()
+	{
+		contador_s =0;
+		contador_m =0;
+		s = jQuery("#segundos");
+		m = jQuery("#minutos");
+
+		if(s.length==0 || m.length==0)
+			return true;
+
+		cronometro = setInterval(
+			function(){
+				if(contador_s==60)
+				{
+					contador_s=0;
+					contador_m++;
+					m.val(contador_m);
+
+					if(contador_m==60)
+					{
+						contador_m=0;
+					}
+				}
+
+				s.val(contador_s);
+				contador_s++;
+
+			}
+			,1000);
+
+	};
+
+
+
+	jQuery('#promocionmod').on('shown.bs.modal', function (e) {
+	  
+		carga();
+		
+
+	});
+
+
+
+	jQuery('.senddata').submit(function(e){
+		e.preventDefault();
+		data = $(this).serializeArray();
+		var url = $(this).attr('action');
+		var met = $(this).attr('method');
+		$.ajax({'url':url,
+			    'data':data,
+			    'method':met,
+			    'dataType':'json',
+			    success:function(response){
+			    		$('.errs').remove();
+			    		if(response.errors){
+							$.each(response.errors, function( index, value ) {
+							 	$('#id_'+index).after('<div class="errs">'+value+'</div>');
+
+
+							});
+
+			    		}
+			    		else{
+			    			window.location.reload();
+			    		}
+				}
+	});
+
+
+
+	});
+
+
+	jQuery('.senddatablock').submit(function(e){
+		e.preventDefault();
+		data = $(this).serializeArray();
+		var url = $(this).attr('action');
+		var met = $(this).attr('method');
+		$.ajax({'url':url,
+			    'data':data,
+			    'method':'GET',
+			    'dataType':'json',
+			    success:function(response){
+
+
+
+			    		$('.errs').remove();
+			    		if(response.errors){
+							$.each(response.errors, function( index, value ) {
+							 	$('#id_'+index).after('<div class="errs">'+value+'</div>');
+
+
+							});
+
+			    		}
+			    		else{
+			    			$('#promocionmod').modal('hide');
+			    			$('#participa-btn').after('GRACIAS POR PARTICIPAR').remove();
+			    		}
+				}
+	});
+
+
+
+	});
+
+
+
+	</script>
+
+{% endblock %}

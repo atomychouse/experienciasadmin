@@ -1,0 +1,204 @@
+{% extends 'webapp/base.html' %}
+
+
+{% block content %}
+
+	<h2 style="padding: 20px 0px;">{{catsearch.0.catname}}</h2>
+
+	<div class="row">
+
+		{% for p in destacados %}
+		<div class="col-12 col-md-6 col-lg-4 col-xl-4"  style="margin:10px 0px;">
+			
+			<div class="card" style="width:100%;margin: auto;position: relative;">
+			  <div class="imagen_cuadro" style="height:35vh;overflow: hidden;background-image:url({{p.imagen}});">
+				  <div class="clearfix topbox" >
+				  	<div class="float-left  general_datebox" >
+				  		<div class="general_datenum">{{p.dia_evento}}</div>
+				  		<div class="general_dateday">{{p.mes_evento}}</div>
+				  	</div>
+				  	<div class="float-left locationbox align-middle">
+				  		<span class="align-middle" style="line-height:3.5;">{{p.ciudad}}</span>
+				  	</div>
+				  </div>		  
+			  </div>
+
+			  <div class="card-body  general">
+			    <p class="card-text">
+			    	<span>{{p.titulo_completo}}</span>
+			    	
+			    	<div class="vigencia">VIGENCIA {{p.vigencia}}</div>
+				</p>
+			  </div>
+			  <div class="list-group-item clearfix">
+			  	<div class="float-left" style="width: auto;">
+				  	<span class="ion-ios-heart-outline"></span>
+				  	<span class="icontxt">{{p.likes}}</span>
+			  	</div>
+	
+		  		<div class="float-right" style="width: auto;">
+				  	<span class="align-bottom icontxt ion-ios-person-outline"></span>
+				  	<span class="align-bottom icontxt">{{p.participaciones}}</span>
+			  	</div>
+	
+
+			  </div>
+
+			</div>
+
+
+
+		</div>
+		{% endfor %}
+	</div>
+
+
+
+<section id="promos_general"  style="margin:60px auto;border:1px solid #baccd3;width:99%;">
+
+<nav class="navbar navbar-expand-md navbar-light bg-light bglwhite" style="background: #fff;padding:25px;">
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#" style="font-size: 5vmin;">Dinámicas</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+
+        	{% for c in cats%}
+            <li class="nav-item">
+                <a class="nav-link small-text" href="#?cat={{c.catslug}}">{{c.catname}}</a>
+            </li>
+            {% endfor %}
+
+
+        </ul>
+    </div>
+</nav>
+
+<div class="box_dinamicas" >
+
+	<div class="dinamicas_list" dina-list style="position: relative;width:80%;margin: auto;">
+
+	  {% for p in todos %}
+	  <div >
+
+			<div class="card" style="width:100%;margin: auto;position: relative;">
+			  <div class="imagen_cuadro" style="height:26vh;overflow: hidden;background-image:url({{p.imagen}});">
+				  <div class="clearfix topbox" >
+				  	<div class="float-left  general_datebox" >
+				  		<div class="general_datenum">{{p.dia_evento}}</div>
+				  		<div class="general_dateday">{{p.mes_evento}}</div>
+				  	</div>
+				  	<div class="float-left locationbox align-middle">
+				  		<span class="align-middle" style="line-height:3.5;">{{p.ciudad}}</span>
+				  	</div>
+				  </div>		  
+			  </div>
+
+			  <div class="card-body  general">
+			    <p class="card-text">
+			    	<span>{{p.titulo_completo}}</span>
+			    	
+			    	<div class="vigencia">VIGENCIA {{p.vigencia}}</div>
+				</p>
+			  </div>
+			  <div class="list-group-item clearfix">
+			  	<div class="float-left" style="width: auto;">
+				  	<span class="ion-ios-heart-outline"></span>
+				  	<span class="icontxt">{{p.likes}}</span>
+			  	</div>
+	
+		  		<div class="float-right" style="width: auto;">
+				  	<span class="align-bottom icontxt ion-ios-person-outline"></span>
+				  	<span class="align-bottom icontxt">{{p.participaciones}}</span>
+			  	</div>
+	
+
+			  </div>
+
+			</div>
+
+
+	  </div>
+	  {% endfor %}
+
+	</div>
+
+</div>
+	
+</section>
+
+
+
+
+
+
+
+<section id="ganadores_box"  style="margin:60px 0px;">
+	<h5 style="padding: 20px 0px;">GANADORES</h5>
+
+
+<div class="box_ganadores">
+
+	<div class="dinamicas_list" dina-list style="width:80%;margin: auto;">
+
+
+	  {% for p in todos %}
+	  <div style="padding: 0px 10px;">
+
+			<div class="card" style="width:100%;margin: auto;position: relative;">
+			  <div class="imagen_cuadro" style="height:26vh;overflow: hidden;background-image:url({{p.imagen}});">
+				  <div class="clearfix topbox" >
+				  	<div class="float-left  general_datebox" >
+				  		<div class="general_datenum">{{p.dia_evento}}</div>
+				  		<div class="general_dateday">{{p.mes_evento}}</div>
+				  	</div>
+				  	<div class="float-left locationbox align-middle">
+				  		<span class="align-middle" style="line-height:3.5;">{{p.ciudad}}</span>
+				  	</div>
+				  </div>		  
+			  </div>
+
+			  <div class="card-body  general">
+			    <p class="card-text">
+			    	<span>{{p.titulo_completo}}</span>
+			    	
+			    	<div class="vigencia">VIGENCIA {{p.vigencia}}</div>
+				</p>
+			  </div>
+			  <div class="list-group-item clearfix">
+			  	<div class="float-left" style="width: auto;">
+				  	<span class="ion-ios-heart-outline"></span>
+				  	<span class="icontxt">{{p.likes}}</span>
+			  	</div>
+	
+		  		<div class="float-right" style="width: auto;">
+				  	<span class="align-bottom icontxt ion-ios-person-outline"></span>
+				  	<span class="align-bottom icontxt">{{p.participaciones}}</span>
+			  	</div>
+	
+
+			  </div>
+
+			</div>
+
+
+	  </div>
+	  {% endfor %}
+
+	</div>
+
+</div>
+	
+</section>
+
+
+
+{% endblock %}
+
+
+
+
+ 

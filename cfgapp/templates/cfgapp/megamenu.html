@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top " id="mainmenu" style="height:120px;">
+    
+    <a class="navbar-brand" href="#" style="padding: 12px 4px;position:absolute;left:20px;top:5px;">
+      <img src="/static/statics/imgs/logo.png" style="height:80px;">
+    </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav centernav">
+      <li class="nav-item mainsli">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item mainsli">
+        <a class="nav-link" href="/cfg/#tipografia">Tipografía</a>
+      </li>
+      <li class="nav-item mainsli">
+        <a class="nav-link" href="/cfg/#tipografia">Color</a>
+      </li>
+
+      <li class="nav-item mainsli">
+
+        <div class="btn-group">
+          <button class="btn btn-default btn-sm" type="button">
+            Cambio Color
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+            <div class="dropdown-menu" style="padding: 5px;">
+              <span class="links" ng-repeat="bc in colors" style="display: block;">
+                <span class="dropdown-item centroide" ng-repeat="fc in colors" style="background:#||bc.colorset.hex||;color:#||fc.colorset.hex||!important;display: block;margin:5px 0px;padding:10px;font-size: 12pt;" ng-if="fc.colorset.hex!=bc.colorset.hex" change-color-settings>A</span>              
+              </span>
+
+            </div>
+
+        </div>
+
+      </li>
+
+
+    </ul>
+  </div>
+</nav>

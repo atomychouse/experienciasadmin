@@ -1,0 +1,441 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es" ng-app='mainApp' ng-controller="pageCtr">
+    <head>
+        <title>ADMIN Experiencias Telcel 2018 </title>
+
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="atomyc.in">
+        
+        <meta name="" content="#496201s">
+        <meta charset="utf-8">
+
+
+
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+        <link rel="stylesheet" href="/static/statics/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/statics/css/textAngular.css">
+        <link href="/static/statics/css/jquery-ui.min.css" rel="stylesheet">
+        <link href="/static/statics/js/datetimepicker-master/build/jquery.datetimepicker.min.css" rel="stylesheet">
+        <link href="/static/statics/css/cropper.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/statics/css/ionicons.css">
+        <link href="/static/statics/css/photo-sphere-viewer.css" rel="stylesheet">
+        <link href="/static/statics/css/main.css" rel="stylesheet">
+        <link href="/static/statics/css/dropzone.css" rel="stylesheet">
+        <link href="/static/statics/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/static/statics/css/responsivemain.css" rel="stylesheet">
+        <link href="/static/statics/css/brandlineicons.css" rel="stylesheet">
+
+ 
+        {% block css %}{% endblock %}
+
+</head>
+<body>
+    {% csrf_token %}
+
+
+<div style="height: auto;padding:35px 12px;border-bottom:1px solid #232b30;">
+    <img src="/static/statics/imgs/logo.png"  >
+    <div class="closebox">
+
+
+        <button type="button" class="btn btn-info" todos-promo>
+          TODOS 
+        </button>
+
+        <button type="button" class="btn btn-info" active-promo>
+          Activas <span class="badge badge-info">{{activas|length}}</span>
+        </button>
+
+        {% if reds > 0 %}
+        <button type="button" class="btn btn-danger" filt-promo>
+          Caducan <span class="badge badge-secundary">{{reds|length}}</span>
+        </button>
+        {% endif %}
+        <i class="fas fa-power-off" style="margin-left:30px;"></i>
+    </div>
+    <div style="clear: both;height: 0px;">&nbsp;</div>
+</div>
+
+<section id="" class="container-fluid" style="width:98%;margin:auto;margin-top:35px;">
+    <ul class="menuadmin" style="border-bottom: 1px solid #b0bdc2;">
+      <li class="menugray"><a href="/" class="links">DINÁMICAS</a></li>
+      <li class="menugray"><span class="links" data-toggle="modal" data-target="#categorias-modal">CATEGORÍAS</span></li>
+      <li class="menugray"><span class="links" data-toggle="modal" data-target="#ventajamodal">VENTAJAS</span></li>
+      <li class="menugray"><a href="/calendario/">CALENDARIO</a></li>
+       <li class="menugray"><span class="links" data-toggle="modal" data-target="#terminosmodal">TERMINOS</span></li>
+      <li class="menuw" style="padding: 10px 0px;">
+        <span class="links">
+            <i class="fas fa-pencil-alt"></i>
+        </span>
+    </li>
+
+    </ul>    
+</section>
+
+
+  <section class="container-fluid" id="contenido">
+     {% block content %}{% endblock %}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="promocionmod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog anchomodal" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <div class="modal-title" id="exampleModalLabel">Promoción: ||promocion_edit.pk||</div>
+        <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
+      </div>
+      
+    <ul class="modal-menu">
+        <li ch-paso data-paso="0">1. Portada</li>
+        <li ch-paso data-paso="1">2. Contenido</li>
+        <li ch-paso data-paso="2">3. Legales</li>
+        <li ch-paso data-paso="3">4. Segmentos</li>
+        <li ch-paso data-paso="4">5. Final</li>
+    </ul>
+      <div class="modal-body formulariobox">
+        <ng-include src="'/static/statics/modulos/promos/home.html'"></ng-include>
+      </div>
+      <div class="modal-footer" style="margin:10px;">
+        <span>||mensaje||</span>
+        <button type="button" class="botons btn-white" data-dismiss="modal">CANCELAR</button>
+        <button type="button" class="botons btn-white" save-promo>GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="ventajamodal" tabindex="-1" role="dialog" aria-labelledby="ventajamodal" aria-hidden="true">
+  <div class="modal-dialog anchomodal" role="document">
+    <div class="modal-content" style="width: 90%;">
+      <div class="modal-header">
+            <div class="modal-title" id="exampleModalLabel">Ventajas</div>
+            <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
+      </div>
+
+      
+      <div class="modal-body">
+        
+
+        <div style="padding: 20px;">
+
+            <div class="">
+                <h3 style="padding:10px 0px;font-size: 18px;font-weight: bold;">Crear Ventaja</h3>
+                <form action="/" method="get" id="ventajas-form">
+                <div class="row">
+                    <div class="col-4 col-lg-4 col-xl-4">
+                        <select name="ventaja" ng-model="ventaja" class="form-control">
+                            <option value="0">Seleccione</option>
+                            <option ng-repeat="s in segmentos" value="||s.slug||">||s.segmento||</option>
+                        </select>
+                    </div>
+                    <div class="col-4 col-lg-4 col-xl-4">
+                        <input type="text" name="fecha" class="form-control" ng-model='ventaja_inicio' date-cus-pick>
+                    </div>
+                    <div class="col-4 col-lg-4 col-xl-4">
+                        <input type="text" name="fecha" class="form-control" ng-model='ventaja_fin' date-cus-pick>
+                    </div>
+
+                </div>
+
+
+
+
+                <div style="text-align: right;margin-top: 40px;">
+                    <span>||mensaje||</span>
+                    <span class="links botons btn-white reset" clear-form>LIMPIAR</span>
+                    <span class="links botons btn-white" add-ventaja>AGREGAR</span>
+                </div>
+                </form>
+            </div>
+
+        <div style="height: 2px;border-top: 1px solid #ebeef0;margin:20px 0px;">&nbsp;</div>
+
+        <div class="row" class="roxheader" style="margin:20px 0px;height:30px;font-size: 18px;">
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                <span class="single-border">&nbsp;</span>
+                <span>Segmento</span>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                <span class="single-border">&nbsp;</span>
+                <span>Desde</span>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                <span class="single-border">&nbsp;</span>
+                <span>Hasta</span>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                &nbsp;
+            </div>
+
+        </div>
+
+        <div ng-repeat="v in ventajas" class="row hrowr"  ng-class-odd="'striped'">
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3 align-middle" style="padding: 10px 0px;">
+                <span class="align-middle">||v.ventaja||</span>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3 align-middle" style="padding: 10px 0px;">
+                <span>||v.inicio||</span>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3 align-middle" style="padding: 10px 0px;">
+                <span>||v.fin||</span>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3 align-middle" style="padding: 10px 0px;text-align: right;position: relative;">
+                <span class="greentrash" rm-ventaja>
+                    <i class="far fa-trash-alt linker"></i>
+                </span>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="categorias-modal" tabindex="-1" role="dialog" aria-labelledby="categorias-modal" aria-hidden="true">
+  <div class="modal-dialog anchomodal" role="document">
+    <div class="modal-content" style="width: 90%;">
+      <div class="modal-header">
+            <div class="modal-title" id="exampleModalLabel">CATEGORÍAS</div>
+            <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
+      </div>
+
+      
+      <div class="modal-body">
+        <section class="container">
+            <span class="links-icon-norund" style="display: none;" add-cat>
+                <i class="ion-ios-plus-empty"></i>
+            </span>
+            <div ng-repeat="c in cats" style="margin-bottom:15px;">     
+
+                <div style="position: relative;height: 60px;margin:10px 0px;">
+                        <span class="greentrash" add-sb style="padding-top: 3%;font-size:18px;">
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                </div>
+
+                <div class="cat-titule row hrowr" style="display: none;">
+                    <div class="col-12 col-md-8 col-lg-8 nopad">
+                        
+                        <input type="text" class="input-def bolding" ng-model="c.name" save-promocat style="display: none;">
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4" style="text-align: right;">
+                        <span class="links-icon-norund"  style="margin-right:5px;display: none;">
+                            <i class="ion-ios-trash" rm-cat></i>
+                        </span>
+
+                        <span class="greentrash" add-sb>
+                            <i class="fas fa-plus-circle"></i>
+                        </span>
+                    </div>
+                </div>
+                
+                <div ng-repeat="sb in c.subcats" class="subcat-box row hrowr" ng-class-odd="'striped'" >
+                    <div class="col-9 col-md-9 col-lg-9" style="padding:3px 0px">
+                        <input type="text" ng-model="sb.name" class="input-def form-control" save-promo-scat>
+                    </div>
+
+                    <div class="col-12 col-md-3 col-lg-3" style="padding-left:0px;padding-right:36px;text-align:right;">
+
+                        <span class="links-icon-norund greentrash" >
+                            <i class="far fa-trash-alt linker" rm-scat></i>
+                        </span>
+
+                    </div>
+                    
+
+
+                </div>
+            </div>
+        </section>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+     
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="terminosmodal" tabindex="-1" role="dialog" aria-labelledby="categorias-modal" aria-hidden="true">
+  <div class="modal-dialog anchomodal" role="document">
+    <div class="modal-content" style="width: 90%;">
+      <div class="modal-header">
+            <div class="modal-title" id="exampleModalLabel">TERMINOS Y CONDICIONES</div>
+            <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
+      </div>
+
+      
+      <div class="modal-body">
+        <section >
+
+
+
+                
+                <div ng-repeat="d in dinamicas" style="margin:20px 0px:">
+                    <div>||d.name||</div>
+                    <div>
+                        <label style="display: block;width:100%;">Términos Y condiciones</label>
+                        <textarea style="width:658px;height: 100px;resize: none;margin: 20px 0px" ng-model='d.terms.terms'></textarea>
+                    </div>
+
+                    <div>
+                        <label style="display: block;width:100%;">Descripción Dinámica</label>
+                        <textarea style="width:658px;height: 100px;resize: none;margin: 20px 0px" ng-model='d.terms.descp'></textarea>
+                    </div>
+
+                    <div style="text-align: right;padding:20px 0px;border-top: 1px solid #86FFFF;padding:20px;">
+                        <button class="botons btn-white" save-dinamica-term>GUARDAR</button>
+                    </div>
+                </div>
+            
+        </section>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+    <script src="/static/statics/js/jquery.js"></script>
+    <script src="/static/statics/js/jquery-ui.min.js"></script>
+    <script src="/static/statics/js/jquery.mjs.nestedSortable.js"></script>
+    <script src="/static/statics/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/static/statics/js/dropzone.js"></script>
+    <script src="/static/statics/js/angular.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+    <script src="/static/statics/js/angular-sanitize.js"></script>
+    <script src='/static/statics/js/textangular/textAngular-rangy.min.js'></script>
+    <script src='/static/statics/js/textangular/textAngular-sanitize.min.js'></script>
+    <script src='/static/statics/js/textangular/textAngular.min.js'></script>
+    <script src="/static/statics/js/cleave.min.js"></script>
+    <script src="/static/statics/js/three.min.js"></script>
+    <script src="/static/statics/js/D.min.js"></script>
+    <script src="/static/statics/js/uevent.min.js"></script>
+    <script src="/static/statics/js/doT.min.js"></script>
+    <script src='/static/statics/js/photo-sphere-viewer.js'></script>
+
+
+    <script type="text/javascript">    
+        var myapp = angular.module('mainApp',['ngRoute','ngSanitize','textAngular']);
+        var customInterpolationApp = angular.module('customInterpolationApp', []);
+        // GLOBALS --------------------------------------------------------------------
+        var csrf = '{{csrf}}';
+        // ----------------------------------------------------------------------------
+        
+        myapp.config(function($interpolateProvider) {
+            $interpolateProvider.startSymbol('||');
+            $interpolateProvider.endSymbol('||');
+
+        });
+
+        myapp.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';        
+        }]); 
+
+
+
+        var cats = [];
+
+        var dinter={};
+        {% for d in dinter %}
+            dinter['{{d.dinamicaslug}}'] = {'terms':'{{d.terminos|safe}}','descp':'{{d.descp|safe}}'};
+        {% endfor %}
+
+
+
+    </script>
+
+  {% block scripts %}{% endblock %}
+    <script src="/static/statics/js/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
+    <script src="/static/statics/js/bones.js"></script>
+    <script src="/static/statics/js/pagectr.js"></script>
+    <script src="/static/statics/js/dinamicasctr.js"></script>
+    <script src="/static/statics/js/managepagectr.js"></script>
+    <script src='/static/statics/js/cropper.min.js'></script>
+
+
+
+{% block scriptafter %}{% endblock %}
+
+
+
+
+
+
+
+    <script type="text/javascript">
+
+        // EXTRACTING CATALOGO
+
+        var catalogo = [];
+         var csrf = '{{csrf}}';
+        
+        $(function(){
+
+            var today = new Date();
+            var tomorrow = new Date();
+            var tm = tomorrow.setDate(today.getDate()+5);
+
+            $( ".datepicker" ).datetimepicker({format:'Y-m-d H:i:s',minDate:tm});
+        });
+ 
+
+
+        var reds = [];
+        var activas = [];
+
+        {% for x in reds %}
+            reds.push('{{x.pk}}');
+        {% endfor%}
+        {% for x in activas %}
+            activas.push('{{x.pk}}');
+        {% endfor%}
+
+
+
+    </script>
+
+  
+
+</body>
+
+</html>

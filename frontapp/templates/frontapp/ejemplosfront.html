@@ -1,0 +1,386 @@
+{% extends 'frontapp/base.html' %}
+
+
+{% block content %}
+
+
+
+<style type="text/css">
+
+.container-fluid{
+  padding:0px;
+  margin:0px;
+}
+
+  
+p{
+  padding: 0px;
+  margin: 0px;
+}
+
+  .destacado-1{
+    background-color: #c227b9;
+  }
+
+
+  .destacado-2{
+    background-color:#57c9e8;
+  }
+
+
+  .destacado-3{
+    background-color:#ffd100;
+  }
+
+
+
+  .titulos{
+    font-family: "fuente-subtitulos";
+    color:#fff;
+      font-size: 4vmin;
+      font-weight: bold;
+      
+      
+  }
+
+  .titulos p{
+    padding: 0px;
+    margin:0px;
+  }
+
+
+  .minitxt{
+    font-size:1.3vmax;
+  }
+
+
+
+  .miniminitxt{
+    font-size:0.7rem;
+    line-height: 1;
+  }
+
+
+
+  .card{
+    -webkit-box-shadow: 0px 6px 6px 1px rgba(212,197,212,1);
+    -moz-box-shadow: 0px 6px 6px 1px rgba(212,197,212,1);
+    box-shadow: 0px 6px 6px 1px rgba(212,197,212,1);
+  }
+
+
+.carousel-cell {
+  width: 30%;
+  min-width: 300px;
+  height:75vh;
+  margin-right:10px;
+  background: #fff;
+  border-radius: 5px;
+  counter-increment: gallery-cell;
+}
+
+
+
+.recbox{
+  background-color: #fff;padding:10px;position: absolute;width:30%;left:10px;
+  text-align: center;top:5px;
+}
+
+.recompensabox{
+  color:#a8adaf;
+  font-size: 0.8rem;
+}
+
+
+.promocionshead{
+  font-family: "fuente-subtitulos";
+  font-size: 1.5rem;
+}
+
+
+.recboxmini{
+
+  background-color: #fff;padding:10px;position: absolute;width:auto;left:10px;
+  text-align: center;
+
+
+}
+
+
+
+.secdinams{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.2rem;
+}
+
+
+
+
+</style>
+
+
+<div style="margin-top: 2vh;padding:20px;text-align: right;">
+
+<span class="ion-ios-plus-outline links" data-toggle="modal" data-target="#promocionmod" add-promo></span>
+
+</div>
+
+
+<div class="row" style="width:100%;padding:40px 10px;">
+  <div class="col-12 col-md-4 col-lg-4 col-xl-4" ng-repeat="d in promociones|orderBy:'orden':true">
+    
+
+    <div class="card" style="position: relative;padding-top:5px;">
+      <div class="recbox">
+      <span class="recompensabox" data-toggle="modal" data-target="#promocionmod">
+        <a href="/promocion/||d.pk||/">Recompensa</a>
+      </span>
+      <a href="/resultados/||d.pk||/">Resultados</a>
+      </div>
+      <div style="position: absolute;right:0px;">
+        <span class="ion-android-create linksw" data-toggle="modal" data-target="#promocionmod" edt-promo></span>
+        <span class="ion-close-circled linksw" rm-promo></span>
+
+      </div>
+
+      <div style="height:40vh;background-image:url(||d.media.firstimg||);background-position: center center;background-size: cover;">
+      </div>
+      
+        <div class="card-body" style="padding: 0px;">
+
+          <div style="width:100%;padding:20px;background-color:#||d.color||;min-height:25vh;max-height:25vh;overflow: auto;">
+          <div class="titulos">
+          <div >||d.linea_uno||</div>
+          <div >||d.linea_dos||</div>
+          <div >||d.linea_tres||</div>
+          <div>||d.vigencia||</div>
+          </div>
+        </div>
+
+        <div class="row" style="padding:10px;">
+
+          <div class="col-2 col-md-2 col-lg-2 col-xl-2">
+            <span class="links ion-ios-heart-outline"></span>
+          </div>
+
+          <div class="col-4 col-md-4 col-lg-4 col-xl-4 minitxt">
+            ||d.social.likes||
+          </div>
+
+
+          <div class="col-2 col-md-2 col-lg-2 col-xl-2" style="text-align: right;">
+            <span class="ion-android-share-alt"></span>
+            <div class="fb-share-button" data-href="http://telcel.local/promocion/||d.pk||/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftelcel.local%2Fpromocion%2F20%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+
+          </div>
+
+          <div class="col-4 col-md-4 col-lg-4 col-xl-4 minitxt" style="text-align: right;">
+            ||d.social.shares||
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="promocionmod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Promoción ||promocion_edit.pk||</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" save-promo>Save</button>
+      </div>
+      
+      <div class="modal-body">
+        
+
+        <ng-include src="'/static/statics/modulos/promos/home.html'"></ng-include>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" save-promo>Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+  {% block scripts %}
+
+    <script type="text/javascript">
+      {% for c in promocat %}
+        var subcats = [];
+        {% for sc in c.promocat_set.all %}
+          var newsubc = {'cpk':'{{sc.pk}}','name':'{{sc.catname}}','slug':'{{sc.catslug}}'};
+          subcats.push(newsubc);
+
+        {% endfor %}
+        var newcat = {'cpk':'{{c.pk}}','name':'{{c.catname}}','subcats':subcats};
+
+        cats.push(newcat);
+
+      {% endfor %}
+
+      
+    </script>
+
+<script type="text/javascript">
+  
+
+
+
+
+
+/*REGISTRO DE USUARIO  */
+
+
+  /*OBTENER COOKIE */
+
+  /*
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+
+var upk = getCookie('upk');
+
+
+var query = window.location.search;
+urls = 'http://admin.experienciastelcel.com/restful/reguser/'+query; 
+
+$.get(urls,function(data,status){
+    
+    document.cookie="upk="+data.userpk;
+
+});
+
+*/
+
+
+
+// CUANDO EL USUARIO DA CLICK EN  --  COMENZAR DINAMICA --- es cuando su tiempo se inicializa
+// AQUI DEBERAs LLAMAR ESTA URL 
+// http://telcel.local/restful/uspk/promopk/  el primer parametro numerico es el pk del usuario, el segundo el de la promoción 
+
+$.get('http://telcel.local/restful/participando/29/32/',function(response){
+    console.log(response);
+});
+
+
+
+/*ESTE S EL CODIGO PARA EL FINAL DE LA TRIVIA  */
+
+  /*LA ESTRUCTURA DEL JSON CON LSO RESULTADOS SON ESTOS */
+
+  data = [
+    {'name':'promo','value':32},
+    {'name':'uspk','value':29},
+    {'name':'tiempo','value':29123},
+    {'name':'pregunta','value':13}, // NOTA QUE EL PARAMETRO DE 'value' es el pk de la pregunta
+    {'name':'resp_13','value':'bilbbo'},
+    {'name':'pregunta','value':24},
+    {'name':'resp_24','value':'sauron'}
+
+
+
+// LA RESPUENSTA SE COMPONE POR EL pk de la pregunta y el pk de la respuesta
+// ES DECIR la respuesta a la pregunta 24 se estrictura asi resp_24=pk de la respuesta seleccionada
+
+  ];
+
+
+  $.ajax({'url':'http://telcel.local/restful/finalpalabras/',
+          'type':'GET',
+          'dataType':'json',
+          'data':data,
+          'success':function(response){
+            console.log(response);
+          }
+        });
+
+
+
+
+
+
+$.get('http://telcel.local/restful/participando/29/29/',function(response){
+    console.log(response);
+});
+
+
+
+/*ESTE S EL CODIGO PARA EL FINAL DE LA TRIVIA  */
+
+  /*LA ESTRUCTURA DEL JSON CON LSO RESULTADOS SON ESTOS */
+
+  data = [
+    {'name':'promo','value':29},
+    {'name':'uspk','value':29},
+    {'name':'tiempo','value':29123},
+    {'name':'pregunta','value':24}, // NOTA QUE EL PARAMETRO DE 'value' es el pk de la pregunta
+    {'name':'resp_24','value':138},
+    {'name':'pregunta','value':25},
+    {'name':'resp_25','value':170}
+
+
+
+// LA RESPUENSTA SE COMPONE POR EL pk de la pregunta y el pk de la respuesta
+// ES DECIR la respuesta a la pregunta 24 se estrictura asi resp_24=pk de la respuesta seleccionada
+
+  ];
+
+
+  $.ajax({'url':'http://telcel.local/restful/finaltrivia/',
+          'type':'GET',
+          'dataType':'json',
+          'data':data,
+          'success':function(response){
+            console.log(response);
+          }
+        });
+
+
+
+
+
+</script>
+
+
+  {% endblock %}
+
+
+

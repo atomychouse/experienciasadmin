@@ -1,0 +1,258 @@
+{% extends 'dinamicasapp/base.html' %}
+
+
+{% block content %}
+
+<style type="text/css">
+	
+	.dinamica-titulo{
+
+		width:100%;
+		padding:24px;
+	}
+
+	.dinamica-titulo p{
+		font-family: "fuente-titulos";
+		font-size:2vmin;
+		padding: 0px;
+	}
+
+
+	.vigencia-txt{
+		text-transform: uppercase;
+		color:#002f87;
+		font-family: "fuente-titulos";
+		font-size: 9pt;
+	}
+
+
+	.dinamica-minibox{
+		position: absolute;
+		bottom:0px;
+		left: 10vw;
+		width:25vw;
+		height:15vh;
+		background: #fff;
+
+	}
+
+
+#dinamica-info-box{
+	background: #fafafa;
+	padding: 40px 8vw;
+}
+
+
+
+
+.bases-box p{
+	font-family: "fuente-textos";	
+}
+
+
+
+.ta-scroll-window > .ta-bind p{
+	padding: 0px;
+}
+
+.bases-box .ta-scroll-window > .ta-bind{
+  height:auto;
+  min-height: auto;
+  padding:20px;
+  background-color: transparent;
+}
+
+
+.boton-next-box{
+	width: 100%;
+	text-align: right;
+}
+
+
+.boton-next-box span{
+	font-size: 24pt;
+	margin:0px 12px;
+}
+
+
+#dropgeneralx{
+	position:fixed;
+	top:10px;
+	right: 10px;
+	z-index: 100;
+}
+
+</style>
+
+
+
+
+    <div class="row" style="width: 100%;" id="adddinamica-box" ng-show="editando">
+      <div class="col-2 col-lg-2 col-md-2 col-xl-2" style="padding:0px 20px;">
+        <span class="ion-ios-arrow-right" ng-hide="categorias_box" 
+              style="font-size:4vmin;color:#c900bb;" 
+              ng-click="categorias_box=true"></span>
+
+        
+      </div>
+
+      <div class="col-8 col-lg-8 col-md-8 col-xl-8" style="padding-top:14px;">
+         
+      </div>
+      <div class="col-2 col-lg-2 col-md-2 col-xl-2" style="text-align:right;">
+        <span class="ion-ios-checkmark links"  style="font-size:4vmin;color:#c900bb;" save-dinamica></span>
+      </div>
+
+    </div>
+
+
+
+<section id="dinamica-head" style="position: relative;">
+
+
+
+	<ul  class="navbar-nav mr-auto itmmenugrid" ng-show="editando">
+      <li>
+        <span class="linkoundw" launch-dinamica-foto>
+            <i class="ion-ios-camera"></i>
+        </span>
+      </li>
+      <li>
+        <span class="linkoundw"  rm-itm>
+            <i class="ion-ios-trash"></i>
+        </span>
+      </li>
+
+
+	</ul>
+	<div style="width:100%;min-height:30vh;background:#4c4c4c;">
+		<img src="||dinamica.media.img||" width="100%" />
+
+	</div>
+
+	<div class="dinamica-minibox botomshadow">
+
+		<div class="dinamica-titulo" style="background:#||dinamica.bkcolor|| ;" >
+
+		<div style="text-align: right;width:100%;">
+			<input type="text" ng-model="dinamica.bkcolor" ng-show="editando" />
+		</div>
+
+		<div text-angular name="dinamica-titulo"  
+		              ng-model="dinamica.titulo" 
+		              ta-target-toolbars='bases' class="tabins"  
+		              ng-show="editando" style="z-index: 90;height: auto;"></div>
+
+			<div ng-hide="editando">
+				<div ng-bind-html="dinamica.titulo">||dinamica.titulo||</div>
+			</div>
+
+			<div class="vigencia-txt">
+				<span ng-hide="editando">VIGENCIA ||dinamica.finaliza||	</span>
+				
+				<div ng-show="editando">
+					<label>
+					Inicia:
+					<input type="text" ng-model="dinamica.inicia" class="datepicker" /> 
+					</label>
+					<label ng-show="dinamica.inicia">
+					Finaliza:
+					<input type="text" ng-model="dinamica.finaliza" class="datepicker" /> 
+					</label>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+	
+</section>
+
+<section id="fecha-vigencia-box" style="height: 20vh;padding:5vh 20vw;text-align:center;">
+
+	<span watch-vigencia style="font-size: 6vmax;">
+		||dinamica.tiempo||
+	</span>
+
+
+</section>
+
+
+<section id="dinamica-info-box">
+	
+	<div class="row rengs">
+
+		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 bases-box">
+		
+		<div ng-bind-html="dinamica.bases" ng-hide="editando">||diamica.bases||</div>
+
+		<div text-angular name="bases"  
+		              ng-model="dinamica.bases" 
+		              ta-target-toolbars='bases' class="tabins"  
+		              ng-show="editando" style="z-index: 90;height: auto;"></div>
+
+		<text-angular-toolbar ta-toolbar-class="btn-toolbar-ca" ta-toolbar="[['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p',  'quote','bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo'],
+	      ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
+	      ['html']]" ta-toolbar-button-class="btn btn-sm" name="bases" ng-show="editando">
+	      </text-angular-toolbar>
+
+
+		</div>
+
+		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+		
+			
+			
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#quizmodal">
+  				Dinámica
+			</button>
+
+		</div>
+
+
+
+	</div>
+
+
+
+</section>
+
+
+		<text-angular-toolbar ta-toolbar-class="btn-toolbar-ca" ta-toolbar="[]" ta-toolbar-button-class="btn btn-sm" name="notol" ng-show="editando">
+	      </text-angular-toolbar>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="quizmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog" role="document" >
+    <div class="modal-content" style="background-color:#||dinamica.bkcolor|| ;">
+      <div class="modal-header">
+
+        <h5 class="modal-title" id="exampleModalLabel">        	
+    	</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding:0px;">
+ 		<ng-include src="'/static/statics/modulos/dinamicas/trivia/trivia.html'"></ng-include>
+      </div>
+      <div class="modal-footer">
+      	<div ng-show="editando">
+      		<span class="links" ng-click="dinamica.status=null">INICIO</span>
+      		<span class="links ion-ios-plus" add-quiz></span>
+      		<span class="links ion-ios-checkmark" data-dismiss="modal"></span>
+      		<span class="links" ng-click="dinamica.status='final'">FINAL</span>
+
+      	</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+

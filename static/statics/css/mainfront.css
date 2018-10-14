@@ -1,0 +1,366 @@
+*{
+	margin: 0px;padding: 0px;
+}
+
+
+
+
+
+html,body{
+	font-size: 100%;
+	width:100%;height: 100%;
+}
+
+body{
+	line-height: 1.4;
+	font-family: 'Source Sans Pro', sans-serif;
+	/*
+	font-family: 'Open Sans', sans-serif;
+	font-family: 'Indie Flower', cursive;
+	font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Paytone One', sans-serif;
+	*/
+}
+
+
+.modal-content{
+	background:#f5f5f5;
+	border-radius:0px;
+	padding:0px;
+	border:0px solid;
+}
+
+
+.noseve{
+	display: none;
+}
+
+
+.modal-body{
+	padding:0px;
+}
+
+
+.ribbon{
+	display: inline-block;
+	width:100%;
+	height: 50px;
+	line-height:3;
+	text-align: center;
+	background:url('/static/statics/images/ribbon.png');
+	background-repeat: no-repeat;
+	background-position: center right;
+	background-color:#e20000;
+	color:#fff;
+	font-size:2.5vmin;
+}
+
+
+
+.navbarmain{
+
+	padding:20px;
+}
+
+.container-fluid{
+	padding: 0px;
+	margin:0px;
+}
+
+
+
+.cintiyo{
+	padding: 20px 0px;
+}
+
+.iconoven{
+	width:20%;
+	height:80px;
+}
+
+.redbel{
+	color:#fff;
+	font-size: 4vmin;
+	background: #e20000;
+	
+}
+
+.linko{
+	cursor: pointer;
+}
+
+
+.terminos_label{
+	text-transform: uppercase;
+	color:#02b0ef;
+	font-weight: bolder;
+}
+
+
+
+.titulos{
+	font-weight: lighter;font-size:5vmin;
+}
+
+
+.bluebox{
+	background: #0a3b79; color:#fff;font-weight:bold;padding:20px 10px;text-align:center;
+}
+
+.botonera button{
+ 	margin:0px 20px;
+}
+
+.btn-orange{
+	background-color: #fa6400;
+	border-radius: 0px;
+	color:#fff;
+	font-weight: bolder;
+}
+
+
+
+.btn-white{
+	background-color:#fff;
+	border-radius: 0px;
+	color:#fa6400;
+	font-weight: bolder;
+}
+
+
+.nav-link{
+	color:#02b0ef !important;
+	font-size: 
+}
+
+/*destacados*/
+
+
+.destacados{
+	font-size:3vmin;
+	padding:20px 20px 0px 20px;
+	height: 25vh;
+}
+
+.datebox{
+	text-align: center;
+	padding:0px;
+	height: 55px;width: 55px;
+}
+
+.locationbox{
+	background: #fff;
+	text-align: center;
+	padding: 0px 10px;
+	height: 55px;width:auto;
+
+
+}
+
+
+
+.detail_locationbox{
+	text-align: center;
+	padding: 0px 10px;
+	height: 55px;width:auto;
+
+
+}
+
+
+
+.destacado_1,.datebox_1{
+	background: #9c0791;
+	color:#ffffff;
+}
+
+
+.vigencia{
+	font-size: 2vmin;
+}
+
+
+	.destacado_1 b,.destacado_1 .vigencia{
+		color: #f38fb0;
+	}
+
+
+
+.destacado_2,.datebox_2{
+	background: #0094cf;
+	color:#ffffff;
+}
+
+
+	.destacado_2 b,.destacado_2 .vigencia{
+		color: #82ffff;
+	}
+
+
+
+.destacado_3,.datebox_3{
+	background: #ffca00;
+	color:#ffffff;
+}
+
+	.destacado_3 b,.destacado_3 .vigencia{
+		color: #ff8f00;
+	}
+
+
+
+.dateday{
+	font-size: 12px;
+}
+.datenum{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+
+
+.bglwhite{
+	background: #fff !important;
+	border-bottom:1.28px solid #baccd3;
+}
+
+
+
+.general,
+.detail_general{
+
+	padding:20px 20px 0px 20px;
+	height: 18vh;
+	background:#f5f5f5; 
+	
+}
+
+
+.crono{
+	list-style: none;
+	color:#676f74;	
+}
+.crono .time{
+	font-size:12vmin;
+}
+
+
+.crono .text{
+	font-size: 2vmin;
+}
+
+.detail_general  .card-text{
+	min-height: 8vh;
+	font-size:3vmin;
+}
+
+
+.card-text{
+	min-height: 12vh;
+}
+
+
+.general .card-text{
+	min-height: 8vh;
+	font-size:2vmin;
+}
+
+
+.general_datebox{
+	background: #f5f5f5;
+	height: 55px;
+	padding:10px;
+	text-align: center;
+}
+
+.general_dateday{
+	font-size:13px;
+	font-weight: bold;
+	line-height: 1;
+
+	text-transform: uppercase;
+}
+.general_datenum{
+	font-size: 18px;
+	padding:0px;
+	line-height: 1;
+}
+
+
+
+.general .vigencia{
+	font-size: 12px;
+	color:#676f74;
+	text-transform: uppercase;
+}
+
+
+.box_dinamicas{
+	background: #e1e8ef;
+	padding:40px;
+}
+
+
+.ganadores_box{
+	padding:40px;
+}
+
+.slick-prev{
+	left:-80px;
+	 
+}
+.slick-prev,
+.slick-next{
+	font-size: 24vmin;
+	position:absolute;
+	z-index:10;
+	top:10%;
+	cursor: pointer;
+}
+.slick-next{
+	right:-80px;
+}
+
+
+.imagen_cuadro{
+
+	background-position: center 10px;
+	background-repeat:no-repeat;
+	background-size: cover;
+}
+
+
+
+.topbox{
+	position: absolute;top:0px;left:30px;
+}
+
+.small-text{
+	font-size: 14px;
+}
+
+.icontxt{
+	margin: 0px 10px;
+	font-size: 14px;
+	color:#a8adaf;
+	font-weight:500;
+	display: inline-block;
+}
+
+
+
+.level1{
+	background: #1f52a2;
+	color:#fff;
+}
+
+.level2{
+	background: #376fb8;
+	color:#fff;
+}
+
+
+.level3{
+	background: #518bcf;
+	color:#fff;
+}

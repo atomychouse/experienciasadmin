@@ -1,0 +1,416 @@
+
+	Para obtener el listado de promociones
+
+Todas
+	url:http://admin.experienciastelcel.com/restful/promos/
+
+	retorna un json con la siguiente información:
+
+
+                    {   
+                    "vigencia":'dec 8| 2018', 
+                    "vigenciaUTC":1223523455,
+                    'fecha_evento':'',
+                    'ciudad':'',
+                    'lugar':'',
+                    'imagen':'http://experienciastelcel.com/static/imagen.jpg', 
+                    "titulo": 'texto1',
+                    "titulo_color": 'texto2,
+                    "titulo_completo":'texto1 texto2', 
+                    "shares": 1, 
+                    "likes": 2345,
+                    "orden":1, 
+                    "dinamica":'trivia',
+                    "categorias":['futbol','teatro'],
+                    "segmentos":['claro_musica','claro_video'], 
+                    "pk":29, 
+                    }
+
+
+Destacados
+	url:http://admin.experienciastelcel.com/restful/promos/?destacados=true
+
+	retorna un json con la siguiente información:
+
+
+                    {   
+                    "vigencia":'dec 8| 2018', 
+                    "vigenciaUTC":1223523455,
+                    'fecha_evento':'',
+                    'ciudad':'',
+                    'lugar':'',
+                    'imagen':'http://experienciastelcel.com/static/imagen.jpg', 
+                    "titulo": 'texto1',
+                    "titulo_color": 'texto2,
+                    "titulo_completo":'texto1 texto2', 
+                    "shares": 1, 
+                    "likes": 2345,
+                    "orden":1, 
+                    "dinamica":'trivia',
+                    "categorias":['futbol','teatro'],
+                    "segmentos":['claro_musica','claro_video'], 
+                    "pk":29, 
+                    }                    
+
+
+
+Busqueda
+		
+		por ciudad
+		url:http://admin.experienciastelcel.com/restful/promosby/?ciudad=mexicalli
+		
+		por categoria
+		url: http://admin.experienciastelcel.com/restful/promosby/?search=musica
+
+
+
+	retorna un json con la siguiente información:
+
+
+                    {   
+                    "vigencia":'dec 8| 2018', 
+                    "vigenciaUTC":1223523455,
+                    'fecha_evento':'',
+                    'ciudad':'',
+                    'lugar':'',                    
+                    'imagen':'http://experienciastelcel.com/static/imagen.jpg', 
+                    "titulo": 'texto1',
+                    "titulo_color": 'texto2,
+                    "titulo_completo":'texto1 texto2', 
+                    "shares": 1, 
+                    "likes": 2345,
+                    "orden":1, 
+                    "dinamica":'trivia',
+                    "categorias":['futbol','teatro'],
+                    "segmentos":['claro_musica','claro_video'], 
+                    "pk":29, 
+                    }              
+
+
+
+
+Detalle de dinámica
+
+	url: http://admin.expericnciastelcel.com/promocion/idpromo/
+
+	retorna un json: 
+	{
+	"promocion": {
+		"segmentos": "[\"claro_musica\"]",
+		"categorias": "[\"musica\"]",
+		"vigencia": "Apr. 16 | 2018",
+        'fecha_evento':'',
+        'ciudad':'',
+        'lugar':'',                    		
+		"imagen": "http://telcelbk.local/static/temps/promo_2_lg.jpg",
+		"premio": "<p>Un pase VIP doble para disfrutar a Lenny Kravitz en la Arena Guadalajara el 18 de Abril.<br/></p>",
+		"preguntas": [
+			{
+				"pk": 3,
+				"indice": "",
+				"pregunta": "¿En dónde nació el cantante Lenny Kravitz?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_3.jpeg",
+				"options": [
+					{
+						"rpk": 52,
+						"cor": "",
+						"indice": "A",
+						"texto": "Londres"
+					},
+					{
+						"rpk": 53,
+						"cor": "",
+						"indice": "B",
+						"texto": "Los Ángeles"
+					},
+					{
+						"rpk": 54,
+						"cor": "",
+						"indice": "C",
+						"texto": "Nueva York"
+					}
+				]
+			},
+			{
+				"pk": 4,
+				"indice": "",
+				"pregunta": "¿En qué famosa saga actuó?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_4.jpeg",
+				"options": [
+					{
+						"rpk": 46,
+						"cor": "",
+						"indice": "A",
+						"texto": "Harry Potter"
+					},
+					{
+						"rpk": 47,
+						"cor": "",
+						"indice": "B",
+						"texto": "Hunger Games"
+					},
+					{
+						"rpk": 48,
+						"cor": "",
+						"indice": "C",
+						"texto": "Divergente"
+					}
+				]
+			},
+			{
+				"pk": 5,
+				"indice": "",
+				"pregunta": "¿Cuál es el nombre de su álbum más reciente?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_5.jpeg",
+				"options": [
+					{
+						"rpk": 43,
+						"cor": "",
+						"indice": "A",
+						"texto": "Lenny"
+					},
+					{
+						"rpk": 44,
+						"cor": "",
+						"indice": "B",
+						"texto": "Raise Vibration"
+					},
+					{
+						"rpk": 45,
+						"cor": "",
+						"indice": "C",
+						"texto": "Crush"
+					}
+				]
+			},
+			{
+				"pk": 6,
+				"indice": "",
+				"pregunta": "¿En qué ciudades de México presentará su nuevo tour?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_6.jpeg",
+				"options": [
+					{
+						"rpk": 40,
+						"cor": "",
+						"indice": "A",
+						"texto": "Ciudad de México, Guadalajara y Monterrey"
+					},
+					{
+						"rpk": 41,
+						"cor": "",
+						"indice": "B",
+						"texto": "Monterrey y Guadalajara"
+					},
+					{
+						"rpk": 42,
+						"cor": "",
+						"indice": "C",
+						"texto": "Monterrey, Puebla y Ciudad de México"
+					}
+				]
+			},
+			{
+				"pk": 7,
+				"indice": "",
+				"pregunta": "¿Cuántos Grammys ha ganado Lenny Kravitz a lo largo de su carrera musical?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_7.jpeg",
+				"options": [
+					{
+						"rpk": 37,
+						"cor": "",
+						"indice": "A",
+						"texto": "Cinco"
+					},
+					{
+						"rpk": 38,
+						"cor": "",
+						"indice": "B",
+						"texto": "Ninguno"
+					},
+					{
+						"rpk": 39,
+						"cor": "",
+						"indice": "C",
+						"texto": "Cuatro"
+					}
+				]
+			},
+			{
+				"pk": 8,
+				"indice": "",
+				"pregunta": "¿En qué año lanzó su canción Fly Away?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_8.jpeg",
+				"options": [
+					{
+						"rpk": 34,
+						"cor": "",
+						"indice": "A",
+						"texto": "1998"
+					},
+					{
+						"rpk": 35,
+						"cor": "",
+						"indice": "B",
+						"texto": "2002"
+					},
+					{
+						"rpk": 36,
+						"cor": "",
+						"indice": "C",
+						"texto": "2000"
+					}
+				]
+			}
+		],
+		"inicio_juego_txt": "<p>La trivia consta de 6 preguntas de opción múltiple, selecciona la respuesta correcta y pasa a la siguiente pregunta. La mayor cantidad de respuestas correctas con el menor tiempo de participación gana.<br/></p>",
+		"gift": 34,
+		"shares": 120,
+		"pk": 2,
+		"bases": "<p>Para poder participar en este concurso deberás contestar todas las preguntas de la trivia. Al finalizar la vigencia de la dinámica se elegirán los ganadores tomando en cuenta:<br/><br/>- La mayor cantidad de respuestas correctas.<br/>- El tiempo de participación.<br/><br/>Los 5 mejores resultados serán contactados directamente para recibir su premio.<br/></p>",
+		"likes": 340,
+		"tiempoahora": 1523724399000,
+		"titulo": "Lenny Kravitz te espera en su concierto",
+		"dinamica": "trivia",
+		"imagen_lg": "http://telcelbk.local/static/temps/promo_2_min.jpg",
+		"vigenciaUTC": 1523836800000
+	}
+}
+
+
+
+
+JSON PARA TRIVIA: 
+			"preguntas": [
+			{
+				"pk": 3,
+				"indice": "",
+				"pregunta": "¿En dónde nació el cantante Lenny Kravitz?",
+				"img": "https://admin.experienciastelcel.com/static/media/promocion/crop_3.jpeg",
+				"options": [
+					{
+						"rpk": 52,
+						"cor": "",
+						"indice": "A",
+						"texto": "Londres"
+					},
+					{
+						"rpk": 53,
+						"cor": "",
+						"indice": "B",
+						"texto": "Los Ángeles"
+					},
+					{
+						"rpk": 54,
+						"cor": "",
+						"indice": "C",
+						"texto": "Nueva York"
+					}
+				]
+			}
+		]
+
+JSON PARA JUEGO IMAGENNES/PALABRA
+
+
+		{
+			"pk": 13,
+			"palabra": "",
+			"description": "ten cuidado, apicalo",
+			"img": [
+				"https://admin.experienciastelcel.com/static/media/imtrivs/crop_13.jpeg",
+				"https://admin.experienciastelcel.com/static/media/imtrivs/crop_13_LBTJWFR.jpeg"
+			]
+		}
+
+
+
+PARA REGISTRAR UN USUARIO VIA URL
+
+
+	url: http://admin.experienciastelcel.com/restful/reguser/
+
+	recibe parametros en un metodo get con la siguiente estructura: 
+
+	[
+		{'name':'u','value':'email_del_usuario'},
+		{'name':'name','value':'nombre_del_usuario'},
+		{'name':'servicios','value':'claro_musica,claro_video'},
+	]
+
+	o bien directo en la url
+
+	http://admin.experienciastelcel.com/restful/reguser/?u=email_usuario&servicios=claro_musica,claro_video&name=Juan
+
+
+PARA OBTENER INFO DEL USUARO
+
+	url: http://admin.experienciastelcel.com/restful/getuser/?upk=iddeusuario
+
+
+
+
+
+PARA PARTICIPAR EN UNA PROMOCIÓN ES NECESARIO REGISTRAR EL INICIO DE LA DINÁMICA
+ESTO SE HACE MEDIANTE ESTA URL
+
+
+	
+	url: http://admin.experienciastelcel.com/restful/participando/pk_deusuario/pk_depromocion/
+
+	esta url también retorna los parametros én que se inicio la participación
+
+	{
+
+	 "partipk": 16,
+	 "inicioUTC": 1523726008000.0,
+	  "status": "progress",
+	  "nivel_respuestas": null,
+	  "inicio": "04/14/18 17:13:28"
+	}
+
+
+
+FINALIZAR UNA DINÁMICA
+
+
+
+
+	TRIVIA
+		url: url: http://admin.experienciastelcel.com/restful/finaltrivia/
+
+		resive los siguientes parametros en método GET
+
+		[
+			{'name':'promo','value':'pk_delapromocion'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'pk_delarespuesta'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'pk_delarespuesta'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'pk_delarespuesta'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'pk_delarespuesta'}
+		]
+
+
+
+
+	JUEGO IMAGENES/PALABRA
+		url: url: http://admin.experienciastelcel.com/restful/finaltrivia/
+
+		resive los siguientes parametros en método GET
+
+		[
+			{'name':'promo','value':'pk_delapromocion'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'palabra'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'palabra'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'palabra'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'palabra'},
+			{'name':'pregunta','value':'pk_delapregunta'},
+			{'name':'answer_pkdelapregunta','value':'palabra'},
+		]
+

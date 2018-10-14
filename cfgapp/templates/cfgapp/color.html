@@ -1,0 +1,60 @@
+<div class="row renglones" style="width:100%;padding: 0px 95px;">
+	<div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xl-6">
+		<div class="row" >
+			<div class="col-6 col-md-6 col-lg-6 col-xl-6" ng-repeat="c in colors" ng-if="c.gama" style="padding:10px 20px;">
+
+				<div class="redondeg" style="background:#||c.colorset.hex||;color:#fff;">
+					||c.typo||
+				</div>
+
+				
+				<div class="centroide" style="padding: 0px 20px;">
+				    	<div class="row">
+				    		<div class="col-4 col-lg-4 col-xl-4 nopad">
+					    		<label>R</label>
+					    		<input type="text" 
+					    			   ng-model="c.colorset.rgb.r" 
+					    			   class=" form-control form-control-sm centroide" 
+					    			   placeholder="R" maxlength="3" change-color>
+				    		</div>
+				    		<div class="col-4 col-lg-4 col-xl-4 nopad">
+					    		<label>G</label>
+					    		<input type="text" 
+					    			   ng-model="c.colorset.rgb.g" 
+					    			   class=" form-control form-control-sm centroide" 
+					    			   placeholder="G" maxlength="3" change-color>
+				    		</div>
+				    		<div class="col-4 col-lg-4 col-xl-4 nopad">
+					    		<label>B</label>
+					    		<input type="text" 
+					    			   ng-model="c.colorset.rgb.b" 
+					    			   class=" form-control form-control-sm centroide" 
+					    			   placeholder="B" maxlength="3" change-color>
+				    		</div>
+
+
+				    	</div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align: right;">
+			<span class="links ion-ios-checkmark" save-color></span>
+		</div>
+
+	</div>	
+	<div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xl-6">
+		<div class="row" ng-repeat="bc in colors">
+			<div class="col-4 col-md-4 col-sm-4 col-lg-4 col-xl-4" style="position: relative;padding:20px;" ng-repeat="fc in colors" ng-if="bc.colorset.hex!=fc.colorset.hex">
+				<span class="links ion-ios-checkmark nota-box savecolormatch"></span>
+				<div class="redondem" style="background:#||bc.colorset.hex||;color:#||fc.colorset.hex||;">
+					<span style="font-size:4vmin;font-weight: bolder;">A</span>
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+</div>

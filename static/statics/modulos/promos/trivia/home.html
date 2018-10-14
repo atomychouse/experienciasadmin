@@ -1,0 +1,110 @@
+<div class="dina_title">Trivia</div>
+<div class="row" ng-repeat="t in promocion_edit.dins" style="border-bottom: 2px solid #eceff1;margin-bottom:20px;">
+  <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+
+        <label>
+          <span class="links ion-ios-camera"></span>
+        <input type="file" name="foto" class="imagen" launch-imagen-p style="display: none;">
+        </label>
+        <div style="width:100%;">
+          <img src="||t.img||"  style="width: 100%;" />
+        </div>
+
+        <div style="margin:10px;display: none;">
+          <span class="ion-ios-camera links" lauch-foto-quiz></span>
+          
+          <img src="||t.img||" style="width:100%;" ng-if="t.img" />
+        </div>
+  </div>
+  <div class="col-12 col-md-8 col-lg-8 col-xl-8">
+        <h5>
+          <input type="text" name="q[]" ng-model="t.pregunta" class="form-control" />
+        </h5>
+        <ul>
+          <li ng-repeat="a in t.options">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                ||a.indice||
+                  <span style="display: inline-block;margin-left:10px;border-left: 2px solid #ced4da;height:90%;width:4px;">&nbsp;</span>
+                </span>
+
+              </div>
+              <input type="text" class="form-control noborders"  ng-model="a.texto" placeholder="Opción" aria-label="Username" aria-describedby="basic-addon1">
+
+
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <span style="display: inline-block;margin-right:10px;border-left: 2px solid #ced4da;height:90%;width:4px;">&nbsp;</span>
+                  <input type="radio" ng-model="a.cor" name="answer_||t.pk||"  value="True" ng-checked='a.cor==True' anser-ch>
+                </span>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+  </div>
+  <div class="col-12 col-lg-12 col-xl-12" style="padding: 20px;text-align: right;">
+      <span class="links ion-close-circled" rm-quiz></span>          
+      <span class="links ion-checkmark-circled" save-quiz></span>
+  </div>
+
+</div>
+
+
+
+
+
+
+    <ul style="display: none;">
+      <li ng-repeat="t in promocion_edit.dins" style="border: 1px dotted #||promocion_edit.color||;margin:10px 0px;padding:10px;">
+
+        <label>
+          <span class="links ion-ios-camera"></span>
+        <input type="file" name="foto" class="imagen" launch-imagen-p style="display: none;">
+        </label>
+        <div style="width:100%;">
+          <img src="||t.img||"  style="width: 100%;" />
+        </div>
+
+        <div style="margin:10px;display: none;">
+          <span class="ion-ios-camera links" lauch-foto-quiz></span>
+          
+          <img src="||t.img||" style="width:100%;" ng-if="t.img" />
+        </div>
+        <h5>
+          <input type="text" name="q[]" ng-model="t.pregunta" class="form-control" />
+        </h5>
+
+        <ul>
+          <li ng-repeat="a in t.options">
+
+  
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">||a.indice|| - ||a.cor||</span>
+            </div>
+            <input type="text" class="form-control"  ng-model="a.texto" placeholder="Opción" aria-label="Username" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <span class="input-group-text">
+
+                <input type="radio" name="answer_||t.pk||" ng-checked='a.cor=="True"' value="true" anser-ch>
+              </span>
+            </div>
+          </div>
+
+
+          </li>
+
+        </ul>
+        <div style="padding: 20px;text-align: right;">
+            <span class="links ion-close-circled" rm-quiz></span>          
+            <span class="links ion-checkmark-circled" save-quiz></span>
+        </div>
+      </li>
+
+    </ul>
+    <div style="padding:10px 0px;text-align: right;">
+    <span class="botons btn-blue upers" add-quiz>agrega pregunta</span>
+    </div>

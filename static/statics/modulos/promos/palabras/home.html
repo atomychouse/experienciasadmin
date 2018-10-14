@@ -1,0 +1,31 @@
+
+    <ul >
+      <li ng-repeat="t in promocion_edit.dins" style="border: 1px dotted #||promocion_edit.color||;margin:10px 0px;padding:10px;text-align: center;">
+        <div style="display: inline-block;width:33%;margin:20px;" ng-repeat="ims in [0,1]">
+        <label>
+            <span class="ion-ios-camera links"></span>
+        <input type="file" name="foto" class="imagen" launch-imagen-ss style="display: none;">
+        </label>
+        <img src="||t.img[ims]||" style="width:100%;" ng-if="t.img[ims]" />
+        
+        </div>
+
+        <h5>
+	  Descripcion:
+          <input type="text" name="q[]" ng-model="t.description" class="form-control" />
+        </h5>
+        <h5>
+          <input type="text" name="q[]" ng-model="t.palabra" class="form-control" />
+        </h5>
+
+
+        <div style="padding: 20px;text-align: right;">
+            <span class="links ion-close-circled" rm-palabra></span>          
+            <span class="links ion-checkmark-circled" save-palabras></span>
+        </div>
+      </li>
+
+    </ul>
+    <div style="padding:20px;text-align: right;">
+    <span class="links" add-palabra>agrega pregunta</span>
+    </div>

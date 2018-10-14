@@ -1,0 +1,43 @@
+<div class="carousel" data-flickity='{ "autoPlay": false ,"contain": true,"freeScroll": true}' style="height:auto;margin:2vh 0px;padding:0px;">
+	
+	<div class="carousel-cell" ng-repeat="d in dinamicas|orderBy:'orden'">
+		<div class="card" style="position: relative;padding-top:5px;">
+			<div class="recbox">
+				<span class="recompensabox" data-toggle="modal" data-target="#dinamicamod">Recompensa</span>
+			</div>
+			<div style="height:40vh;background-image:url(||d.media.firstimg||);background-position: center center;background-size: cover;">
+			</div>
+		  
+			  <div class="card-body" style="padding: 0px;">
+
+			  	<div style="width:100%;padding:20px;background-color:#||d.color||;">
+			  	<div class="titulos">
+					<div ng-bind-html="d.titulo">||d.titulo||</div>
+			  	</div>
+			  </div>
+
+			  <div class="row" style="padding:10px;">
+
+			  	<div class="col-2 col-md-2 col-lg-2 col-xl-2">
+			  		<span class="links ion-ios-heart-outline"></span>
+			  	</div>
+
+			  	<div class="col-4 col-md-4 col-lg-4 col-xl-4 minitxt">
+			  		||d.social.likes||
+			  	</div>
+
+
+			  	<div class="col-2 col-md-2 col-lg-2 col-xl-2" style="text-align: right;">
+			  		<span class="ion-android-share-alt"></span>
+			  	</div>
+
+			  	<div class="col-4 col-md-4 col-lg-4 col-xl-4 minitxt" style="text-align: right;">
+			  		||d.social.shares||
+			  	</div>
+			  </div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

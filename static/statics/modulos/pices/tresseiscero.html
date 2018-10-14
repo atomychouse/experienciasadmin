@@ -1,0 +1,32 @@
+<div class="tooltipsy" id="myacastitm" style="display: none;" just-draggable>
+
+
+
+    <div class="row">
+          <div class="col-8 col-lg-8 nopad">
+              Mis Categorías
+          </div>
+          <div class="col-4 col-lg-4 nopad" style="text-align: right;">
+              <span class="links" close-cfg>
+                  <i class="ion-close-circled"></i>
+              </span>
+
+          </div>
+    </div>
+
+    <div class="ceparador"></div>
+	<div ng-repeat="c in r.cats">		
+		<div class="cat-titule-cfg" > ||c.catname||</div>
+		
+		<div ng-repeat="sb in c.mycats" class="row" style="padding:0px 0px 0px 30px;">
+			
+			<div class="col-12 col-md-9 col-lg-9 nopad">
+				<span > ||sb.catname||</span>
+			</div>
+			<div class="col-12 col-md-3 col-lg-3 nopad" style="text-align: right;">
+				<input type="checkbox" ng-checked="checkmycat(sb);" value="||sb.catpk||" add-cat-itm>
+			</div>
+
+		</div>
+	</div>
+</div>

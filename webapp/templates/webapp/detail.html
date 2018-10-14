@@ -1,0 +1,231 @@
+{% extends 'webapp/base.html' %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+	<div class="col-12 col-md-12 col-lg-12 col-xl-12" style="position: relative;height:60vh;background-image: url('{{p.imagen}}');background-size: cover;background-position: center;background-repeat: no-repeat;">
+		<div class="row" style="padding:20px;">
+			<div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5" style="bottom:-6.5vh;position:absolute;left:10%;">
+
+					<div class="card" style="width:100%;">
+						  <div class="clearfix " style="background:#f5f5f5;">
+						  	<div class="float-left general_datebox " >
+						  		<div class="general_datenum">{{p.dia_evento}}</div>
+						  		<div class="general_dateday">{{p.mes_evento}}</div>
+						  	</div>
+						  	<div class="float-left detail_locationbox align-middle">
+						  		<span class="align-middle" style="line-height:3.5;">{{p.ciudad}}</span>
+						  	</div>
+						  </div>		  
+
+					  <div class="card-body  detail_general">
+					    <p class="card-text">
+					    	<span>{{p.titulo_completo}}</span>
+					    	
+					    	<div class="vigencia" style="font-weight: bold;">VIGENCIA {{p.vigencia}}</div>
+						</p>
+					  </div>
+					  <div class="clearfix" style="padding:10px;">
+					  	<div class="float-left" style="width: auto;">
+						  	<span class="ion-ios-heart-outline"></span>
+						  	<span class="icontxt">{{p.likes}}</span>
+					  	</div>
+			
+				  		<div class="float-right" style="width: auto;">
+						  	<span class="align-bottom icontxt ion-ios-person-outline"></span>
+						  	<span class="align-bottom icontxt">{{p.participaciones}}</span>
+					  	</div>
+			
+
+					  </div>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="align-middle" style="margin-top:15vh;">
+	<div class="text-center">
+		<b style="text-transform: uppercase;color:#676f74;">Tiepo Restante para participar</b>
+	</div>
+	<div class="text-center marcador" style="font-size:12vmin;">
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time dias">00</li>
+				<li class="text dias">dias</li>
+			</ul>
+		</div>
+
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time dias">:</li>
+				<li class="text dias">&nbsp;</li>
+			</ul>
+		</div>
+
+
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time horas">00</li>
+				<li class="text horas">horas</li>
+			</ul>
+		</div>
+
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time dias">:</li>
+				<li class="text dias">&nbsp;</li>
+			</ul>
+		</div>
+
+
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time mins">00</li>
+				<li class="text mins">minutos</li>
+			</ul>
+		</div>
+
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time dias">:</li>
+				<li class="text dias">&nbsp;</li>
+			</ul>
+		</div>
+
+
+		<div style="display: inline-block;">
+			<ul class="crono">
+				<li class="time segs">00</li>
+				<li class="text segs">segundos</li>
+			</ul>
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+<div class="row" style="margin-top:90px;">
+	<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="padding:0px 20px;">
+
+		<h1 class="titulos">Premio</h1>
+		<div style="padding: 20px 0px;">
+			{{p.premio|safe}}
+		</div>
+
+	</div>
+	<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="padding:0px 20px;">
+		<div>
+			<h1 class="titulos">Ventaja</h1>
+			<div class="clearfix" style="padding:20px 0px; ">
+				<div class="float-left">
+					<img src="/static/statics/images/icono-claro-musica2.png" style="width: 100%;">
+				</div>
+				<div class="float-right" style="width:70%;">
+					Recuerda que del xx de xxxx al xx de xxxxx
+					le está dando una ventaja a los contratantes del servicio
+				</div>
+			</div>
+		</div>
+		<div style="padding:20px 0px;">
+			<span><input type="checkbox" class="" name="terms" /></span>
+			<span class="terminos_label">Aceptar Terminos y Condiciones</span>
+		</div>
+		<div>
+			<button class="btn btn-orange" data-toggle="modal" data-target="#exampleModal">Participar</button>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+<div style="margin-top: 80px;">
+	<h1 class="titulos">Otras recomendaciones</h1>
+</div>
+<div class="row">
+
+	  {% for p in promos %}
+	  	<div class="col-12 col-md-4 col-lg-4 col-xl-4" style="padding:10px;">
+			<div class="card" style="width:100%;margin: auto;position: relative;">
+			  <div class="imagen_cuadro" style="height:26vh;overflow: hidden;background-image:url('{{p.imagen}}');">
+				  <div class="clearfix topbox" >
+				  	<div class="float-left  general_datebox" >
+				  		<div class="general_datenum">{{p.dia_evento}}</div>
+				  		<div class="general_dateday">{{p.mes_evento}}</div>
+				  	</div>
+				  	<div class="float-left locationbox align-middle">
+				  		<span class="align-middle" style="line-height:3.5;">{{p.ciudad}}</span>
+				  	</div>
+				  </div>		  
+			  </div>
+
+			  <div class="card-body  general">
+			    <p class="card-text">
+			    	<span>{{p.titulo_completo}}</span>
+			    	
+			    	<div class="vigencia">VIGENCIA {{p.vigencia}}</div>
+				</p>
+			  </div>
+			  <div class="clearfix" style="padding:10px;">
+			  	<div class="float-left" style="width: auto;">
+				  	<span class="ion-ios-heart-outline"></span>
+				  	<span class="icontxt">{{p.likes}}</span>
+			  	</div>
+	
+		  		<div class="float-right" style="width: auto;">
+				  	<span class="align-bottom icontxt ion-ios-person-outline"></span>
+				  	<span class="align-bottom icontxt">{{p.participaciones}}</span>
+			  	</div>
+	
+
+			  </div>
+
+			</div>
+		</div>
+	  {% endfor %}
+
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+        	<span class="ion-clock"></span>
+        	<span class="hors">00</span>:
+        	<span class="mins">00</span>:
+        	<span class="segs">00</span>
+
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        {% include "webapp/dinamicas/"|add:fullp.dinamica|add:'.html' %}         
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

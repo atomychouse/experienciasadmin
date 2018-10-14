@@ -1,0 +1,64 @@
+        <div style="position: relative;">
+            <div class="tooltipsy" ng-show="r.confiuring" just-draggable>
+
+                <div class="row">
+                      <div class="col-8 col-lg-8 nopad">
+                          Configurador Cabecera
+                      </div>
+                      <div class="col-4 col-lg-4 nopad" style="text-align: right;">
+                          <span class="links" ng-click="r.confiuring=false;" style="margin:0px 10px; ">
+                              <i class="ion-close-circled"></i>
+                          </span>
+                          <span class="links" close-row-cfg>
+                              <i class="ion-checkmark-circled"></i>
+                          </span>
+
+                      </div>
+                </div>
+
+                <div class="ceparador" style="margin:20px 0px;">&nbsp;</div>
+                
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 nopad" >
+                        <div><label>Altura de la imagen</label></div>
+                        <div style="text-align:left;" class="row">
+
+
+                          <div ng-repeat="alto in [20,40,60]" class="links  col-4 col-lg-4 col-xl-4 nopad">
+                            <span ng-click="r.cfg.alto=alto"  
+                                  class="las-||alto||" 
+                                  ng-class="{activados:alto==r.cfg.alto}" 
+                                  style="height:||alto||px;border:1px solid #fff;">&nbsp;</span>
+                            
+                          </div>
+                        </div>
+
+
+
+                    </div>
+         
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Posición del texto</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.txtalign">
+                            <option ng-repeat="x in ['left','center','right']">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="display: none;">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label>Color</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.margin">
+                            <option ng-repeat="x in [0,5,10,20]">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div> 

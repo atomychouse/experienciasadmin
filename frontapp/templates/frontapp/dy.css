@@ -1,0 +1,37 @@
+
+
+
+@font-face {
+    font-family: "UniversLTStd-Cn";
+        
+        src:url('/static/statics/fonts/UniversLTStd-Cn.otf') format('truetype');
+        }
+        
+
+.load_UniversLTStd-Cn
+{
+    font-family: "UniversLTStd-Cn";
+}
+
+
+
+{% for f in fuentes %}
+
+
+@font-face {
+    font-family: "{{f.class}}";
+        
+        src:url('/{{f.file}}') format('truetype');
+        }
+        
+     
+
+
+.{{f.class}}
+{
+    font-family: "{{f.class}}";
+}
+
+{% endfor %}
+
+

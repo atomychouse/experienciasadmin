@@ -1,0 +1,111 @@
+{% extends 'frontapp/base.html' %}
+
+
+{% block content %}
+
+<div class="rtext" style="padding: 0px 8px 0px 0px;">
+	<div class="mas-secciones">
+		<span style="padding:4% 0px;display: inline-block;width:100%;">
+			<i class="fas fa-plus-circle icono-link" data-toggle="modal" data-target="#promocionmod" add-promo></i>			
+		</span>
+	</div>
+</div>
+
+<div class="row" style="width:100%;margin:auto;padding:0px;">
+	<div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4" 
+	     ng-repeat="d in promociones" 
+	     style="padding:10px;">
+		
+
+		<div class="card" style="position: relative;padding-top:5px;width:99%;margin:auto;">
+			<div style="position: absolute;left:0px;background-color:#82ffff;width:100%;padding:10px;">
+				<div style="display: inline-block;float: left;">
+					<a href="/resultados/||d.pk||/" class="linker" >
+						<i class="fas fa-file-alt"></i>
+					</a>
+					<span style="display: inline-block;margin-left: 10px;"><b>||d.dinamica||</b></span>
+				</div>
+
+				<div style="float: right;display: inline-block;width: auto;">
+					<i class="fas fa-pencil-alt linker" data-toggle="modal" data-target="#promocionmod" edt-promo></i>
+					<span style="display: inline-block;width:10px;border-left: 1px solid #233035;margin-left: 10px;">&nbsp;</span>
+					<i class="far fa-trash-alt linker" rm-promo></i>
+				</div>
+				<div style="clear: both;height:0px;">&nbsp;</div>
+			</div>
+
+			<div style="height:40vh;background-image:url(||d.media.firstimg||);background-position: center center;background-size: cover;">
+			</div>
+		  
+			  <div class="card-body" style="padding: 0px;">
+
+			  	<div class="textboxcard">
+				  	<div class="tt-card">
+						<div >||d.linea_uno||</div>
+						<div >||d.linea_dos||</div>
+				  	</div>
+					<div class="vigenciatxt">VIGENCIA: ||d.vigencia_txt||</div>
+
+			  </div>
+
+				<div class="feettxt" style="padding:10px;">
+				  	<div>
+				  		<span>PARTICIPACIONES:</span>
+				  		<span>||d.participantes||</span>
+				  	</div>
+				  	<div>
+				  		<span>LIKES:</span>
+				  		<span>||d.likes||</span>
+				  	</div>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+  {% block scripts %}
+
+  	<script type="text/javascript">
+  		{% for c in promocat %}
+  			var subcats = [];
+  			{% for sc in c.promocat_set.all %}
+	  			var newsubc = {'cpk':'{{sc.pk}}','name':'{{sc.catname}}','slug':'{{sc.catslug}}'};
+	  			subcats.push(newsubc);
+
+  			{% endfor %}
+  			var newcat = {'cpk':'{{c.pk}}','name':'{{c.catname}}','subcats':subcats};
+
+  			cats.push(newcat);
+
+  		{% endfor %}
+
+
+  		$('#ventajas-form').submit(function(e){
+  			e.preventDefault();
+  			return false;
+  		});
+
+
+  		$('.reset').click(function(e){
+  			e.preventDefault();
+  			forma = document.getElementById('ventajas-form');
+  			forma.reset();
+  		});
+  		
+  	</script>
+
+  {% endblock %}

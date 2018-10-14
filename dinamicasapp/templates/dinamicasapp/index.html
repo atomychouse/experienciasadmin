@@ -1,0 +1,64 @@
+{% extends 'dinamicasapp/base.html' %}
+
+
+{% block content %}
+
+
+    <div class="row" style="width: 100%;" id="adddinamica-box" ng-show="editando">
+      <div class="col-2 col-lg-2 col-md-2 col-xl-2" style="padding:0px 20px;">
+        <span class="ion-ios-arrow-right" ng-hide="categorias_box" 
+              style="font-size:4vmin;color:#c900bb;" 
+              ng-click="categorias_box=true"></span>
+
+        
+      </div>
+
+      <div class="col-8 col-lg-8 col-md-8 col-xl-8" style="padding-top:14px;">
+        INICIO 
+      </div>
+      <div class="col-2 col-lg-2 col-md-2 col-xl-2">
+        <a href="#/dinamicas/adddinamica/" class="ion-plus-circled links" data-toggle="tooltip" data-placement="top" title="Nueva Dinámica" style="font-size:4vmin;color:#c900bb;" new-dinamica></a>
+      </div>
+
+    </div>
+
+
+
+<div class="row rengs" style="padding-top:100px;padding-bottom:75px;">
+
+  {% for d in dinamicas %}
+
+	<div class="col-12 col-md-4 col-sm-12 col-lg-4 col-xl-4">
+
+		<div class="card" style="width:100%;margin:auto;">
+		  <img class="card-img-top" src="/{{d.myimage}}" alt="Card image cap">
+		  <div class="card-body">
+		    <h5 class="card-title">{{d.titulo|safe}}</h5>
+		    <p class="card-text"></p>
+		    <a href="/dinamicas/dinamica/{{d.id}}/" class="">Ver</a>
+		  </div>
+		</div>
+
+
+	</div>
+{% endfor %}
+
+</div>
+
+
+
+<div  ng-repeat="r in modules|orderBy:'orden'" class="renglones ||r.slug||"  ng-class="{managging:editando===true}" style="width: 100%;height: auto;">
+    <div class=" bartitle">
+        <ng-include src="'/static/statics/modulos/configuradores/'+r.slug+'.html'"></ng-include>
+         <ng-include src="'/static/statics/modulos/headers/'+r.slug+'.html'"></ng-include>
+    </div>
+    <a name="/||r.rowpk||"></a>
+    <ng-include src="'/static/statics/modulos/'+r.slug+'.html'"></ng-include>
+      
+</div>
+
+
+
+
+{% endblock %}
+

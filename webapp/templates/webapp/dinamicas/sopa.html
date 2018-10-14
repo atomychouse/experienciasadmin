@@ -1,0 +1,44 @@
+
+    <ul >
+      <li ng-repeat="t in promocion_edit.dins" style="margin:10px 0px;padding:10px;text-align: center;">
+        <div style="display: inline-block;width:33%;margin:20px;" ng-repeat="ims in [0,1]">
+        <label>
+            <span class="ion-ios-camera links"></span>
+        <input type="file" name="foto" class="imagen" launch-imagen-marcador style="display: none;">
+        </label>
+        <img src="||t.imgs[ims].img||" style="width:100%;"  />
+        <input type="text" class="form-control" ng-model="t.imgs[ims].marcador">
+        </div>
+
+        <h5>
+	  Descripción:
+
+            <text-angular ta-toolbar="[]" 
+                          class="captions form-control" 
+                          name="description_||t.pk||"  
+                          ng-model="t.description" style="padding:5px;">
+            </text-angular>
+        </h5>
+
+
+        <div>
+            
+            Respuesta: 
+            <label>
+                Si <input type="radio" name="resp_||t.pk||" ng-model="t.respuesta" value="True" ng-checked="t.respuesta=='true'">
+            </label>
+            <label>
+                No <input type="radio" name="resp_||t.pk||" ng-model="t.respuesta" value="False" ng-checked="t.respuesta=='false'">
+            </label>
+        </div>
+
+        <div style="padding: 20px;text-align: right;">
+            <span class="links ion-close-circled" rm-palabra></span>          
+            <span class="links ion-checkmark-circled" save-marcador></span>
+        </div>
+      </li>
+
+    </ul>
+    <div style="padding:20px;text-align: right;">
+    <span class="links" add-marcador>agrega pregunta</span>
+    </div>

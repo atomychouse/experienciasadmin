@@ -1,0 +1,56 @@
+<div class="modal-body">
+<section id="juego" jugando-trivia>
+
+	<div class="pregunta_0 noseve">
+
+	<div style="width:100%;height:35vh;background: #c8c8c8;">&nbsp;</div>
+	<div  style="background: #0a3b79; color:#fff;font-weight:bold;padding:20px;">
+			{{fullp.titulo|safe}}
+			<h1 style="font-weight: bold;color:#02b0ef;">¡Mucha suerte!</h1>
+	</div>
+	</div>
+
+{% for t in fullp.trivia%}
+		
+	<div class="pregunta_{{forloop.counter}} noseve">
+		<img   src="{{t.img}}" style="width:100%;" />
+		<div  style="background: #0a3b79; color:#fff;font-weight:bold;padding:20px;">
+				{{t.pregunta}}
+		</div>
+
+		{% for op in t.options %}
+			<div class="level{{forloop.counter}}" style="padding:20px;">
+				<label>
+					<input type="radio" name="respuesta_{{t.pk}}" data-pregunta="{{t.pk}}" data-value="{{op.rpk}}" responde-pregunta />
+					<span style="margin:0px 20px">{{op.texto}}</span>
+				</label>
+				
+			</div>
+		{% endfor %}
+	</div>
+
+
+{% endfor %}
+
+	<div class="preguntafinal noseve">
+
+	<div style="width:100%;height:20vh;background: #4c4c4c;">&nbsp;</div>
+	<div  style="background: #0a3b79; color:#fff;font-weight:bold;padding:20px;">
+			Gracias por participar
+	</div>
+
+
+
+	</div>
+
+</section>
+
+</div>
+
+
+<div  class="bluebox botonera">			
+	<button class="btn btn-white" back-trivia ng-hide="preguntaindex<1">Regresar</button>
+	<button class="btn btn-orange"  next-trivia ng-show="preguntaindex<preguntastotal">Continuar</button>
+	<button class="btn btn-orange"  fin-trivia ng-show="preguntaindex==preguntastotal">Finalizar</button>			
+	<button class="btn btn-orange cerrarbtn" style="display: none;" data-dismiss="modal" >Cerrar</button>
+</div>

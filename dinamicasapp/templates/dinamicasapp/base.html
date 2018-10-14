@@ -1,0 +1,426 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es" ng-app='mainApp' ng-controller="pageCtr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="atomyc.in">
+        <title>Privilegios Telcel 2018  &reg;</title>
+        <meta name="" content="#496201s">
+        <meta charset="utf-8">
+
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Josefin+Sans|Open+Sans|Paytone+One" rel="stylesheet">
+        <link rel="stylesheet" href="/static/statics/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/statics/css/textAngular.css">
+        <link href="/static/statics/css/jquery-ui.min.css" rel="stylesheet">
+        <link href="/static/statics/js/datetimepicker-master/build/jquery.datetimepicker.min.css" rel="stylesheet">
+        <link href="/static/statics/css/cropper.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/statics/css/ionicons.css">
+        <link href="/static/statics/css/photo-sphere-viewer.css" rel="stylesheet">
+        <link href="/static/statics/css/main.css" rel="stylesheet">
+        <link href="/static/statics/css/dropzone.css" rel="stylesheet">
+        <link href="/static/statics/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/static/statics/css/responsivemain.css" rel="stylesheet">
+        <link rel="stylesheet" ng-href="/dycss/{{cur_page.pk}}/dynamic.css?loadcss=||loadcss||" >
+        <link rel="stylesheet" ng-href="/dycss/cfg.css?loadcss=||loadcss||" >
+        <link href="/static/statics/css/brandlineicons.css" rel="stylesheet">
+ 
+        {% block css %}{% endblock %}
+
+</head>
+<body  >
+  {% csrf_token %}
+  <div id="velo" style="position: fixed;height: 100%;width: 100%;left: 0px;top: 0px;background-color: rgba(0,0,0,0.8);z-index:1033;display: none;">
+    <div style="width:50%;margin:auto;position: relative;top:25%;">
+      &nbsp;
+     
+      <div class="tooltipsy">
+        <div style="text-align: center;">GUARDANDO ESPERE UN MOMENTO ...</div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <form ng-show="editando" style="display: none;">
+    <input type="file" id="uploader-grid" name="uploader" upload-grid-img>
+    <input type="file" id="uploader-rebase" name="upload-rebase" upload-grid-img>
+    <input type="file" id="upload-file" name="upload-file" upload-file>
+    <input type="file" id="upload-fuente" name="upload-file" upload-fuente>
+  </form>
+
+  <div id="cropperbox"  class="cropprev">
+      <div style="text-align: right;margin:10px 0px 30px 0px;">
+            <span class="links" close-crop>
+              <i class="ion-close-circled" ></i>
+            </span>
+            <span class="links" save-crop>
+              <i class="ion-checkmark-circled" ></i>
+            </span>
+      </div>
+
+      <div style="">
+        <form action="/motor/dropimage/" class="dropzz" id="dropme" drop-me style="height: 25px !important;">
+              <p class="dz-message">Agregar Archivos aquí</p>
+              {% csrf_token %}
+              <div class="dz-filename"><span data-dz-name></span></div>
+        </form>
+
+
+      </div>
+
+      <div id="cropping-box">
+        <img id="image" 
+             src="/static/statics/imgs/defaults/grid.png" alt="Picture" 
+             style="width:400px !important;">
+      </div>
+  </div>
+
+
+
+
+
+  <div id="cropperboxdinamica"  class="cropprev">
+      <div style="text-align: right;margin:10px 0px 30px 0px;">
+            <span class="links" close-crop>
+              <i class="ion-close-circled" ></i>
+            </span>
+            <span class="links" save-crodinamiva>
+              <i class="ion-checkmark-circled" ></i>
+            </span>
+      </div>
+
+      <div style="">
+        <form action="/motor/dropimage/" class="dropzz" id="dropmed" drop-me style="height: 25px !important;">
+              <p class="dz-message">Agregar Archivos aquí</p>
+              {% csrf_token %}
+              <div class="dz-filename"><span data-dz-name></span></div>
+        </form>
+
+
+      </div>
+
+      <div id="cropping-box">
+        <img id="imagex" 
+             src="/static/statics/imgs/defaults/grid.png" alt="Picture" 
+             style="width:400px !important;">
+      </div>
+  </div>
+
+
+
+  <section class="container">
+    {% include 'frontapp/megamenu.html' %}
+  </section>
+  <section class="container-fluid" id="contenido">
+
+
+    <div ng-show="categorias_box"  class="rshadow categorias_box">
+      
+
+    <div class="row" style="width: 100%;">
+      <div class="col-11 col-lg-11 col-md-11 col-xl-11" style="padding:14px 0px 0px 0px;text-align: center; ">
+        <span class="cfg-subtitulos">CATEGORÍAS</span>
+      </div>
+
+      <div class="col-1 col-lg-1 col-md-1 col-xl-1 nopad" style="text-align: right;">
+
+
+        <span class="ion-chevron-left links" 
+              style="font-size:4vmin;color:#c900bb;" 
+              ng-click="categorias_box=false"></span>
+
+      </div>
+
+    </div>
+
+
+
+    <ol style="padding: 10px 40px;">
+      <span class="ion-ios-plus-empty links" add-din-cat></span>
+      <li ng-repeat="c in cats" class="row" style="border-bottom: 1px dotted #000;padding:10px 0px;">
+
+        <div class="col-8 col-md-8 col-lg-8 col-xl-8">
+          <div class="cfg-subtitulos"  ng-hide="editando">||c.name||</div>
+          <div class="cfg-subtitulos"  ng-show="editando">
+            <input type="text" name="" ng-model="c.name" class="form-control">
+          </div>
+
+        </div>
+        <div class="col-4 col-md-4 col-lg-4 col-xl-4">
+          <span class="ion-ios-plus-empty links" add-sub-cat></span>
+          <span class="ion-ios-trash links" rm-din-cat></span>
+        </div>
+        
+
+        <div class="cleaner-float"></div>
+        
+        <ol style="padding:0px 10px;">
+          <li ng-repeat="sc in c.subcats" class="row">
+              <div class="col-9 col-md-9 col-lg-9 col-xl-9">
+                <div class="cfg-texto"  ng-hide="editando">||sc.name||</div>              
+                <div class="cfg-texto"  ng-show="editando">
+                  <input type="text" ng-model="sc.name" class="form-control" />
+                </div>              
+
+              </div>
+              <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                <div>
+                  <span class="ion-ios-trash links" rm-din-sbcat></span>
+                </div>
+              </div>
+          </li>
+        </ol>
+      </li>
+    </ol>
+
+
+
+
+    </div>
+
+
+
+
+     {% block content %}{% endblock %}
+  </section>
+
+
+
+
+
+        
+
+{% if user.profile in 'admin' %}
+
+
+  <div id="tooltip-modules" ng-show="editando">
+      <ol id="menusortable" sortable-me>
+          <li ng-repeat="m in modules|orderBy:'orden'" class="ordermy">
+              <div>
+                <a href="#/||m.rowpk||" data-toggle="tooltip" data-placement="right" title="||m.title||">
+                  <i class="||m.icono||"></i>
+                  
+                </a>
+              </div>
+          </li>
+          <li class="ui-state-disabled">
+              <div class="ceparador">&nbsp;</div>
+          </li>
+          <li >
+              <div>
+                <span class="links" ng-click="viewmodbox();">
+                    <i class="ion-plus-circled"></i>
+                </span>
+              </div>
+          </li>
+      </ol>
+  </div>
+
+
+  <div class="tool-float-box" ng-show="boxmods" id="addmodbox" style="display: none;">
+      <div class="row">
+            <div class="col-10 col-lg-10">
+                Agregar un Módulo
+            </div>
+            <div class="col-2 col-lg-2" style="text-align: right;">
+                <span class="links" ng-click="boxmods=false;">
+                    <i class="ion-close-circled"></i>
+                </span>
+            </div>
+      </div>
+        
+    <div class="ceparador" style="margin:20px 0px;">&nbsp;</div>
+
+      <div class="row" style="text-align: center;padding:0px 10px;">
+        <div class="col-2" ng-repeat="am in all_modules" class="icon-box" style="padding:0px; ">
+          <span class="links modulo_icon" add-row>
+              <i class="||am.icono||"></i>
+          </span>        
+        </div>
+      </div>
+
+
+  </div>
+
+{% endif %}
+
+
+  <footer id="pie">
+    
+  </footer>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal-imagebox">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">||titulo||</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-ins-loader" style="display: none;">Cargando espere por favor ...</p>  
+          <img src="||fullimage||" id="modal-img" ng-if="fullimage" style="width:100%;" />
+        
+        <div style="text-align:left;margin:20px 0px;">
+          <a href="/dw/?f=||dwfile||" ng-if="dwfile" target="_blank" class="dwbtn">
+            Original &nbsp;&nbsp;<i class="ion-arrow-down-a"></i>
+          </a>
+
+            <a href="/dw/?f=/||dw.file||"  target="_blank" class="dwbtn" ng-repeat="dw in dwfiles">
+              ||dw.name|| &nbsp;&nbsp;<i class="ion-arrow-down-a"></i>
+            </a>
+
+        </div>
+
+        <div>
+          <h3 id="modal-ins-tit" style="text-align: center;" class="cfg-titulos"></h3>          
+           <div ng-bind-html="descp" class="cfg-texto">||descp||</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+    <script src="/static/statics/js/jquery.js"></script>
+    <script src="/static/statics/js/jquery-ui.min.js"></script>
+    <script src="/static/statics/js/jquery.mjs.nestedSortable.js"></script>
+    <script src="/static/statics/bootstrap/js/bootstrap.bundle.js"></script>
+   
+    <script src="/static/statics/js/dropzone.js"></script>
+    <script src="/static/statics/js/angular.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+    <script src="/static/statics/js/angular-sanitize.js"></script>
+
+    <script src='/static/statics/js/textangular/textAngular-rangy.min.js'></script>
+    <script src='/static/statics/js/textangular/textAngular-sanitize.min.js'></script>
+    <script src='/static/statics/js/textangular/textAngular.min.js'></script>
+
+    <script src="/static/statics/js/cleave.min.js"></script>
+
+
+
+        <script src="/static/statics/js/three.min.js"></script>
+        <script src="/static/statics/js/D.min.js"></script>
+        <script src="/static/statics/js/uevent.min.js"></script>
+        <script src="/static/statics/js/doT.min.js"></script>
+        <script src='/static/statics/js/photo-sphere-viewer.js'></script>
+
+
+   
+    <script type="text/javascript">    
+        
+
+
+
+        var myapp = angular.module('mainApp',['ngRoute','ngSanitize','textAngular']);
+        var customInterpolationApp = angular.module('customInterpolationApp', []);
+
+        // GLOBALS --------------------------------------------------------------------
+
+        var csrf = jQuery("[name=csrfmiddlewaretoken]").val();
+
+        // ----------------------------------------------------------------------------
+        
+        myapp.config(function($interpolateProvider) {
+            $interpolateProvider.startSymbol('||');
+            $interpolateProvider.endSymbol('||');
+
+        });
+
+        myapp.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';        
+        }]); 
+
+        var pages = '{{pages|safe}}';
+        var pages = eval("(" + pages + ")"); 
+        var djangorows = '{}';//'{{cur_page.getmodulos|safe}}';
+        var rows = eval("(" + djangorows + ")");
+        var curr_page = {'pagepk':'{{cur_page.pk}}'};
+
+
+        {% if dinamica %}
+          var dinamica = '{{dinamica|safe}}';
+          var dinamica = eval("(" + dinamica + ")"); 
+        {% else %}
+          var dinamica = null;
+
+        {% endif %}
+
+        
+    </script>
+
+    <script src="/static/statics/js/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
+    <script src="/static/statics/js/bones.js"></script>
+    <script src="/static/statics/js/pagectr.js"></script>
+    
+    {% if user.profile in 'admin' %}
+
+    <script src="/static/statics/js/managepagectr.js"></script>
+    <script src="/static/statics/js/dinamicasctr.js"></script>
+    <script src='/static/statics/js/cropper.min.js'></script>
+
+    {% endif %}
+
+
+
+
+    <script type="text/javascript">
+
+        // EXTRACTING CATALOGO
+
+        var catalogo = [];
+         var csrf = '{{csrf}}';
+        
+        $(function(){
+
+            var today = new Date();
+            var tomorrow = new Date();
+            var tm = tomorrow.setDate(today.getDate()+1);
+            
+
+            $( ".datepicker" ).datetimepicker({format:'Y-m-d',minDate:tm});
+        });
+
+
+
+        $(document).ready(function(){
+
+
+
+         $("#mydropwww").dropzone({ url: "/motor/dropimage/",
+                'success':function(e){
+                  console.log(e);
+
+
+                }
+
+          });
+
+
+
+
+        });
+
+
+
+
+       
+    </script>
+
+    {% block scripts %}{% endblock %}
+
+</body>
+
+</html>

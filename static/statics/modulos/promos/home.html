@@ -1,0 +1,193 @@
+
+<section id="portada" ng-show="pasos==0">
+	
+
+	<div class="row">
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
+			<div class="toplabel">Tipo de dinámica</div>
+			<select class="form-control" name="tipo_dinamica" cambio-dinamica>
+				<option>Seleccione dinamica </option>
+				<option ng-repeat="dins in dinamicas" ng-selected="dins.slug==promocion_edit.dinamica" value="||dins.slug||" ng-model="promocion_edit.dinamica">||dins.name||</option>
+			</select>
+
+		</div>
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
+			<div class="toplabel">Estatus</div>
+			<select class="form-control" name="tipo_dinamica" ng-model="promocion_edit.status">
+				<option>Seleccione...</option>
+				<option ng-selected="st==promocion_edit.status" ng-repeat="st in ['working','publish','offline','proximamente','finalizado']" value="||st||"  >||st||</option>
+			</select>			
+		</div>
+
+	</div>
+
+
+
+	<div class="row">
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
+			<label>
+				<div class="toplabel">Vigencia</div>
+				<input type="text" class="form-control" name="vigencia" ng-model="promocion_edit.vigencia" date-pick>
+			</label>
+		</div>
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
+			<label>
+				<div class="toplabel">Fecha Publicación</div>
+				<input type="text" class="form-control" name="vigencia" ng-model="promocion_edit.fecha_publicacion" date-pick>
+			</label>
+			
+		</div>
+		<div class="col-12 col-md-2 col-lg-2 col-xl_2">
+			<div class="toplabel">Destacado</div>
+			<select class="form-control" name="tipo_dinamica" cambio-dest>
+				<option>Seleccione</option>
+				<option ng-selected="dest==promocion_edit.destacado" ng-repeat="dest in [true,false]" value="||dest||" ng-model="promocion_edit.destacado" >||dest||</option>
+			</select>
+		</div>
+	</div>
+
+
+
+
+
+	<div class="row">
+
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5" style="position: relative;">
+			<div class="toplabel">Foto de portada</div>
+			<span class="ion-ios-camera links" lauch-foto-general style="position: absolute;right:30px;top:50px;font-size: 26px;color:#263238;"></span>
+			<img src="||promocion_edit.media.firstimg||" style="width: 100%;margin: auto;" />
+			<div id="dropgeneral">&nbsp;</div>
+
+		</div>
+
+		<div class="col-12 col-md-7 col-lg-7 col-xl-7">
+			<div>
+				<div class="toplabel"> Titulo</div>
+				<input type="text" ng-model="promocion_edit.linea_uno" class="form-control">					
+			</div>
+			<div>
+				<div class="toplabel"> Titulo color</div>
+				<input type="text" ng-model="promocion_edit.linea_dos" class="form-control">					
+			</div>
+
+			
+		</div>
+
+	</div>
+</section>
+
+
+<section id="contenido3" ng-show="pasos==1">
+	<div>
+		<ng-include 
+			src="'/static/statics/modulos/promos/'+promocion_edit.dinamica+'/home.html'" 
+			ng-if="promocion_edit.dinamica"></ng-include>
+	</div>
+</section>
+
+
+<section id="contenido2" ng-show="pasos==2">
+
+	<div class="row">
+		<div class="col-12 col-md-4 col-lg-4 col-xl-4">
+			<label class="toplabel">Lugar</label>
+			<input type="text" name="ciudad" class="form-control" ng-model="promocion_edit.lugar">	
+		</div>
+		<div class="col-12 col-md-4 col-lg-4 col-xl-4">
+			<label class="toplabel">Ciudad</label>
+			<input type="text" class="form-control" name="ciudad" ng-model="promocion_edit.ciudad">		
+		</div>
+		<div class="col-12 col-md-4 col-lg-4 col-xl-4">
+			<label class="toplabel">
+				Fecha evento</label>
+				<input type="text" class="form-control" name="fecha_evento" ng-model="promocion_edit.fecha_evento" date-pick>
+						
+		</div>
+	</div>
+	<div style="position: relative;">
+		<div class="toplabel">Foto de la publicación</div>
+		<span class="ion-ios-camera links" lauch-foto-quiz style="position: absolute;right:10px;top:10px;"></span>
+		<div class="dropzon" ></div>
+		<img src="||promocion_edit.media.imglg||" style="width:100%;" />		
+	</div>
+
+	<div class="row">
+		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+					<div class="toplabel"> Instrucciones</div>
+
+					<text-angular ta-toolbar="[]" 
+								  class="captions" 
+								  name="titulo_instrucciones"  
+								  ng-model="promocion_edit.titulo" style="padding:5px;">
+					</text-angular>
+
+		</div>
+
+		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+			<div class="toplabel"> Premio</div>
+			<text-angular ta-toolbar="[]" 
+						  class="captions" 
+						  name="bases"  
+						  ng-model="promocion_edit.bases" style="padding:5px;">
+			</text-angular>
+		</div>
+		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+			<div class="toplabel"> Texto ganadores</div>
+			<text-angular ta-toolbar="[]" 
+						  class="captions" 
+						  name="terms"  
+						  ng-model="promocion_edit.terms" style="padding:5px;">
+			</text-angular>
+		</div>
+
+
+		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+			<div class="toplabel"> Texto Premio en los terminos y condiciones</div>
+			<textarea ng-model="promocion_edit.premioterms" style="padding:5px;width:100%;">
+			</textarea>
+		</div>
+
+
+
+	</div>
+
+
+
+</section>
+
+
+
+<section id="contenido3" ng-show="pasos==3">
+
+		<div class="row" ng-repeat="s in cats">
+			<div class="col-6 col-md-6 co-lg-6 col-xl-6" ng-repeat="sb in s.subcats" style="padding:10px;">
+				<span style="display: inline-block;padding:0px 10px;">
+					<input type="checkbox" 
+					       name="categorias" 
+					       ng-checked="checkcategoria(sb);" value="||sb.slug||" catz-promo />
+				</span>
+				<span class="cat-box-name">||sb.name||</span>		
+			</div>
+		</div>
+
+	<div style="border-top: 1px dotted #4c4c4c;padding:20px;display: none;">
+		<h5>Segmentos</h5>
+		<ul>
+			<li ng-repeat="s in segmentos">
+				<span style="display: inline-block;padding:0px 10px;">
+					<input type="checkbox" name="segmento" ng-checked="checksegmento(s);" value="||s.slug||" segmenta-promo />
+				</span>
+				<label style="margin-left:30px;display: inline-block;">
+					<b>||s.segmento||</b>
+				</label>
+				
+			</li>
+		</ul>
+	</div>
+</section>
+
+
+
+<section id="contenido3" ng-show="pasos==4">
+	<ng-include src="'/static/statics/modulos/promos/finalizar.html'" ></ng-include>
+</section>

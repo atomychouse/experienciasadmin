@@ -1,0 +1,146 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="atomyc.in">
+        <title>BRANDLINE 2018  &reg;</title>
+        <meta name="" content="#496201s">
+        <meta charset="utf-8">
+
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Josefin+Sans|Open+Sans|Paytone+One" rel="stylesheet">
+        <link rel="stylesheet" href="/static/statics/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/statics/css/textAngular.css">
+        <link href="/static/statics/css/jquery-ui.min.css" rel="stylesheet">
+        <link href="/static/statics/js/datetimepicker-master/build/jquery.datetimepicker.min.css" rel="stylesheet">
+        <link href="/static/statics/css/cropper.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/statics/css/ionicons.css">
+        <link href="/static/statics/css/login.css" rel="stylesheet">
+        <link rel="stylesheet" href="/dycss/dynamic.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        {% block css %}{% endblock %}
+
+</head>
+<body ng-app='mainApp' ng-controller="pageCtr">
+
+
+<!-- The video -->
+{% if backg.type in 'video' %}
+<video autoplay muted loop id="myVideo">
+  <source src="{{backg.src}}" type="video/mp4">
+</video>
+{% else %}
+<div id="myVideo" style="background:url('{{backg.src}}'); background-size:cover;">
+    &nbsp;
+</div>
+{% endif %}
+
+
+
+<div style="position: fixed;z-index: 101;background-color:rgba(0,153,216,0.5);width:100%;height: 100%;">&nbsp;</div>
+
+<!-- Optional: some overlay text to describe the video -->
+<div class="loginbox container">
+
+  <div style="display: table;height: 100%;width: 100%;">
+    <div style="display: table-row;">
+      <div style="display: table-cell;vertical-align: middle;">
+        <div style="text-align: center;">
+          <img src="/static/statics/imgs/logo.png" style="width:60%;">
+        </div>
+        <div style="text-align: center;margin-top:60px;color:#0099d8;font-size:2.5vmin;">
+          CENTRO DE RECURSOS
+        </div>
+        <div style="width:65%;margin:30px auto;height:2px;background-color: #e5e5e5;">&nbsp;</div>
+        <div style="text-align: center;margin-top:0px;color:#ffffff;font-size:2.5vmin;">
+          BIENVENIDO
+        </div>
+
+        <div style="width:65%;margin:60px auto;">
+          <form name="loginform" id="loginform" ng-submit="enviando($event);" ng-click="err=false;">
+            
+            <div ng-if="err" style="background-color: #3d3d3d;color:#999;font-size: 2.5vmin;padding:10px;margin:20px 0px;">||err||</div>
+
+            <div style="margin-bottom:5px;">
+              <input type="text" name="usuario" class="form-control" placeholder="Usuario" ng-model="us">
+            </div>
+            <div>
+              <input type="password" name="contrasenya" class="form-control" placeholder="Contraseña" ng-model="pas">
+            </div>
+
+            <div class="row" style="margin-top:50px;">
+              <div  style="color:#808080;display: inline-block;width:60%;padding:12px 0px 0px 12px;">¿Olvidó su contraseña?</div>
+              <div  style="text-align: right;display: inline-block;width:38%;padding-right: 12px;">
+                <button type="submit" class="btn btn-info">ENTRAR</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div style="position: absolute;left:45%;top:22%;color:#fff;z-index:1003;font-size:12vmin;">
+    <p>DESCARGA </p>
+    <p><strong>IMÁGENES</strong></p>
+    <p>PARA TU</p>
+    <p>PROYECTO</p>
+</div>
+
+
+
+    <script src="/static/statics/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/statics/js/jquery-ui.min.js"></script>
+    
+    <script src="/static/statics/bootstrap/js/bootstrap.bundle.js"></script>
+
+
+
+    <script src="/static/statics/js/angular.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+
+
+
+    <script src="/static/statics/js/angular-sanitize.js"></script>
+
+   
+    <script type="text/javascript">    
+        $(function () {
+          $('[data-toggle="popover"]').popover()
+        });
+        var myapp = angular.module('mainApp',['ngRoute','ngSanitize']);
+        var customInterpolationApp = angular.module('customInterpolationApp', []);
+        // GLOBALS --------------------------------------------------------------------
+        var csrf = '{{csrf_token}}';
+        // ----------------------------------------------------------------------------
+        
+        myapp.config(function($interpolateProvider) {
+            $interpolateProvider.startSymbol('||');
+            $interpolateProvider.endSymbol('||');
+
+        });
+
+        myapp.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';        
+        }]); 
+
+    </script>
+
+
+    <script src="/static/statics/js/loginctr.js"></script>
+    
+
+    {% block scripts %}{% endblock %}
+
+</body>
+
+</html>

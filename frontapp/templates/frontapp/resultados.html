@@ -1,0 +1,116 @@
+{% extends 'frontapp/base.html' %}
+
+
+
+
+{% block content %}
+
+
+<div class="row" style="padding: 20px;">
+	<div class="col-12 col-md-9 col-lg-9 col-xl-9">
+		<div>Promoción</div>
+		<div class="blue-text">{{promo.linea_uno}}</div>
+		<div class="blue-text">{{promo.linea_dos}}</div>
+		<div class="fechasuper">Vigencia: {{promo.vigencia}} </div>
+		<div class="fechasuper">Fecha de publicación: {{promo.fecha_publicacion}} </div>
+	</div>
+	<div class="col-12 col-md-3 col-lg-3 col-xl-3" style="padding-top:5%;">
+		<div style="text-align: right;">
+			<span style="display: inline-block;width:50px;height: 50px;background:#82ffff;text-align:center;padding-top:5%;">
+				<a href="/dw/?f=frontapp/listados/promo_{{promopk}}.xlsx" target="_blank" style="color:#233035;font-size: 22px;">
+					<i class="far fa-file-excel"></i>
+				</a>
+			</span>
+		</div>
+	</div>
+
+</div>
+
+
+
+<table class="tabla-res" style="padding-top:80px;width:90%;margin: auto;">
+
+	<tr style="font-size:18px;">
+		<td></td>
+		
+		<td>
+			<span class="single-border">&nbsp;</span>
+			<span>Correo</span>
+		</td>
+		<td>
+			<span class="single-border">&nbsp;</span>
+			<span>Aciertos</span>
+		</td>
+		<td>
+			<span class="single-border">&nbsp;</span>
+			<span>Tiempo</span>
+		</td>
+		<td>
+			<span class="single-border">&nbsp;</span>
+			<span>Inició</span>			
+		</td>
+		<td>
+			<span class="single-border">&nbsp;</span>
+			<span>Finalizó</span>			
+		</td>
+</tr>
+
+{% for p in  parti %}
+
+	<tr class="{% cycle 'striped' '' %}" style="padding:20px;">
+		<td>
+			<form action="/" method="post" >
+		          	<input data-promo='{{p.pk}}' data-user='{{p.usuario.pk}}' {% if p.ganadora %} checked='checked' disabled='true' {% endif %} type="checkbox" class="" name="gana{{p.usuario.pk}}" value="{{p.usuario.pk}}" click-ganador />
+
+		</form>
+		</td>
+		<td>{{p.usuario.email}}</td>
+		<td>{{p.nivelanswer}}</td>
+		<td>{{p.tiempo}}  </td>
+		<td>{{p.finicio}}  </td>
+		<td>{{p.ffinal}}  </td>
+		
+
+	</tr>
+{% endfor %}
+
+
+
+</table>
+
+{% endblock %}
+
+
+
+  {% block scripts %}
+
+  	<script type="text/javascript">
+  		{% for c in promocat %}
+  			var subcats = [];
+  			{% for sc in c.promocat_set.all %}
+	  			var newsubc = {'cpk':'{{sc.pk}}','name':'{{sc.catname}}','slug':'{{sc.catslug}}'};
+	  			subcats.push(newsubc);
+
+  			{% endfor %}
+  			var newcat = {'cpk':'{{c.pk}}','name':'{{c.catname}}','subcats':subcats};
+
+  			cats.push(newcat);
+
+  		{% endfor %}
+
+
+  		$('#ventajas-form').submit(function(e){
+  			e.preventDefault();
+  			return false;
+  		});
+
+
+  		$('.reset').click(function(e){
+  			e.preventDefault();
+  			forma = document.getElementById('ventajas-form');
+  			forma.reset();
+  		});
+  		
+  	</script>
+
+  {% endblock %}

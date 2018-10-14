@@ -1,0 +1,78 @@
+        <div style="position: relative;">
+            <div class="tooltipsy" ng-show="r.confiuring" just-draggable>
+
+                <div class="row">
+                      <div class="col-8 col-lg-8 nopad">
+                          Espacio en blanco 
+                      </div>
+                      <div class="col-4 col-lg-4 nopad" style="text-align: right;">
+                          <span class="links" ng-click="r.confiuring=false;" style="margin:0px 10px; ">
+                              <i class="ion-close-circled"></i>
+                          </span>
+                          <span class="links" close-row-cfg>
+                              <i class="ion-checkmark-circled"></i>
+                          </span>
+
+                      </div>
+                </div>
+
+                <div class="ceparador" style="margin:20px 0px;">&nbsp;</div>
+                
+  
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Margen exterior</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.padding">
+                            <option ng-repeat="x in [0,50,95]">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="display: ;">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label>Espacio</label>
+                    </div>
+
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+
+                      
+                      <div class="slider-box-space">
+                        <div class="back-slide">&nbsp;</div>
+                        <div class="sliders" slide-space></div>
+                      </div>
+
+
+                    </div>
+                </div>
+
+                <div class="ceparador" style="margin:20px 0px;">&nbsp;</div>
+
+
+                  <div>
+                    <ul class="linea-cfg" style="width: 100%;">
+                      <li>||linea||</li>
+                      <li ><a href="#sin" class="cambiolinea" ng-click="r.cfg.clase='nones';">
+                      <img src="/static/statics/imgs/defaults/space_none.png" />
+                      </a> </li>
+                      <li><a href="#sin" class="cambiolinea" ng-click="r.cfg.clase='centro';">
+                        <img src="/static/statics/imgs/defaults/space_one_line.png" />
+                      </a> </li>
+                      <li><a href="#sin" class="cambiolinea" ng-click="r.cfg.clase='extremes';">
+                        <img src="/static/statics/imgs/defaults/space_two_line.png" />
+                      </a> </li>
+                      <li><a href="#sin" class="cambiolinea" ng-click="r.cfg.clase='todos';">
+                        <img src="/static/statics/imgs/defaults/space_threee_line.png" />
+                      </a></li>
+                      <li><a href="#sin" class="cambiolinea" ng-click="r.cfg.clase='halftop';">
+                            <img src="/static/statics/imgs/defaults/space_up_line.png" />
+                      </a> </li>
+                    </ul>                    
+                  </div>
+                
+
+
+
+            </div>
+        </div> 

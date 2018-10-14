@@ -1,0 +1,202 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es" ng-app='mainApp' ng-controller="pageCtr">
+    <head>
+        <title>Experiencias Telcel 2018 </title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="atomyc.house">
+        
+        <meta name="" content="#496201s">
+        <meta charset="utf-8">
+
+
+
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">        
+        <link rel="stylesheet" href="/static/statics/bootstrap/css/bootstrap.min.css">
+        <link href="/static/statics/css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/statics/css/ionicons.css">
+        <link href="/static/statics/css/mainfront.css" rel="stylesheet">
+        <link href="/static/statics/css/slick.css" rel="stylesheet">
+        <link href="/static/statics/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+ 
+        {% block css %}{% endblock %}
+
+
+
+</head>
+<body>
+<div class="container-iframe" style="width:80%;max-width:960px;margin: auto;">
+
+<nav class="navbar navbar-expand-md navbar-light bg-light navbarmain bglwhite">
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="/" style="font-weight: bolder;color:#2f0088;font-size:5vmin;">
+            <img src="/static/statics/images/marca_sitio.png" style="width: 80%;" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" style="position: relative;">
+               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Experiencias
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for c in cats %}
+                  <a class="dropdown-item" href="/promos/{{c.catslug}}/">{{c.catname}}</a>
+                  {% endfor %}
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Ganadores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">¿Cómo funciona?</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Perfil</a>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+
+
+<section class="container-fluid">
+{% block content %}{% endblock %}
+</section>
+
+</div>
+
+
+
+
+
+
+
+    <script src="/static/statics/js/jquery.js"></script>
+    <script src="/static/statics/js/jquery-ui.min.js"></script>
+    <script src="/static/statics/js/slick.js"></script>
+    <script src="/static/statics/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/static/statics/js/angular.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+    <script src="/static/statics/js/angular-sanitize.js"></script>
+
+
+    <script type="text/javascript">    
+        var myapp = angular.module('mainApp',['ngRoute','ngSanitize']);
+        var customInterpolationApp = angular.module('customInterpolationApp', []);
+
+        
+        myapp.config(function($interpolateProvider) {
+            $interpolateProvider.startSymbol('||');
+            $interpolateProvider.endSymbol('||');
+
+        });
+
+        myapp.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';        
+        }]); 
+
+
+    </script>
+
+
+    <script src="/static/statics/js/frontpagectr.js"></script>
+    <script src="/static/statics/js/pagesrvs.js"></script>
+
+  {% block scripts %}{% endblock %}
+
+<script type="text/javascript">
+
+var _layout_anonymous_shift_pressed = false;
+var KEYCODE_SHIFT = 16;
+
+(function($) 
+{  
+    $.fn.filterNumbersOnly = function(options) 
+    {  
+        this.each(function() 
+        {
+            var element = $(this);
+            $(element).keydown(isNumeric);
+            $(element).keypress(isNumeric);
+            $(element).keyup(isShiftReleased);
+        });
+    }
+})(jQuery);
+
+
+function isShiftReleased(e)
+{
+    if (_layout_anonymous_shift_pressed)
+    {
+        var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+        var code = parseInt(key, 10);
+        
+        if (code == KEYCODE_SHIFT)
+        {
+            _layout_anonymous_shift_pressed = false;
+        }
+    }
+}
+
+
+function isNumeric(e) {
+    return e.charCode === 0 || /\d/.test(String.fromCharCode(e.charCode));
+};
+
+function isAlpha(e) {
+    
+    e = e || window.event;
+    var keyCode = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+    
+    if( keyCode == 225  || keyCode == 233 || keyCode == 237 || keyCode == 243 || keyCode == 250 || keyCode == 39)
+    {
+        return true;
+    }
+    else
+    {
+        var charCode = (typeof event.which == "undefined") ? event.keyCode : event.which;
+        return charCode === 0 || charCode === 8 || /^[a-zA-ZñÑ\s]*$/.test(String.fromCharCode(charCode));
+    }
+     
+}
+
+//Every two seconds....
+setInterval(function() {
+    var height = $(".container-iframe").height() + 100;
+    parent.postMessage(height,"*");
+},50);
+  
+  
+
+
+
+
+
+
+
+</script>
+
+
+  
+
+
+
+</body>
+
+</html>

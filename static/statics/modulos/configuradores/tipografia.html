@@ -1,0 +1,45 @@
+        <div style="position: relative;">
+            <div class="tooltipsy" ng-show="r.confiuring" just-draggable>
+
+                <div class="row">
+                      <div class="col-8 col-lg-8 nopad">
+                          Configurador Imagen Rebasada
+                      </div>
+                      <div class="col-4 col-lg-4 nopad" style="text-align: right;">
+                          <span class="links" ng-click="r.confiuring=false;" style="margin:0px 10px; ">
+                              <i class="ion-close-circled"></i>
+                          </span>
+                          <span class="links" close-row-cfg>
+                              <i class="ion-checkmark-circled"></i>
+                          </span>
+
+                      </div>
+                </div>
+
+                <div class="ceparador" style="margin:20px 0px;">&nbsp;</div>
+                
+  
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Margen exterior</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.padding">
+                            <option ng-repeat="x in [0,50,95]">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="display: none;">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label>Color</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.margin">
+                            <option ng-repeat="x in [0,5,10,20]">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div> 

@@ -1,0 +1,76 @@
+{% extends 'frontapp/base.html' %}
+
+
+{% block content %}
+
+
+CALENDARIO
+
+<div class="row" >
+	
+	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" style="background-color: #4c4c4c;">
+		{{times.0|date:"M"}}
+		
+		<div>
+			<button type="button" class="btn btn-info">
+	          Activas <span class="badge badge-info">{{activas}}</span>
+	        </button>
+    	</div>
+
+        {% if reds > 0 %}
+        <button type="button" class="btn btn-danger">
+          Caducan <span class="badge badge-secundary">{{reds}}</span>
+        </button>
+        {% endif %}
+
+
+	</div>
+	
+	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" style="background-color: #acacac;">
+		{{times.1|date:"M"}}
+	</div>
+
+	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" style="background-color: #efefef;">
+		{{times.2|date:"M"}}
+	</div>
+
+</div>
+
+
+{% endblock %}
+
+
+
+
+  {% block scripts %}
+
+  	<script type="text/javascript">
+  		{% for c in promocat %}
+  			var subcats = [];
+  			{% for sc in c.promocat_set.all %}
+	  			var newsubc = {'cpk':'{{sc.pk}}','name':'{{sc.catname}}','slug':'{{sc.catslug}}'};
+	  			subcats.push(newsubc);
+
+  			{% endfor %}
+  			var newcat = {'cpk':'{{c.pk}}','name':'{{c.catname}}','subcats':subcats};
+
+  			cats.push(newcat);
+
+  		{% endfor %}
+
+
+  		$('#ventajas-form').submit(function(e){
+  			e.preventDefault();
+  			return false;
+  		});
+
+
+  		$('.reset').click(function(e){
+  			e.preventDefault();
+  			forma = document.getElementById('ventajas-form');
+  			forma.reset();
+  		});
+  		
+  	</script>
+
+  {% endblock %}

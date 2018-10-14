@@ -1,0 +1,53 @@
+
+<div class="dina_title">Swiper</div>
+
+<div class="row" ng-repeat="t in promocion_edit.dins" style="border-bottom: 2px solid #eceff1;margin-bottom:20px;">
+
+        <div class="col-12">
+            <label>
+              <span class="links ion-ios-camera"></span>
+            <input type="file" name="foto" class="imagen" up-swip-img style="display: none;">
+            </label>
+            <div >||t.cargando||</div>
+        </div>
+
+      <div class="col-12">
+
+
+        
+
+        <div style="width:33.333%;display:inline-block;padding:10px;" ng-repeat="i in t.imgs">
+          <img src="/||i.img||"  style="width: 100%;" />
+          <div style="padding:10px;border:1px solid #4c4c4c;">
+            <div style="display: inline-block;float: left;">
+                <span data='left' class="bt" ng-class="{supers:i.sideimg=='left'}" check-swip>LEFT</span>
+                <span data='right' class="bt" ng-class="{supers:i.sideimg=='right'}" check-swip> RIGHT </span>
+            </div>
+            <span rm-swimg style="float: right;">
+              <i class="far fa-trash-alt linker"></i>
+            </span>
+            <span style="height:0px;clear: both;">&nbsp;</span>
+          </div>
+        </div>
+
+        
+
+
+  </div>
+  <div class="col-12">
+        <h5>
+          <input type="text" name="q[]" ng-model="t.pregunta" class="form-control" />
+        </h5>
+  </div>
+
+  <div class="col-12 col-lg-12 col-xl-12" style="padding: 20px;text-align: right;">
+      <span class="links ion-close-circled" rm-swiper></span>          
+      <span class="links ion-checkmark-circled" save-swiper></span>
+  </div>
+
+</div>
+
+
+    <div style="padding:10px 0px;text-align: right;">
+    <span class="botons btn-blue upers" add-swiper>agrega pregunta</span>
+    </div>

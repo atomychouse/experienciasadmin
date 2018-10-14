@@ -1,0 +1,75 @@
+{% extends 'frontapp/base.html' %}
+
+
+{% block content %}
+	<section class="container">
+
+						<span class="links-icon-norund" add-cat>
+							<i class="ion-ios-plus-empty"></i>
+						</span>
+
+
+			<div ng-repeat="c in cats" style="margin-bottom:15px;">
+						
+				
+				
+				<div class="cat-titule row" >
+					<div class="col-12 col-md-8 col-lg-8 nopad">
+						<input type="text" class="input-def bolding" ng-model="c.name" save-promocat>
+					</div>
+					<div class="col-12 col-md-4 col-lg-4" style="text-align: right;padding-left:22px;padding-right: 0px;">
+						<span class="links-icon-norund"  style="margin-right:5px;">
+							<i class="ion-ios-trash" rm-cat></i>
+						</span>
+						<span class="links-icon-norund" add-sb>
+							<i class="ion-ios-plus-empty"></i>
+						</span>
+					</div>
+				</div>
+				
+				<div ng-repeat="sb in c.subcats" class="subcat-box row" >
+
+
+					<div class="col-9 col-md-9 col-lg-9" >
+						
+						<input type="text" ng-model="sb.name" class="input-def" save-promo-scat>
+					</div>
+
+					<div class="col-12 col-md-3 col-lg-3" style="padding-left:0px;padding-right:36px;text-align:right;">
+
+						<span class="links-icon-norund" >
+							<i class="ion-ios-trash" rm-scat></i>
+						</span>
+
+					</div>
+					
+
+
+				</div>
+
+			</div>
+
+</section>
+
+{% endblock %}
+
+  {% block scripts %}
+
+  	<script type="text/javascript">
+  		{% for c in promocat %}
+  			var subcats = [];
+  			{% for sc in c.promocat_set.all %}
+	  			var newsubc = {'cpk':'{{sc.pk}}','name':'{{sc.catname}}'};
+	  			subcats.push(newsubc);
+
+  			{% endfor %}
+  			var newcat = {'cpk':'{{c.pk}}','name':'{{c.catname}}','subcats':subcats};
+
+  			cats.push(newcat);
+
+  		{% endfor %}
+
+  		
+  	</script>
+
+  {% endblock %}

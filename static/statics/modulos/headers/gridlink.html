@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light " ng-show="editando" >
+  
+  <span class="navbar-brand icon-brand">
+    <i class="||r.icono||"></i>
+  </span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText-||r.rowpk||" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText-||r.rowpk||">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <span class="nav-link nav-tit cfg-titulos" href="#">
+          <input type="text" class="input-title" ng-model="r.title" placeholder="Título" ng-blur="savemodulo(r);">
+        </span>
+      </li>
+    </ul>
+    
+    <span class="navbar-text">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item "> 
+            <span class="linkound" ng-click="r.confiuring=true;">
+                <i class="ion-ios-gear"></i>
+            </span> 
+      </li>
+
+      <li class="nav-item ">
+        <span class=" linkound" href="#" add-itm>
+            <i class="ion-ios-plus"></i>
+        </span>
+      </li>
+
+      <li class="nav-item ">
+        <span class="linkound" href="#" rm-row>
+            <i class="ion-ios-trash"></i>
+        </span>
+      </li>
+      <li class="nav-item ">
+        <span class="linkound" href="#">
+            <i class="ion-ios-checkmark"></i>
+        </span>
+      </li>
+    </ul>
+
+      
+    </span>
+
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" ng-show="noloensenyes" >
+  
+
+  <div class="" id="navbarText-||r.rowpk||">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <span class=" nav-tit cfg-titulos">
+          ||r.title||
+        </span>
+      </li>
+    </ul>
+
+  </div>
+</nav>

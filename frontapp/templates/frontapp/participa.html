@@ -1,0 +1,60 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="promocionmod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Promoción {{promo.pk}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      	<form name="participandome" action="/participando/" method="POST" id="participando" class="senddatablock">
+          {% csrf_token %}
+          <input type="hidden" name="promo" value="{{promo.pk}}">
+        <div>
+        	<span ><input type="text" name="mins" id="minutos"></span>
+        	<span >:</span>
+        	<span ><input type="text" name="segs" id="segundos"></span>
+        </div>
+
+       {% for preg in promo.pregunta_set.all %}
+        <input type="hidden" name="pregunta" value="{{preg.pk}}">
+       	<ul>
+       		<li>
+       			<div>{{preg.pregunta}}</div>
+       			<ul>
+       				{% for reg in preg.respuesta_set.all %}
+       				<li>
+       	
+				       	<div class="input-group mb-3">
+				            <div class="input-group-prepend">
+				              <span class="input-group-text">{{reg.indice}}</span>
+				            </div>
+				            	{{reg.resp}}
+				            <div class="input-group-append">
+				              <span class="input-group-text">
+				                <input type="radio" name="answer_{{preg.pk}}"  value="{{reg.pk}}" >
+				              </span>
+				            </div>
+				        </div>
+
+       				</li>
+       				{% endfor %}
+       				
+       			</ul>
+       		</li>
+       </ul>
+       {% endfor %}
+       	<button class="btn btn-primary" type="submit">FINALIZAR</button>
+   		</form>
+
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

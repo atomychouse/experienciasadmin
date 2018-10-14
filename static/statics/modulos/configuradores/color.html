@@ -1,0 +1,124 @@
+
+
+        <div style="position: relative;">
+            <div class="tooltipsy" ng-show="r.confiuring" just-draggable>
+
+                <div class="row">
+                      <div class="col-8 col-lg-8 nopad">
+                          Código Cromático
+                      </div>
+                      <div class="col-4 col-lg-4" style="text-align: right;padding:0px;">
+                          <span class="links" ng-click="r.confiuring=false;" style="margin:0px 10px; ">
+                              <i class="ion-close-circled"></i>
+                          </span>
+                          <span class="links" close-row-cfg>
+                              <i class="ion-checkmark-circled"></i>
+                          </span>
+
+                      </div>
+                </div>
+
+                <div class="ceparador">&nbsp;</div>
+
+                <div class="row">
+                  <div class="col-12 col-xl-12 col-lg-12 col-md-12">
+                    <label>Sistema de Color</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-2 col-md-2 col-xl-2 ol-lg-2 nopad">
+                    <input type="checkbox" ng-model="r.cfg.pantonec.visible">
+                  </div>
+                  <div class="col-10 col-xl-10 col-lg-10 col-md-10">
+                    <label>Pantone Coated</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-2 col-md-2 col-xl-2 ol-lg-2 nopad">
+                    <input type="checkbox" ng-model="r.cfg.pantoneu.visible">
+                  </div>
+                  <div class="col-10 col-xl-10 col-lg-10 col-md-10">
+                    <label>Pantone Uncoated</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-2 col-md-2 col-xl-2 ol-lg-2 nopad">
+                    <input type="checkbox" ng-model="r.cfg.cmyk.visible">
+                  </div>
+                  <div class="col-10 col-xl-10 col-lg-10 col-md-10">
+                    <label>CMYK</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-2 col-md-2 col-xl-2 ol-lg-2 nopad">
+                    <input type="checkbox" ng-model="r.cfg.hex.visible">
+                  </div>
+                  <div class="col-10 col-xl-10 col-lg-10 col-md-10">
+                    <label>Hexagesimal</label>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-2 col-md-2 col-xl-2 ol-lg-2 nopad">
+                    <input type="checkbox" ng-model="r.cfg.hsb.visible">
+                  </div>
+                  <div class="col-10 col-xl-10 col-lg-10 col-md-10">
+                    <label>HSB</label>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-2 col-md-2 col-xl-2 ol-lg-2 nopad">
+                    <input type="checkbox" ng-model="r.cfg.rgb.visible">
+                  </div>
+                  <div class="col-10 col-xl-10 col-lg-10 col-md-10">
+                    <label>RGB</label>
+                  </div>
+                </div>
+
+
+
+
+
+
+                <div class="ceparador">&nbsp;</div>
+
+                
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad ">
+                        <label class="inerpad">Columnas</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm"  ng-model="r.cfg.cols" ng-options="key as value for (key , value) in {12:1,6:2,4:3,3:4,2:6}"></select>
+                    </div>
+                </div>
+                <div class="row" style="display: none;">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Margen exterior</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.padding">
+                            <option ng-repeat="x in [0,50,95]">||x||</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <label class="inerpad">Margen Interior</label>
+                    </div>
+                    <div class="col-6 col-md-6 col-lg-6 nopad">
+                        <select class="form-control form-control-sm" ng-model="r.cfg.margin">
+                            <option ng-repeat="x in margenes_interiores" value="||x.valr||">||x.tit||</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div> 
