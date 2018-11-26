@@ -40,14 +40,15 @@ class TimeMets():
             fechastr = None            
         return fechastr
 
-
 class Profileuser(models.Model):
     usuariopk = models.ForeignKey(User)
     nombre_usuario = models.CharField(max_length=200,blank=True,null=True)
     servicios = models.CharField(max_length=500,blank=True,null=True)
     date_reg = models.DateTimeField(auto_now_add=True)
     imagen = models.ImageField(upload_to='static/media/avatar/',blank=True,null=True)
-
+    msisdn = models.CharField(max_length=200,blank=True,null=True)
+    region = models.CharField(max_length=200,blank=True,null=True)
+    perfil = models.CharField(max_length=200,blank=True,null=True)
 
 class Pagesetts(models.Model):
     ventaja = models.CharField(max_length=100)
@@ -56,6 +57,7 @@ class Pagesetts(models.Model):
     fin = models.DateField()
 
 class Promocion(models.Model):
+    slug_titulo = models.CharField(max_length=200,blank=True,null=True)
     titulo = models.TextField(blank=True,null=True)
     linea_uno = models.CharField(max_length=200, blank=True,null=True)
     linea_dos = models.CharField(max_length=200,blank=True,null=True)
@@ -81,6 +83,25 @@ class Promocion(models.Model):
     header_final = models.CharField(max_length=200,blank=True,null=True)
     premioterms = models.TextField(blank=True,null=True)
     reporte_enviado = models.IntegerField(blank=True,null=True)
+    numero_ganadores = models.IntegerField(blank=True,null=True)
+    premio_frase = models.CharField(max_length=200,blank=True,null=True)
+
+
+    def estatus_admin(self):
+        
+        mxtz = pytz.timezone('America/Mexico_City')
+        hoy = datetime.datetime.now(mxtz)
+        if not self.vigencia:
+            self.vigencia = datetime.datetime.now() + datetime.timedelta(days=10)
+            self.vigencia = self.vigencia.date()
+        if self.status != 'finalizado':
+            if self.vigencia >= hoy.date():
+                return self.status
+            else:
+                return 'cerrado'
+        else:
+            return self.status
+
 
     def yo_like(self,upk):
         if upk:
@@ -373,16 +394,10 @@ class Promocion(models.Model):
 
         return terminos
 
-
-
-
-
 class Mediapromo(models.Model):
     promo=models.ForeignKey(Promocion)
     imagen = models.ImageField(upload_to='static/media/promomedia/')
     tipoimg = models.CharField(max_length=100,blank=True,null=True)
-
-
 
 class Promocat(models.Model):
     catname = models.CharField(max_length=200,default='categoria')
@@ -390,19 +405,14 @@ class Promocat(models.Model):
     parentcat = models.ForeignKey('Promocat',blank=True,null=True)
     orden = models.IntegerField(default=0)
 
-   
 class Catpromo(models.Model):
     categoria = models.ForeignKey(Promocat)
     promocion = models.ForeignKey(Promocion)
-
 
 class Segmento(models.Model):
     segmento = models.CharField(max_length=200,default='amigo')
     slug = models.CharField(max_length=200,default='categoria')
     orden = models.IntegerField(default=0)
-
-
-
 
 # DINAMICAS -----------------------------------------------------------------------------
 
@@ -506,6 +516,15 @@ class Participacion(models.Model,TimeMets):
         return img
 
 
+    def datos_usuario(self):
+        datos = self.usuario.profileuser_set.all().first()
+        if datos:
+            return datos
+        else:
+            return ''
+
+
+
     def servicios_usuario(self):
         servicios = self.usuario.profileuser_set.all().first()
         if servicios:
@@ -592,10 +611,33 @@ class Swipimages(models.Model):
     sideimg = models.CharField(max_length=10,default='right')
     orden = models.IntegerField(default=1)
 
-
-
 class Dinamicaterminos(models.Model):
     dinamicaslug = models.CharField(max_length=100)
     dinamica_name = models.CharField(max_length=200)
     terminos = models.TextField(blank=True,null=True)
     descp = models.TextField(blank=True,null=True)
+    instructivo = models.TextField(blank=True,null=True)
+    textoganadoresdinamica = models.TextField(blank=True,null=True)
+
+class Banner(models.Model):
+    titulo = models.CharField(max_length=200, blank=True,null=True)
+    descp = models.TextField(blank=True,null=True)
+    vigencia = models.DateField(blank=True,null=True)
+    fecha_publicacion = models.DateField(blank=True,null=True)
+    liga = models.TextField(blank=True,null=True)
+    position = models.CharField(max_length=100,default='top')
+    imagen_grande = models.ImageField(upload_to='static/statics/banners')
+    imagen_movil = models.ImageField(upload_to='static/statics/banners')
+
+class Terminos(models.Model):
+    texto = models.TextField(blank=True,null=True)
+    edicion = models.DateTimeField(auto_now=True)
+    texto_recogerprovincia = models.TextField(blank=True,null=True)
+    texto_recogercdmx = models.TextField(blank=True,null=True)
+    texto_recogerterceros = models.TextField(blank=True,null=True)
+
+
+class Calendariotelcel(models.Model):
+    mes = models.IntegerField()
+    fecha_completa = models.DateField()
+    

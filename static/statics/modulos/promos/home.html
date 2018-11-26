@@ -25,18 +25,35 @@
 
 	<div class="row">
 		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
+			<label class="toplabel">Fecha evento</label>
+			<input type="text" class="form-control" id="input_fecha_evento" name="fecha_evento"  ng-model="promocion_edit.fecha_evento" date-pick>
+		</div>
+
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
 			<label>
 				<div class="toplabel">Vigencia</div>
-				<input type="text" class="form-control" name="vigencia" ng-model="promocion_edit.vigencia" date-pick>
+				<input type="text" class="form-control" id="input_vigencia" name="vigencia" ng-model="promocion_edit.vigencia" date-pick>
 			</label>
 		</div>
+		
 		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
 			<label>
 				<div class="toplabel">Fecha Publicación</div>
-				<input type="text" class="form-control" name="vigencia" ng-model="promocion_edit.fecha_publicacion" date-pick>
+				<input type="text" class="form-control" id="input_fecha_publicacion" name="vigencia" ng-model="promocion_edit.fecha_publicacion" date-pick>
 			</label>
 			
 		</div>
+		
+		<div class="col-12 col-md-5 col-lg-5 col-xl-5">
+			<div class="toplabel">Categoría</div>
+				<select class="form-control" name="segmento_cats" catz-promo  ng-repeat="s in cats">
+					<option value="">Seleccione ...</option>
+					<option  value="||sb.slug||" ng-selected="checkcategoria(sb);" ng-repeat="sb in s.subcats">||sb.slug||</option>
+				</select>
+		</div>
+
+
+
 		<div class="col-12 col-md-2 col-lg-2 col-xl_2">
 			<div class="toplabel">Destacado</div>
 			<select class="form-control" name="tipo_dinamica" cambio-dest>
@@ -52,15 +69,30 @@
 
 	<div class="row">
 
+		<div class="col-12 col-lg-12 col-xl-12 xol-sm-12">
+			<div style="position: relative;">
+				<div class="toplabel">Foto de la publicación</div>
+				<span class="ion-ios-camera links" lauch-foto-quiz style="position: absolute;right:10px;top:10px;"></span>
+				<div class="dropzon" ></div>
+				<img src="||promocion_edit.media.imglg||" style="width:100%;" />		
+			</div>
+		</div>
+
 		<div class="col-12 col-md-5 col-lg-5 col-xl-5" style="position: relative;">
 			<div class="toplabel">Foto de portada</div>
 			<span class="ion-ios-camera links" lauch-foto-general style="position: absolute;right:30px;top:50px;font-size: 26px;color:#263238;"></span>
 			<img src="||promocion_edit.media.firstimg||" style="width: 100%;margin: auto;" />
 			<div id="dropgeneral">&nbsp;</div>
 
+
 		</div>
 
 		<div class="col-12 col-md-7 col-lg-7 col-xl-7">
+			<div>
+				<div class="toplabel">Slug Analytics</div>
+				<input type="text" ng-model="promocion_edit.slug_titulo" class="form-control">					
+			</div>
+
 			<div>
 				<div class="toplabel"> Titulo</div>
 				<input type="text" ng-model="promocion_edit.linea_uno" class="form-control">					
@@ -69,6 +101,8 @@
 				<div class="toplabel"> Titulo color</div>
 				<input type="text" ng-model="promocion_edit.linea_dos" class="form-control">					
 			</div>
+
+
 
 			
 		</div>
@@ -97,31 +131,11 @@
 			<label class="toplabel">Ciudad</label>
 			<input type="text" class="form-control" name="ciudad" ng-model="promocion_edit.ciudad">		
 		</div>
-		<div class="col-12 col-md-4 col-lg-4 col-xl-4">
-			<label class="toplabel">
-				Fecha evento</label>
-				<input type="text" class="form-control" name="fecha_evento" ng-model="promocion_edit.fecha_evento" date-pick>
-						
-		</div>
 	</div>
-	<div style="position: relative;">
-		<div class="toplabel">Foto de la publicación</div>
-		<span class="ion-ios-camera links" lauch-foto-quiz style="position: absolute;right:10px;top:10px;"></span>
-		<div class="dropzon" ></div>
-		<img src="||promocion_edit.media.imglg||" style="width:100%;" />		
-	</div>
+
 
 	<div class="row">
-		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
-					<div class="toplabel"> Instrucciones</div>
-
-					<text-angular ta-toolbar="[]" 
-								  class="captions" 
-								  name="titulo_instrucciones"  
-								  ng-model="promocion_edit.titulo" style="padding:5px;">
-					</text-angular>
-
-		</div>
+		
 
 		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
 			<div class="toplabel"> Premio</div>
@@ -132,23 +146,18 @@
 			</text-angular>
 		</div>
 		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
-			<div class="toplabel"> Texto ganadores</div>
-			<text-angular ta-toolbar="[]" 
-						  class="captions" 
-						  name="terms"  
-						  ng-model="promocion_edit.terms" style="padding:5px;">
-			</text-angular>
+			<div>
+				<div class="toplabel"> Número de ganadores</div>
+				<input type="text" ng-model="promocion_edit.numero_ganadores" class="form-control">					
+			</div>
+
+
+			<div>
+				<div class="toplabel"> Premio</div>
+				<input type="text" ng-model="promocion_edit.premio_frase" class="form-control">					
+			</div>
+
 		</div>
-
-
-		<div class="col-12 col-md-6 col-lg-6 col-xl-6">
-			<div class="toplabel"> Texto Premio en los terminos y condiciones</div>
-			<textarea ng-model="promocion_edit.premioterms" style="padding:5px;width:100%;">
-			</textarea>
-		</div>
-
-
-
 	</div>
 
 
@@ -157,14 +166,21 @@
 
 
 
-<section id="contenido3" ng-show="pasos==3">
+<section id="contenido3" ng-show="pasos==13">
 
-		<div class="row" ng-repeat="s in cats">
+
+
+		<select name="segmento_cats" catz-promo  ng-repeat="s in cats">
+			<option value="">Seleccione ...</option>
+			<option  value="||sb.slug||" ng-selected="checkcategoria(sb);" ng-repeat="sb in s.subcats">||sb.slug||</option>
+		</select>
+
+		<div class="row" ng-repeat="s in cats" style="display: none;">
 			<div class="col-6 col-md-6 co-lg-6 col-xl-6" ng-repeat="sb in s.subcats" style="padding:10px;">
 				<span style="display: inline-block;padding:0px 10px;">
 					<input type="checkbox" 
 					       name="categorias" 
-					       ng-checked="checkcategoria(sb);" value="||sb.slug||" catz-promo />
+					       ng-checked="checkcategoria(sb);" value="||sb.slug||"  />
 				</span>
 				<span class="cat-box-name">||sb.name||</span>		
 			</div>
@@ -172,6 +188,13 @@
 
 	<div style="border-top: 1px dotted #4c4c4c;padding:20px;display: none;">
 		<h5>Segmentos</h5>
+		
+
+
+		<select name="segmento" segmenta-promo>
+			<option  value="||s.slug||" ng-repeat="s in segmentos">||s.slug||</option>
+		</select>
+
 		<ul>
 			<li ng-repeat="s in segmentos">
 				<span style="display: inline-block;padding:0px 10px;">
@@ -191,3 +214,38 @@
 <section id="contenido3" ng-show="pasos==4">
 	<ng-include src="'/static/statics/modulos/promos/finalizar.html'" ></ng-include>
 </section>
+
+
+
+<script type="text/javascript">
+	
+
+
+	$('#input_fecha_evento').change(function(){
+		fecha = $(this).val();
+		fecha_pices = fecha.split('/');
+		console.log(fecha_pices);
+
+		curmonth = parseInt(fecha_pices[1]) - 1;
+
+		var para_massiete = new Date(fecha_pices[2],curmonth,fecha_pices[0],0,0,0);
+		massiete = para_massiete.setDate(para_massiete.getDate() - 7);
+		fecha_publicacion = new Date(massiete);
+		mes = parseInt(fecha_publicacion.getMonth()) + 1;
+		fecha_publicacion_val = fecha_publicacion.getDate() + '/' + mes +'/'+fecha_publicacion.getFullYear();
+		$('#input_fecha_publicacion').val(fecha_publicacion_val);
+
+
+		var para_menoscuatro = new Date(fecha_pices[2],curmonth,fecha_pices[0],0,0,0);
+		menoscuatro = para_menoscuatro.setDate(para_menoscuatro.getDate() - 4);
+		vigencia = new Date(menoscuatro);
+		mes = parseInt(fecha_publicacion.getMonth()) + 1;
+		vigencia_val = vigencia.getDate() + '/' + mes +'/'+vigencia.getFullYear() ;
+		$('#input_vigencia').val(vigencia_val);
+		
+
+	});
+
+
+
+</script>

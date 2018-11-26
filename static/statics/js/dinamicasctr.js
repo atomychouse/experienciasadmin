@@ -840,6 +840,8 @@ angular.module("mainApp").directive('savePromo', function($http) {
             datas['terms'] = safeText(scope.promocion_edit.terms);
             datas['texto_alterno'] = safeText(scope.promocion_edit.texto_alterno);
             datas['premioterms'] = safeText(scope.promocion_edit.premioterms);
+            datas['numero_ganadores'] = scope.promocion_edit.numero_ganadores;
+            datas['premio_frase'] = scope.promocion_edit.premio_frase;
 
             datas['csrf'] = csrf;
             data = $.param(datas);
@@ -873,7 +875,6 @@ angular.module("mainApp").directive('edtPromo', function($http) {
             scope.mensaje = '';
             params = {'url':'/allp/','method':'GET','params':{'pk':scope.d.pk}};
             $http(params).then(function(response){
-                console.log(response.data.promocion,'scandal');
                 scope.$parent.promocion_edit = response.data.promocion;
             });
 
@@ -985,10 +986,12 @@ angular.module("mainApp").directive('segmentaPromo', function() {
     restrict: 'A',
     link: function(scope, elm, attrs) {
 
-        elm.click(function(e){
-            checado = $(elm).is(':checked');
+        elm.change(function(e){
+            checado = true;
             valor = $(elm).val();
+
             promo = scope.$parent.$parent.promocion_edit;
+            
             if(checado){
               
               promo.segmentos.push(valor);
@@ -1018,10 +1021,14 @@ angular.module("mainApp").directive('catzPromo', function() {
     restrict: 'A',
     link: function(scope, elm, attrs) {
 
-        elm.click(function(e){
-            checado = $(elm).is(':checked');
+
+
+        elm.change(function(e){
+            checado = true; //$(elm).is(':checked');
             valor = $(elm).val();
             promo = scope.$parent.$parent.promocion_edit;
+            promo.categorias = [];
+
             if(checado){
               
               promo.categorias.push(valor);
@@ -1031,6 +1038,10 @@ angular.module("mainApp").directive('catzPromo', function() {
               inx = promo.categorias.indexOf(valor);
               promo.categorias.splice(inx,1);
             }
+
+            console.log();
+
+
             scope.$apply();
         });
 
@@ -1906,13 +1917,17 @@ angular.module("mainApp").directive('saveDinamicaTerm', function($http) {
 
           terms = safeText(scope.d.terms.terms);
           descp = safeText(scope.d.terms.descp);
+          instructivo = safeText(scope.d.terms.instructivo);
+          ganadores = safeText(scope.d.terms.textoganadoresdinamica);
 
           data = {
             'dpk':scope.d.dpk,
             'name':scope.d.name,
             'slug':scope.d.slug,
             'terms':terms,
-            'descp':descp
+            'descp':descp,
+            'instructivo':instructivo,
+            'textoganadoresdinamica':ganadores
           };
 
 
@@ -1934,3 +1949,74 @@ angular.module("mainApp").directive('saveDinamicaTerm', function($http) {
 
 
 
+angular.module("mainApp").directive('saveTermtxt', function($http) {
+
+  return {
+    restrict: 'A',
+    link: function(scope, elm, attrs) {
+        elm.click(function(e){
+
+            var mensaje = safeText(scope.terminostxt);
+            var texto_recogerprovincia = safeText(scope.texto_recogerprovincia);
+            var texto_recogercdmx = safeText(scope.texto_recogercdmx);
+            var texto_recogerterceros = safeText(scope.texto_recogerterceros);
+
+
+            data = {'mensaje':mensaje,
+                    'texto_recogerprovincia':texto_recogerprovincia,
+                    'texto_recogercdmx':texto_recogercdmx,
+                    'texto_recogerterceros':texto_recogerterceros
+            };
+            
+            data = $.param(data);
+            params = {'url':'/promomanage/savetermstxt/','method':'POST','data':data};
+            $http(params).then(function(response){
+                console.log(response);
+                
+            });
+
+        });
+
+
+
+    }
+  };
+
+});
+
+
+
+
+angular.module("mainApp").directive('kilFeriado', function($http) {
+
+  return {
+    restrict: 'A',
+    link: function(scope, elm, attrs) {
+        elm.click(function(e){
+          
+          delmes = scope.$parent.m;
+          inx = delmes.dias.indexOf(scope.d);
+          delmes.dias.splice(inx,1);
+          
+          fecha = scope.d+'/'+delmes.digit+'/'+ scope.$parent.$parent.y.year; 
+          data = {'fecha':fecha};
+
+          //data = $.param(data);
+          params = {'url':'/rmferiado/','method':'GET','params':data};
+          $http(params).then(function(response){
+              console.log(response);
+              
+          });
+
+          scope.$apply();
+
+
+
+        });
+
+
+
+    }
+  };
+
+});

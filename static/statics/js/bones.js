@@ -99,10 +99,45 @@ function safeText(texto){
         texto = texto.toString().replace(/\\t/g, "\\t");
         texto = texto.toString().replace(/\\b/g, "\\b");
         texto = texto.toString().replace(/\\f/g, "\\f");
+        texto = texto.replace(/\n/g, "\\n");
     }
+
     catch(err){
         texto = '';
     }
 
     return texto;
+}
+
+
+
+function sendit(e){
+    $(this).preventDefault();
+    console.log('a');
+    return false;
+    //var data = $(this).serializeArray();
+     toastr('warning','La información se esta procesando espere porfavor ...');
+    var url = $(this).attr('action');
+    var type = $(this).attr('method');
+    forma = $(this).get(0);
+    //forma = $('#empresaspt1').get(0);
+    $('#formabox').hide().after('<div class="titulo" style="font-size:1.2rem;">Gracias por su interes, le haremos llegar una respuesta en breve.</div>');
+    var data = new FormData(forma);
+    $.ajax({url:url,
+            type:type,
+            data:data,
+            cache: false,
+            processData: false,
+            contentType:false,
+            dataType: 'json',
+            success:function(response){
+                $('.errr').removeClass('errr');
+                $('.alert').remove();
+
+            }
+
+    });
+
+    return false;
+
 }

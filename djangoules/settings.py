@@ -6,12 +6,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'f9!fdoms=&$h%9yy-i6_b8pla-y4zo^^2@8c(it8^kmbnk8pqa'
 
-DEBUG = True
+DEBUG = False
 
 LOGIN_REDIRECT_URL = '/login/'
 
 
-ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = (
@@ -31,6 +30,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -38,8 +38,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware'
+    
 )
 
 ROOT_URLCONF = 'djangoules.urls'
@@ -85,8 +85,25 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_VIEW = "/"
+LOGOUT_URL = "/logout/"
+
+
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
+
+
+CORS_ORIGIN_WHITELIST = (
+    'experienciastelcel.com',
+    '45.33.11.198',
+    'admin.experienciastelcel.com',
+)
+
+
+ALLOWED_HOSTS = ['45.33.11.198','experienciastelcel.com','admin.experienciastelcel.com']
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1','experienciastelcel.com']
+
+#CORS_ALLOW_CREDENTIALS = True
 
 try:
     from local_settings import *

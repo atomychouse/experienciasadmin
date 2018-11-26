@@ -179,6 +179,7 @@ class promoList(View,TimeMets):
                     "mes_evento":self.fecha_to_str(p.fecha_evento,formato='%b'),
                     'ciudad':p.ciudad,
                     'status':p.status,
+                    'slug_titulo':p.slug_titulo,
                     'destacado':p.destacado,
                     'lugar':p.lugar, 
                     "vigenciaUTC": time.mktime(p.vigencia.timetuple()),
@@ -335,13 +336,13 @@ class promoSear(View,TimeMets):
             qs.append(Q(destacado=dests[destacados]))
 
 
-        qs.append( Q(fecha_publicacion__isnull=True) | Q(fecha_publicacion__lte=hoy) )
+        #qs.append( Q(fecha_publicacion__isnull=True) | Q(fecha_publicacion__lte=hoy) )
 
         host = request.get_host()
     
-        prox = Q(status='proximamente')
-        pu = Q(status='publish') & Q(vigencia__gte=hoy)
-        filtro = Q(prox | (pu))
+        prox = (Q(status='proximamente') | Q(status='publish'))
+        pu = Q(vigencia__gte=hoy)
+        filtro = Q(prox & (pu))
 
         prms = Promocion.objects.filter(filtro).order_by('-destacado','fecha_evento','vigencia')
         prms = prms.filter(*qs)
@@ -351,7 +352,7 @@ class promoSear(View,TimeMets):
                     {
                     'liked':p.yo_like(upk),   
                     "vigencia":self.fecha_to_str(p.vigencia), 
-                    "vigencia":self.fecha_to_str(p.fecha_evento), 
+                    #"vigencia":self.fecha_to_str(p.fecha_evento), 
                     "vigenciaUTC": time.mktime(p.vigencia.timetuple()),
                     "dia_evento":self.fecha_to_str(p.fecha_evento,formato='%d'),
                     "mes_evento":self.fecha_to_str(p.fecha_evento,formato='%b'),                    
@@ -380,7 +381,16 @@ class promoSear(View,TimeMets):
 promoSear = promoSear.as_view()
 
 
+
+def nltobr(texto):
+    try:
+        return texto.replace('\\n','<br>')
+    except:
+        return texto
+
+
 class promoDetail(View,TimeMets):
+
 
 
     def get(self,request,pks=None):
@@ -392,6 +402,7 @@ class promoDetail(View,TimeMets):
         if pks:
 
             ventaja = Pagesetts.objects.filter(fin__gte=hoy).order_by('fin').first()
+            
             if ventaja:
                 vtext = self.segments(ventaja.ventaja)
                 ven = ventaja.ventaja
@@ -404,8 +415,67 @@ class promoDetail(View,TimeMets):
                 texto = ''
                 terminosventaja = ''
 
-
             promo = Promocion.objects.get(pk=pks)
+
+            # Terminos y condicines
+            venter = Dinamicaterminos.objects.filter(dinamicaslug=promo.dinamica).first()
+
+            if venter:
+                ventajadescss = '%s'%(venter.descp)
+                instructivo = venter.instructivo
+            else:
+                ventajadescss = ''
+                instructivo = ''
+
+
+
+
+            titulo = '%s %s'%(promo.linea_uno,promo.linea_dos)
+            numero_ganadores = '%s'%(promo.numero_ganadores)
+            premio = '%s'%(promo.premio_frase)
+            
+            try:
+                otrotermino = '%s'%(venter.textoganadoresdinamica)
+            except:
+                otrotermino = ''
+
+            
+            terminostxt = Terminos.objects.all().first()
+            terminos_param = terminostxt.texto
+
+            if promo.ciudad.lower() == 'cdmx':
+                textorecoger  = terminostxt.texto_recogercdmx
+                textoterceros = terminostxt.texto_recogerterceros
+            else:
+                textorecoger  = terminostxt.texto_recogerprovincia
+                textoterceros = ''
+
+
+            fecha_terminos = self.fecha_to_str(promo.fecha_publicacion,formato='%d de %B del %Y')
+
+
+            terminos_param = terminos_param.replace('{%nombrepromo%}',titulo)
+            terminos_param = terminos_param.replace('{%textoparaciudad_provincia%}',textorecoger)
+            terminos_param = terminos_param.replace('{%textoexlusivocdmx%}',textoterceros)
+            terminos_param = terminos_param.replace('{%textoganadorsegundinamica%}',otrotermino)
+            
+            try:
+                terminos_param = terminos_param.replace('{%publicacion_terminos%}',fecha_terminos)
+            except:
+                pass
+
+            terminos_param = terminos_param.replace('{%vigencia_terminos%}',self.fecha_to_str(promo.vigencia,formato='%d de %B del %Y'))
+            terminos_param = terminos_param.replace('{%bases_txt%}',promo.terminosdeladinamica())
+            terminos_param = terminos_param.replace('{%ventaja_term%}',vtext)
+            terminos_param = terminos_param.replace('{%ventaja_desc%}',ventajadescss)
+            terminos_param = terminos_param.replace('{%numero-de-ganadores%}',numero_ganadores)#promo.numero_ganadores)
+            terminos_param = terminos_param.replace('{%premio%}',premio)
+            #terms)
+            terminos_param = terminos_param.replace('{%fecha%}',self.fecha_to_str(promo.fecha_evento,formato='%d de %B del %Y'))
+            terminos_param = terminos_param.replace('{%lugar%}',promo.lugar)
+            terminos_param = terminos_param.replace('{%ciudad%}',promo.ciudad)
+
+
 
 
             dinamicas_names = {
@@ -417,7 +487,12 @@ class promoDetail(View,TimeMets):
             }
 
 
+
+
+
+
             prm = {
+                    'terminostxt':terminos_param,
                     'liked':promo.yo_like(upk), 
                     'termsdin':promo.terminosdeladinamica(),
                     'descpdin':promo.descpdeladinamica(),
@@ -442,7 +517,7 @@ class promoDetail(View,TimeMets):
                     "imagen_lg":'https://%s%s'%(host,promo.imglg),
                     "imagen_lg_ganadores":'%s'%(promo.finalimg_min(host)),
                     "titulo": '%s %s'%(promo.linea_uno,promo.linea_dos),
-                    "inicio_juego_txt":promo.titulo,
+                    "inicio_juego_txt":nltobr(instructivo),
                     "shares":promo.participacion_set.all().count(), 
                     "likes": promo.delikes_set.all().count(), 
                     "categorias":promo.categorias,
@@ -514,16 +589,31 @@ class regTelUser(View,TimeMets):
             vtext = ''
             texto = ''
 
-
-
         if usuario:
             u,failu = User.objects.get_or_create(email=data.get('correo'),username=data.get('correo'))
             prof,failprof = Profileuser.objects.get_or_create(usuariopk=u)
             prof.nombre_usuario = u'%s'%(data.get('nombre','unName'))
+            prof.msisdn = u'%s'%(data.get('msisdn',''))
+            prof.region = u'%s'%(data.get('region',''))
+            prof.perfil = u'%s'%(data.get('perfil',''))
             u.first_name = u'%s'%(data.get('nombre','unName'))[:30]
             u.save()        
             prof.save()
-            response = {'userpk':u.pk,'ventaja':ven,'ventaja_texto':vtext,'fecha_ventaja':texto}
+
+
+
+            if u.profileuser_set.all().first().servicios:
+                servicios = u.profileuser_set.all().first().servicios
+            else:
+                servicios = ''
+            
+
+            if ven in servicios:
+                conventaja = True
+            else:
+                conventaja = False
+
+            response = {'userpk':u.pk,'ventaja':ven,'ventaja_texto':vtext,'fecha_ventaja':texto,'conventaja':conventaja,'servicios':servicios}
         else:
             response = {'userpk':'no user'}
 
@@ -757,7 +847,7 @@ class Cats(View):
     def get(self,request):
         mxtz = pytz.timezone('America/Mexico_City')
         hoy = datetime.datetime.now(mxtz)
-        qq = (Q(promocion__fecha_publicacion__isnull=True) | Q(promocion__fecha_publicacion__lte=hoy)) & Q(promocion__vigencia__gte=hoy)
+        qq = (Q(promocion__status='proximamente') | Q(promocion__status='publish')) & Q(promocion__vigencia__gte=hoy)
         categorias = Catpromo.objects.filter(qq).values_list('categoria__catslug',flat=True).distinct()
         #categorias = Catpromo.objects.values_list('categoria__catslug',flat=True).distinct()
 
@@ -809,6 +899,7 @@ class Participandome(View,TimeMets):
 
             if data.get('check',None):
                 part = Participacion.objects.filter(usuario_id=uspk,promopk_id=promopk).first()
+                
                 if part:
                     if part.final:
                         response['status'] = 'finalizo'
@@ -908,6 +999,9 @@ class FinalTrivia(View,TimeMets):
         parti.tiempo = '%s:%s'%(data.get('mins','0'),data.get('segs'))       
         parti.save()
         respuestas = request.GET.getlist('pregunta')
+
+        respuestas = set(respuestas)
+
         parti.resparticipacion_set.all().delete()
         correctas = 0
 
@@ -926,7 +1020,7 @@ class FinalTrivia(View,TimeMets):
         total = data.get('tiempo','10:0:0')
         parti.nivelanswer = correctas
         parti.final = datetime.datetime.now(mxtz)
-        parti.tiempo = total
+        parti.tiempo = parti.final - parti.inicio
         parti.save()
         fecha_aviso = self.fecha_to_str(fecha_aviso)
 
@@ -1096,14 +1190,26 @@ class FinalSopa(View,TimeMets):
         response = {} 
         mxtz = pytz.timezone('America/Mexico_City')
         promo = Promocion.objects.get(pk=promopk)
-        parti = Participacion.objects.get(promopk=promopk,usuario=User.objects.get(pk=uspk))
-        parti.final = datetime.datetime.now(mxtz)
-        parti.nivelanswer = data.get('respuestas',0)
-        total = data.get('tiempo','0:0:0')
-        parti.tiempo = total
-        parti.save()
-        response = {'pk':'newpk','correctas':parti.nivelanswer,'tiempoUTC':total}
-        return JsonResponse(response)
+        usuario = User.objects.get(pk=uspk)
+
+
+        parti = Participacion.objects.get(promopk=promopk,usuario=usuario)
+        
+        inicioen = datetime.datetime.now(mxtz) - parti.inicio 
+
+        if promo.dinamica=='sopa':
+            parti.final = datetime.datetime.now(mxtz)
+            parti.nivelanswer = 4
+            total = data.get('tiempo','0:0:0')
+            parti.tiempo = total
+            parti.save()
+            response = {'pk':'newpk','correctas':parti.nivelanswer,'tiempoUTC':total,'inicioen':parti.inicio}
+            return JsonResponse(response)
+        else:
+            response = {'pk':'newpk','correctas':'todas','tiempoUTC':'123123123'}
+            return JsonResponse(response)
+
+
 
 FinalSopa = FinalSopa.as_view()
 
@@ -1120,13 +1226,16 @@ class FinalPuzz(View,TimeMets):
         mxtz = pytz.timezone('America/Mexico_City')
         promo = Promocion.objects.get(pk=promopk)
         parti = Participacion.objects.get(promopk=promopk,usuario=User.objects.get(pk=uspk))
-        parti.final = datetime.datetime.now(mxtz)
-        parti.nivelanswer = data.get('respuestas',0)
-        total = data.get('tiempo','0:0:0')
-        parti.tiempo = total
-        parti.save()
-        response = {'pk':'newpk','correctas':parti.nivelanswer,'tiempoUTC':total}
-        return JsonResponse(response)
+        if promo.dinamica=='puzzle':
+            parti.final = datetime.datetime.now(mxtz)
+            parti.nivelanswer = data.get('respuestas',0)
+            total = data.get('tiempo','0:0:0')
+            parti.tiempo = total
+            parti.save()
+            response = {'pk':'newpk','correctas':parti.nivelanswer,'tiempoUTC':total}
+            return JsonResponse(response)
+        else:
+             response = {'pk':'newpk','correctas':parti.nivelanswer,'tiempoUTC':total}
 FinalPuzz = FinalPuzz.as_view()
 
 

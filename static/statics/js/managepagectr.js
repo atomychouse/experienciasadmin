@@ -2157,9 +2157,8 @@ angular.module("mainApp").directive('filtPromo', ['$filter',function($filter) {
 
 
         elm.click(function(e){
-
-          scope.promociones = scope.promociones.filter(function (elm) {
-            console.log(scope.reds.indexOf(elm.pk.toString()));            
+          scope.promociones = scope.allpromociones; 
+          scope.promociones = scope.promociones.filter(function (elm) {          
             return (scope.reds.indexOf(elm.pk.toString())>-1);
           });
 
@@ -2184,12 +2183,42 @@ angular.module("mainApp").directive('activePromo', ['$filter',function($filter) 
     link: function(scope, elm, attrs) {
 
 
+
+
         elm.click(function(e){
 
           scope.promociones = scope.allpromociones;  
-          scope.promociones = scope.promociones.filter(function (elm) {
-                    console.log(scope.activas.indexOf(elm.pk.toString()));   
-            return (scope.activas.indexOf(elm.pk.toString())>-1);
+          scope.promociones = scope.promociones.filter(function (itm) {
+                       
+             return (itm.status=='publish');
+          });
+
+        scope.$apply();
+
+        });
+
+
+
+    }
+  };
+
+}]);
+
+
+
+angular.module("mainApp").directive('proxPromo', ['$filter',function($filter) {
+
+  return {
+    restrict: 'A',
+    link: function(scope, elm, attrs) {
+
+
+        elm.click(function(e){
+
+          scope.promociones = scope.allpromociones;  
+          scope.promociones = scope.promociones.filter(function (itm) {
+                       
+             return (itm.status=='proximamente');
           });
 
         scope.$apply();
@@ -2213,8 +2242,15 @@ angular.module("mainApp").directive('todosPromo', ['$filter',function($filter) {
 
 
         elm.click(function(e){
-            scope.promociones = scope.allpromociones;
-            scope.$apply();
+
+          scope.promociones = scope.allpromociones; 
+          scope.promociones = scope.promociones.filter(function (elm) {          
+            return (scope.reds.indexOf(elm.pk.toString())< 0);
+          });
+
+        scope.$apply();
+
+
         });
 
 

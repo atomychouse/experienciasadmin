@@ -42,6 +42,7 @@ urlpatterns = [
 
     url(r'^savedinter/$',(MViews.saveDinTer), name='savedinter'),
 
+    url(r'^savetermstxt/$',(MViews.saveTermstxt), name='savetermstxt'),
 
 
 ]

@@ -28,7 +28,7 @@ urlpatterns = [
    url(r'^finalsopa/(?P<uspk>[\w-]+)/(?P<promopk>[\w-]+)/$',(MViews.FinalSopa), name='finalsopa'),
    url(r'^finalpuzz/(?P<uspk>[\w-]+)/(?P<promopk>[\w-]+)/$',(MViews.FinalPuzz), name='finalpuzz'),
    url(r'^finalswiper/(?P<uspk>[\w-]+)/(?P<promopk>[\w-]+)/$',(MViews.FinalSwip), name='finalswiper'),
-
+   #url(r'^inicia/(?P<uspk>[\w-]+)/(?P<promopk>[\w-]+)/$',(MViews.Inicia), name='startdagame'),
 
 
 

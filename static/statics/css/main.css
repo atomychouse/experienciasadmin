@@ -1422,8 +1422,6 @@ p{
 
 .closeboton{
 
-  position: absolute;
-  right:-76px;
   display: inline-block;
   width:80px;
   background: #fff;

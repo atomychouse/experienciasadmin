@@ -32,7 +32,9 @@ myapp.controller('pageCtr',function($scope,$http){
     $scope.pasos = 0;
     $scope.mensaje = '';
     $scope.reds = reds; 
+    $scope.proximamentes = proximamentes; 
     $scope.activas = activas;
+    $scope.feriados = feriados;
 
     $scope.segmentos = [
         {'segpk':1,
@@ -137,12 +139,28 @@ $scope.checktrivia = function(cor){
 $scope.promociones = [];
 $scope.ventajas = [];
 $scope.allpromos = [];
+$scope.terminostxt = '';
+$scope.texto_recogerprovincia = '';
+$scope.texto_recogercdmx = '';
+$scope.texto_recogerterceros = '';
 
 $http.get('/allp/')
     .then(function(response) {
       $scope.ventajas = response.data.ventajas;
       $scope.promociones = response.data.dinamicas;
       $scope.allpromociones = response.data.dinamicas;
+      $scope.terminostxt = response.data.terminos;
+      $scope.texto_recogerprovincia = response.data.texto_recogerprovincia;
+      $scope.texto_recogercdmx = response.data.texto_recogercdmx;
+      $scope.texto_recogerterceros = response.data.texto_recogerterceros;
+
+
+          $scope.promociones = $scope.promociones.filter(function (elm) {          
+            return ($scope.reds.indexOf(elm.pk.toString())< 0);
+          });
+
+
+
     });
    
 

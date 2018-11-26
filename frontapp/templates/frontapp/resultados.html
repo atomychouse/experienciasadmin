@@ -28,12 +28,26 @@
 
 
 
-<table class="tabla-res" style="padding-top:80px;width:90%;margin: auto;">
+<table class="tabla-res" style="padding-top:80px;width:99%;margin: auto;">
 
 	<tr style="font-size:18px;">
 		<td></td>
 		
+
+		<td style="width: 150px;">
+			<span class="single-border">&nbsp;</span>
+			<span>Nombre</span>
+		</td>
+
 		<td>
+			<span class="single-border">&nbsp;</span>
+			<span>Móvil</span>
+		</td>
+		<td >
+			<span class="single-border" style="width:30px;">&nbsp;</span>
+			<span>Región</span>
+		</td>		
+		<td >
 			<span class="single-border">&nbsp;</span>
 			<span>Correo</span>
 		</td>
@@ -56,19 +70,24 @@
 </tr>
 
 {% for p in  parti %}
-
-	<tr class="{% cycle 'striped' '' %}" style="padding:20px;">
+	
+	<tr class="{% cycle 'striped' '' %}" style="padding:20px;vertical-align: top;">
 		<td>
+			
 			<form action="/" method="post" >
 		          	<input data-promo='{{p.pk}}' data-user='{{p.usuario.pk}}' {% if p.ganadora %} checked='checked' disabled='true' {% endif %} type="checkbox" class="" name="gana{{p.usuario.pk}}" value="{{p.usuario.pk}}" click-ganador />
+			
 
 		</form>
 		</td>
-		<td>{{p.usuario.email}}</td>
-		<td>{{p.nivelanswer}}</td>
-		<td>{{p.tiempo}}  </td>
-		<td>{{p.finicio}}  </td>
-		<td>{{p.ffinal}}  </td>
+		<td>{{p.datos_usuario.nombre_usuario|default:''}}</td>
+		<td>{{p.datos_usuario.msisdn|default:''}}</td>
+		<td style="text-align: center;">{{p.datos_usuario.region|default:''}}</td>
+		<td>{{p.usuario.email|default:''}}</td>
+		<td>{{p.nivelanswer|default:''}}</td>
+		<td>{{p.tiempo|default:''}}  </td>
+		<td>{{p.finicio|default:''}}  </td>
+		<td>{{p.ffinal|default:''}}  </td>
 		
 
 	</tr>

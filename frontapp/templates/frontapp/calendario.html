@@ -1,39 +1,192 @@
 {% extends 'frontapp/base.html' %}
 
 
+{% block scriptafter %}
+
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+
+      var meses = ['','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+
+
+      var datos_char = [
+          ['Mes', 'Se publican', 'Finalizan','Online'],
+          {% for k,m in grafica_meses.items %}
+            [meses[{{k}}],{{m.sepublican}},{{m.finalizan}},{{m.online}}],
+          {% endfor%}
+
+      ];
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable(datos_char);
+
+        var options = {
+          title: 'Promociones',
+          hAxis: {title: 'Mes',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0,'title':'Dinámicas'}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+
+
+      $('.sended').submit(function(e){
+
+          e.preventDefault();
+          var url = $(this).attr('action');
+          var type = $(this).attr('method');
+          forma = $(this).get(0);
+           var data = new FormData(forma);
+            
+            $.ajax({url:url,
+            type:type,
+            data:data,
+            cache: false,
+            processData: false,
+            contentType:false,
+            dataType: 'json',
+            success:function(response){
+
+              
+                  idelemento = $('#diasferiados');
+                  escope = angular.element(idelemento).scope();
+                  var viss;
+                  var visibles = escope.feriados.filter(function (elm) {
+                  return (elm.year==response.year);
+                  
+                  });
+
+                  var meses;
+                  viss = visibles.filter(function(sbel){
+                    meses = sbel.params.filter(function(ssbel){
+                      return(ssbel.digit==response.mes);
+                    });
+                    return(sbel.params.digit==response.mes);
+                  });
+
+
+
+                  if(visibles.length==0){
+                    escope.feriados.push({'year':response.year,'params':[{'name':response.mes,'digit':response.mes,'dias':[response.dia]}]});
+                    console.log('agrega anyo');
+                  }
+                  else{
+
+                    if(meses.length==0){
+                      valor = {'name':response.mes,'digit':response.mes,'dias':[response.dia]};
+                      visibles[0].params.push(valor);
+                      console.log('agrega mes');
+                    }
+                    else{
+                      try{
+                        meses[0].dias.push(response.dia);
+                      }
+                      catch(err){
+                        error = err;
+                      }
+                    }
+                  } 
+
+                  console.log(escope.feriados);        
+                  //elm.params.push({'name':response.mes,'digit':response.mes,'dias':[response.dia]});
+
+
+              escope.$apply();
+
+            }
+
+    });
+
+      });
+
+    </script>
+{% endblock %}
+
+
+
+
 {% block content %}
 
-
-CALENDARIO
-
-<div class="row" >
-	
-	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" style="background-color: #4c4c4c;">
-		{{times.0|date:"M"}}
-		
-		<div>
-			<button type="button" class="btn btn-info">
-	          Activas <span class="badge badge-info">{{activas}}</span>
-	        </button>
-    	</div>
-
-        {% if reds > 0 %}
-        <button type="button" class="btn btn-danger">
-          Caducan <span class="badge badge-secundary">{{reds}}</span>
+      <div style="padding-top:20px; "> 
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#diasferiados">
+          Calendario de dias feriados
         </button>
-        {% endif %}
 
 
-	</div>
-	
-	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" style="background-color: #acacac;">
-		{{times.1|date:"M"}}
-	</div>
+        
+      </div>
 
-	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4" style="background-color: #efefef;">
-		{{times.2|date:"M"}}
-	</div>
 
+
+
+
+
+<div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="diasferiados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog anchomodal" role="document">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <div class="modal-title" id="exampleModalLabel">DIAS FERIADOS</div>
+        <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
+      </div>
+      <div class="modal-body formulariobox">
+      <form action="/addferiado/" method="post" class="sended">
+        {% csrf_token %}
+        <div>
+            <label class="toplabel">Fecha evento</label>
+            <input type="text" 
+                   class="form-control" 
+                   id="input_fecha_evento" 
+                   name="diaferiado"  
+                   ng-model="feriados.fecha" style="width: 50%" date-pick>
+            <button type="submit" class="btn btn-info">
+              agregar
+            </button>
+        </div> 
+      </form>
+
+
+      
+      <div ng-repeat="y in feriados">
+        <h2>||y.year||</h2>
+        <div ng-repeat="m in y.params" style="display: inline-block;width:40%;background-color: #ececec;margin: 10px;padding:20px;">
+
+          <h4>||m.name||</h4>
+          
+          <div ng-repeat="d in m.dias track by $index " style="display: inline-block;width:40px;background-color: #666;margin:5px;text-align: center;">
+            ||d||
+            <sup style="background-color: #fff;cursor: pointer;padding: 5px;"><span kil-feriado>x</span></sup>
+          </div>
+          
+          
+          </div>
+        
+      </div>
+
+
+
+      </div>
+      <div class="modal-footer" style="margin:10px;">
+        <span>||mensaje||</span>
+        <button type="button" class="botons btn-white" data-dismiss="modal">CANCELAR</button>
+        <button type="button" class="botons btn-white" save-promo>GUARDAR</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -45,6 +198,16 @@ CALENDARIO
   {% block scripts %}
 
   	<script type="text/javascript">
+
+
+    {% if feriados %}
+    var ferias = '{{feriados|safe}}';
+   feriados = eval("(" + ferias + ")");
+    {% else %}
+    var feriados = [];
+
+
+    {% endif %}
   		{% for c in promocat %}
   			var subcats = [];
   			{% for sc in c.promocat_set.all %}
@@ -63,6 +226,9 @@ CALENDARIO
   			e.preventDefault();
   			return false;
   		});
+
+
+
 
 
   		$('.reset').click(function(e){

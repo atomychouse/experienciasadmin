@@ -1,77 +1,79 @@
-
-    
-
+{% extends 'frontapp/baselogin.html' %}
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="promocionmod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Promoción {{promo.pk}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
+ {% block content%}
+
+<style type="text/css">
+
+  body,html{
+    background-color:#E1E5EF;
+    width:100%;
+    height: 100%;
+  }
+  input{
+    width:40%;
+    padding:10px;
+    font-size:1.2rem; 
+    margin:20px 0px;
+    border:0px solid;
+    background-color: #4c4c4c;
+    color:#fff;
+  }
+  label{
+    display: block;
+    text-align: left;
+    width: 40%;
+    margin:auto;
+  }
+
+
+  .btn-info{
+    padding:20px;
+    border-radius: 5%;
+    background-color: #5F42DC;
+    color:#fff;
+    border: 0px solid;
+    font-size: 1rem;
+  }
+
+</style>
 
 
 
-<!-- Optional: some overlay text to describe the video -->
-        <div class="login container" style="display: none;">
+<div style="display: table;width:100%;height: 100%;">
 
+  <div style="display: table-row;">
+    <div style="display: table-cell;width:100%;height: 100%;vertical-align: middle;text-align: center;">
+        <div class="login container"ng-controller="pageCtr" >
+
+                  <div style="margin:0px 0px 60px 0px;"> <img src="/static/statics/images/marca_sitio 2.png"></div>
                   <form name="loginform" id="loginform" ng-submit="enviando($event);" ng-click="err=false;">
                     
                     <div ng-if="err" style="background-color: #3d3d3d;color:#999;font-size: 2.5vmin;padding:10px;margin:20px 0px;">||err||</div>
 
                     <div style="margin-bottom:5px;">
+                      <label>Usuario</label>
                       <input type="text" name="usuario" class="form-control" placeholder="Usuario" ng-model="us">
                     </div>
                     <div>
+                      <label>Contraseña</label>
                       <input type="password" name="contrasenya" class="form-control" placeholder="Contraseña" ng-model="pas">
                     </div>
 
                     <div class="row" style="margin-top:50px;">
                       
-                      <div  style="text-align: right;display: inline-block;width:38%;padding-right: 12px;">
-                        <button type="submit" class="btn btn-info">ENTRAR</button>
+                      <div  style="text-align: right;display: inline-block;width:41%;padding-right: 12px;">
+                        <button type="submit" class="btn btn-info"> Enviar </button>
                       </div>
                     </div>
                   </form>
 
         </div>
 
-
-
-
-    
-                    <form name="lg" id="regform" action="/registro/" method="POST" class="senddata" >
-                            {% csrf_token %}
-
-                            <div class="labelo" id="id_username">
-                                <input type="text" class="form-control" placeholder="Movil" name="username">
-                            </div>
-                            <div class="labelo" id="id_email">
-                                <input type="email" class="form-control" placeholder="email" name="email">
-                            </div>
-    
-
-                            <div class="formrow" style="text-align: right;">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-info">Guardar</button>
-                            </div>
-                        </form> 
-
-
-
-
-
-      </div>
-      <div class="modal-footer">
-
-      </div>
     </div>
   </div>
+
 </div>
+
+{% endblock %}

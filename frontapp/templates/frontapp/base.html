@@ -42,21 +42,8 @@
     <img src="/static/statics/imgs/logo.png"  >
     <div class="closebox">
 
-
-        <button type="button" class="btn btn-info" todos-promo>
-          TODOS 
-        </button>
-
-        <button type="button" class="btn btn-info" active-promo>
-          Activas <span class="badge badge-info">{{activas|length}}</span>
-        </button>
-
-        {% if reds > 0 %}
-        <button type="button" class="btn btn-danger" filt-promo>
-          Caducan <span class="badge badge-secundary">{{reds|length}}</span>
-        </button>
-        {% endif %}
-        <i class="fas fa-power-off" style="margin-left:30px;"></i>
+ 
+        <a href="/login/"><i class="fas fa-power-off" style="margin-left:30px;"></i></a>
     </div>
     <div style="clear: both;height: 0px;">&nbsp;</div>
 </div>
@@ -67,7 +54,8 @@
       <li class="menugray"><span class="links" data-toggle="modal" data-target="#categorias-modal">CATEGORÍAS</span></li>
       <li class="menugray"><span class="links" data-toggle="modal" data-target="#ventajamodal">VENTAJAS</span></li>
       <li class="menugray"><a href="/calendario/">CALENDARIO</a></li>
-       <li class="menugray"><span class="links" data-toggle="modal" data-target="#terminosmodal">TERMINOS</span></li>
+      <li class="menugray"><span class="links" data-toggle="modal" data-target="#terminosmodal">INSTRUCCIONES LEGALES</span></li>
+      <li class="menugray"><span class="links" data-toggle="modal" data-target="#terminostxt">TERMINOS</span></li>
       <li class="menuw" style="padding: 10px 0px;">
         <span class="links">
             <i class="fas fa-pencil-alt"></i>
@@ -79,6 +67,10 @@
 
 
   <section class="container-fluid" id="contenido">
+
+
+        
+
      {% block content %}{% endblock %}
 
 
@@ -96,7 +88,7 @@
         <li ch-paso data-paso="0">1. Portada</li>
         <li ch-paso data-paso="1">2. Contenido</li>
         <li ch-paso data-paso="2">3. Legales</li>
-        <li ch-paso data-paso="3">4. Segmentos</li>
+        <!-- <li ch-paso data-paso="3">4. Segmentos</li> -->
         <li ch-paso data-paso="4">5. Final</li>
     </ul>
       <div class="modal-body formulariobox">
@@ -285,7 +277,7 @@
   <div class="modal-dialog anchomodal" role="document">
     <div class="modal-content" style="width: 90%;">
       <div class="modal-header">
-            <div class="modal-title" id="exampleModalLabel">TERMINOS Y CONDICIONES</div>
+            <div class="modal-title" id="exampleModalLabel">Instrucciones legales</div>
             <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
       </div>
 
@@ -299,14 +291,31 @@
                 <div ng-repeat="d in dinamicas" style="margin:20px 0px:">
                     <div>||d.name||</div>
                     <div>
-                        <label style="display: block;width:100%;">Términos Y condiciones</label>
+                        <label style="display: block;width:100%;">Instrucciones legales</label>
                         <textarea style="width:658px;height: 100px;resize: none;margin: 20px 0px" ng-model='d.terms.terms'></textarea>
                     </div>
 
                     <div>
-                        <label style="display: block;width:100%;">Descripción Dinámica</label>
+                        <label style="display: block;width:100%;">Ventaja</label>
                         <textarea style="width:658px;height: 100px;resize: none;margin: 20px 0px" ng-model='d.terms.descp'></textarea>
                     </div>
+
+
+
+                    <div>
+                        <label style="display: block;width:100%;">Instrucciones</label>
+                        <textarea style="width:658px;height: 100px;resize: none;margin: 20px 0px" ng-model='d.terms.instructivo'></textarea>
+                    </div>
+
+
+
+
+                    <div>
+                        <label style="display: block;width:100%;">Texto ganadores por dinámica</label>
+                        <textarea style="width:658px;height: 100px;resize: none;margin: 20px 0px" ng-model='d.terms.textoganadoresdinamica'></textarea>
+                    </div>
+
+
 
                     <div style="text-align: right;padding:20px 0px;border-top: 1px solid #86FFFF;padding:20px;">
                         <button class="botons btn-white" save-dinamica-term>GUARDAR</button>
@@ -322,13 +331,84 @@
 
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="terminostxt" tabindex="-1" role="dialog" aria-labelledby="categorias-modal" aria-hidden="true">
+  <div class="modal-dialog anchomodal" role="document">
+    <div class="modal-content" style="width: 90%;">
+      <div class="modal-header">
+            <div class="modal-title" id="exampleModalLabel">Instrucciones legales</div>
+            <span class="closeboton" data-dismiss="modal" aria-label="Close"> <i class="fas fa-times"></i> </span>
+      </div>
+
+      
+      <div class="modal-body">
+        <section >
+
+        <div>
+            <label style="display: block;width:100%;">Texto recoger provincia</label>
+            
+            <text-angular ta-toolbar="[]" 
+                          class="captions" 
+                          name="texto_recogerprovincia"  
+                          ng-model="texto_recogerprovincia" style="padding:5px;width:100%;height: 60vh;">
+            </text-angular>
+            
+        </div>
+
+
+        <div>
+            <label style="display: block;width:100%;">Texto recoger cdmx</label>
+            <text-angular ta-toolbar="[]" 
+                          class="captions" 
+                          name="texto_recogercdmx"  
+                          ng-model="texto_recogercdmx" style="padding:5px;width:100%;height: 60vh;">
+            </text-angular>
+
+        </div>
+
+        <div>
+            <label style="display: block;width:100%;">Texto recoger terceros</label>
+            <text-angular ta-toolbar="[]" 
+                          class="captions" 
+                          name="texto_recogerterceros"  
+                          ng-model="texto_recogerterceros" style="padding:5px;width:100%;height: 60vh;">
+            </text-angular>
+
+            
+        </div>
+
+
+
+            <text-angular ta-toolbar="[
+                ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
+                ['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear'],
+                ['justifyLeft','justifyCenter','justifyRight', 'justifyFull'],
+                ['html']]" 
+                          class="captions" 
+                          name="terminostxt"  
+                          ng-model="terminostxt" style="padding:5px;width:100%;height: 60vh;">
+            </text-angular>
+
+            <div style="text-align: right;padding:20px 0px;border-top: 1px solid #86FFFF;padding:20px;">
+                <button class="botons btn-white" save-termtxt>GUARDAR</button>
+            </div>
+
+
+
+            
+        </section>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
   </section>
-
-
-
-
-
-
 
 
 
@@ -357,6 +437,7 @@
         var customInterpolationApp = angular.module('customInterpolationApp', []);
         // GLOBALS --------------------------------------------------------------------
         var csrf = '{{csrf}}';
+        var feriados;
         // ----------------------------------------------------------------------------
         
         myapp.config(function($interpolateProvider) {
@@ -377,7 +458,12 @@
 
         var dinter={};
         {% for d in dinter %}
-            dinter['{{d.dinamicaslug}}'] = {'terms':'{{d.terminos|safe}}','descp':'{{d.descp|safe}}'};
+            dinter['{{d.dinamicaslug}}'] = {
+                                            'terms':'{{d.terminos|safe}}',
+                                            'descp':'{{d.descp|safe}}',
+                                            'instructivo':'{{d.instructivo|safe}}',
+                                            'textoganadoresdinamica':'{{d.textoganadoresdinamica|safe}}'
+                                            };
         {% endfor %}
 
 
@@ -422,13 +508,21 @@
 
         var reds = [];
         var activas = [];
+        var proximamentes = [];
 
         {% for x in reds %}
             reds.push('{{x.pk}}');
         {% endfor%}
+
         {% for x in activas %}
             activas.push('{{x.pk}}');
         {% endfor%}
+
+
+        {% for x in proximamentes %}
+            proximamentes.push('{{x.pk}}');
+        {% endfor%}
+
 
 
 

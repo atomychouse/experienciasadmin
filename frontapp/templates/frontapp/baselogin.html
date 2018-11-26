@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="atomyc.site">
+        <title></title>
+        <meta name="" content="#496201">
+        <!-- core CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <link href="/static/css/frontend-main.css" rel="stylesheet">
+        <link href="/static/css/brandfonts.css" rel="stylesheet">
+
+
+        {%block extras%}{%endblock%}
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+        <link href="/static/statics/css/jquery-ui.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/statics/css/ionicons.css">
+        <link href="/static/statics/css/main.css" rel="stylesheet">
+        <link href="/static/statics/css/font-awesome.min.css" rel="stylesheet">
+        <link href="/static/statics/css/responsivemain.css" rel="stylesheet">
+
+
+</head>
+<body ng-app='inicioApp'>
+
+{% csrf_token %}
+
+    {% block content%}
+    {% endblock %}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/statics/js/jquery.js"></script>
+    <script src="/static/statics/js/jquery-ui.min.js"></script>
+    <script src="/static/statics/js/angular.min.js"></script>
+    <script src="/static/statics/js/angular-route.min.js"></script>
+        
+
+    
+    <script type="text/javascript">    
+        var myapp = angular.module('inicioApp',['ngRoute']);
+        var customInterpolationApp = angular.module('customInterpolationApp', []);
+
+        var csrf = '{{csrf}}';
+        // ----------------------------------------------------------------------------
+        
+        myapp.config(function($interpolateProvider) {
+            $interpolateProvider.startSymbol('||');
+            $interpolateProvider.endSymbol('||');
+
+        });
+
+        myapp.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';        
+        }]);
+
+        
+
+        
+    </script>
+
+    {% block extrajs %}{% endblock %}
+    <script src="/static/statics/js/loginctr.js"></script>
+    <!-- JSUT FORM ADMINS  THE ORDER OF SCDIPTS MATTERS PLEASE DONT MOVE-->    
+    <script src="/static/statics/js/chumbucket.js"></script>
+    {% block modules_loader %}{% endblock %}
+</body>
+
+</html>

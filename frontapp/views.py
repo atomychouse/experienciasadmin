@@ -51,16 +51,20 @@ class Index(View):
         context['user'] = userp
         context['promocat'] = Promocat.objects.filter(parentcat=None)  
         mxtz = pytz.timezone('America/Mexico_City')
-
         hoy = datetime.datetime.now(mxtz)
         nextw = datetime.datetime.now(mxtz) + datetime.timedelta(days=7)
         nextq = datetime.datetime.now(mxtz) + datetime.timedelta(days=15)
+        redsfecha = hoy - datetime.timedelta(days=1)
+        reds = Promocion.objects.filter(Q(status='finalizado') | Q(vigencia__lte=redsfecha))
 
-        reds = Promocion.objects.filter(Q(vigencia__lte=nextw) & Q(vigencia__gte=hoy) )
-        activas = Promocion.objects.filter(Q(vigencia__gte=datetime.datetime.now()))
+        proximamentes = Promocion.objects.filter(Q(status='proximamente'))
+        activas = Promocion.objects.filter(Q(vigencia__gte=redsfecha))
+        
         context['reds'] = reds
+        context['proximamentes'] = proximamentes
         context['activas'] = activas
         context['dinter'] = Dinamicaterminos.objects.all()
+        context['feriados']  = 'no'
 
         response = render(request, self.template, context)
         return response
@@ -78,29 +82,64 @@ class calendarioDin(View):
     def get(self, request,pks=None):
         context = {}
         search = {}
-        userp = {'name':'Alberto','profile':'admin'}
-        context['user'] = userp
-        context['promocat'] = Promocat.objects.filter(parentcat=None)  
+
+        grafica_meses = {}
+        listado_meses = {}
+
         mxtz = pytz.timezone('America/Mexico_City')
+        hoymas = datetime.datetime.now(mxtz) - datetime.timedelta(days=30)
+        promos_today = Promocion.objects.filter(fecha_publicacion__gte=hoymas).order_by('fecha_publicacion').first()
+        lastpromo = Promocion.objects.all().order_by('-vigencia').first()
+        step = datetime.timedelta(1*365/12)
 
-        hoy = datetime.datetime.now(mxtz)
-        nextw = datetime.datetime.now(mxtz) + datetime.timedelta(days=7)
+        inicio = promos_today.fecha_publicacion - datetime.timedelta(days=30)
+        if lastpromo.vigencia:
 
-        reds = Promocion.objects.filter(Q(vigencia__lte=nextw) & Q(vigencia__gte=hoy) )
-        activas = Promocion.objects.filter(Q(vigencia__gte=datetime.datetime.now())) 
-        context['reds'] = reds
-        context['activas'] = activas
+            final = lastpromo.vigencia + datetime.timedelta(days=30)
+        else:
+            final = datetime.datetime.now(mxtz) + datetime.timedelta(days=10)
+            final = final.date()
 
-        thismonth = datetime.datetime.now()
-        nextmonth = thismonth + datetime.timedelta(days=30)
-        nexttomext = nextmonth + datetime.timedelta(days=30)
+        while inicio <= final:
+            
+            promos = Promocion.objects.filter(fecha_publicacion__month=inicio.month,fecha_publicacion__year=inicio.year)
+            finalizan = Promocion.objects.filter(vigencia__month=inicio.month,vigencia__year=inicio.year)
+            online = Promocion.objects.filter(status='publish',vigencia__gte=inicio-datetime.timedelta(days=30))
+            grafica_meses[inicio.month] = {'sepublican':promos.count(),'finalizan':finalizan.count(),'online':online.count()} 
+            listado_meses[inicio.month] = {'sepublican':promos,'finalizan':finalizan,'online':online} 
 
-        #thismpromos = Promocion.objects.filter(vigencia.__month=datetime.datetime.now().month)
-        #nextpromos = Promocion.objects.filter(vigencia.__month=nextmonth.month)
-        #nextnextpromos = Promocion.objects.filter(vigencia.__month=nexttomext.month)
+
+            inicio += step
 
 
-        context['times'] = [0,0,0]#[thismonth,nextmonth,nexttomext]
+        feriados = []
+        calendariotelcel = Calendariotelcel.objects.dates('fecha_completa','year')
+        meses_arr = []
+        for x in calendariotelcel:
+            meses = Calendariotelcel.objects.dates('fecha_completa','month').filter(fecha_completa__year=x.year)
+            params = []
+            for m in meses:
+                
+                dias = Calendariotelcel.objects.dates('fecha_completa','day').filter(fecha_completa__month=m.month)
+                fordias = []
+                for d in dias:
+                    fordias.append(d.day)
+                    
+                params.append({'name':m.month,'digit':m.month,'dias':fordias})
+
+            anyo = {'year':x.year,'params':params}
+            feriados.append(anyo)
+
+        
+
+
+        context['grafica_meses'] = grafica_meses
+        context['listado_meses'] = listado_meses
+        context['activas'] = Promocion.objects.filter(status='publish').order_by('fecha_evento')
+        context['proxi'] = Promocion.objects.filter(status='proximamente').order_by('fecha_evento')
+        context['feriados'] = simplejson.dumps(feriados)
+        #context['promos'] = promos
+
 
 
         response = render(request, self.template, context)
@@ -147,29 +186,11 @@ class Signin(View):
     template = 'frontapp/login.html'
 
     def get(self, request,secty=None,lugy=None,columna=None):
+        
         logout(request)
-        backgnumber = randint(0, 7)
-
-        backg = [
-            {'type':'video','src':'/static/statics/loginback/checo.mp4'},
-            {'type':'video','src':'/static/statics/loginback/checo2.mp4'},
-            {'type':'video','src':'/static/statics/loginback/checo3.mp4'},
-            {'image':'img','src':'/static/statics/loginback/checo.jpg'},
-            {'image':'img','src':'/static/statics/loginback/checo2.jpg'},
-            {'image':'img','src':'/static/statics/loginback/checo3.jpg'},
-            {'image':'img','src':'/static/statics/loginback/checo4.jpg'},
-            {'image':'img','src':'/static/statics/loginback/checo5.jpg'},
-            
-        ]
 
         data = request.GET.copy()
         context = {}
-        
-        
-        userp = {'name':'Alberto','profile':'admin'}
-
-        context['user'] = userp
-        context['backg'] = backg[backgnumber]
         response = render(request, self.template, context)
         return response
 Signin = Signin.as_view()
@@ -201,22 +222,30 @@ Downloads = Downloads.as_view()
 
 class Sin(View):
 
-    def get(self,request):
-        data = request.GET.copy()
-        response = {}    
-        forma = FormCreator()
-        fra = forma.form_to_model(modelo=Profuser,excludes=[])
-        fra = fra(data)        
-        if fra.is_valid():
-            saved = fra.save()
-            response['ok']=saved.id
+    def post(self,request):
+        data = request.POST.copy()
+        user = authenticate(username=data['usuarius'], password=data['passo'])
+        response = {}
+        
+        try:
+            group = user.groups.values()[0]['name']
+        except:
+            group = 'basic'
+
+        if user is not None:
+            login(request, user)
+            response['saved'] = 'ok'
+            response['datos'] = {'msg':u'guardao con éxito','liga':'/admin/'}
+            response['callback'] = 'reg_success'
         else:
-            response['errors'] = fra.errors
+            response['msg'] = 'la información no es correcta, verifique por favor'
+            response['errors'] = 'Usuario y/o contraseña incorrecta'
+
+        return HttpResponse(simplejson.dumps(response))
 
 
-
-        return JsonResponse(response)
 Sin = Sin.as_view()
+
 
 
 class Register(View):
@@ -322,25 +351,35 @@ class Resultado(View,TimeMets):
     template = 'frontapp/resultados.html'
 
     def get(self, request,pks=None):
-        import locale
-        locale.setlocale(2, '')
+
+
+
         context = {}
         search = {}
         promo = Promocion.objects.get(pk=pks)
-        parti = promo.participacion_set.all().order_by('-nivelanswer')
-        parti = Participacion.objects.filter(promopk=promo,final__isnull=False).order_by('-nivelanswer','-tiempo')
+        
 
+        #parti = promo.participacion_set.all().order_by('-nivelanswer')
+        parti = Participacion.objects.filter(promopk=promo,final__isnull=False).order_by('-nivelanswer','tiempo')[:200]
+
+ 
+        
         filepad = '%s/frontapp/listados/promo_%s.xlsx' %(settings.BASE_DIR,pks)
         workbook = xlsxwriter.Workbook(filepad)
         worksheet = workbook.add_worksheet()
         worksheet.write('A1','%s %s'%(promo.linea_uno,promo.linea_dos))
-        worksheet.write('A5','Usuario')        
-        worksheet.write('B5','email')        
-        worksheet.write('C5','servicios')        
-        worksheet.write('D5','respuestas correctas')        
-        worksheet.write('E5','tiempo de juego')        
-        worksheet.write('F5',u'Inició')        
-        worksheet.write('G5',u'Finalizó')        
+        worksheet.write('A2','%s %s'%('',self.fecha_to_str(promo.fecha_evento,formato='%d de %m de %Y') ))
+        #worksheet.write('A2','%s'%(
+
+        worksheet.write('A5','Nombre')        
+        worksheet.write('B5',u'Móvil')        
+        worksheet.write('C5',u'Región')
+        worksheet.write('D5','Correo')        
+        worksheet.write('E5','Ventaja')        
+        worksheet.write('F5','Aciertos')        
+        worksheet.write('G5','Tiempo')        
+        worksheet.write('H5',u'Inició')        
+        worksheet.write('I5',u'Finalizó')        
 
 
         row = 5
@@ -352,15 +391,25 @@ class Resultado(View,TimeMets):
 
             else:
                 tiempojuego = p.tiempoJuega()
-            worksheet.write(row,0,p.usuario.username)    
-            worksheet.write(row,1,p.usuario.email)    
-            worksheet.write(row,2,servicios)    
-            worksheet.write(row,3,p.nivelanswer)    
-            worksheet.write(row,4,p.tiempo)    
-            worksheet.write(row,5,p.finicio())    
-            worksheet.write(row,6,p.ffinal())    
+            
+            try:
+                servicios = servicios.replace('None,','')
+                servicios = servicios.replace('None','')
+            except:
+                pass
+                
+            worksheet.write(row,0,p.usuario.profileuser_set.all().first().nombre_usuario)
+            worksheet.write(row,1,p.usuario.profileuser_set.all().first().msisdn)
+            worksheet.write(row,2,p.usuario.profileuser_set.all().first().region)
+            worksheet.write(row,3,p.usuario.email)    
+            worksheet.write(row,4,servicios)    
+            worksheet.write(row,5,p.nivelanswer)    
+            worksheet.write(row,6,p.tiempo)    
+            worksheet.write(row,7,p.finicio())    
+            worksheet.write(row,8,p.ffinal())    
             row += 1
         workbook.close()
+        
 
         context['parti'] = parti
         context['promopk'] = pks
@@ -464,9 +513,12 @@ class allPromos(View,TimeMets):
         search = {}
         host = request.get_host()
 
+
+
         pek = data.get('pk',None)
         if pek:
             p = Promocion.objects.get(pk=pek)
+
             promo = {'pk':p.pk,
                     'titulo':p.titulo,
                     'linea_uno':p.linea_uno,
@@ -477,6 +529,7 @@ class allPromos(View,TimeMets):
                     'fecha_evento':self.fecha_to_str(p.fecha_evento,formato='%d/%m/%Y'),
                     'fecha_publicacion':self.fecha_to_str(p.fecha_publicacion,formato='%d/%m/%Y'),
                     'color':p.color,
+                    'slug_titulo':p.slug_titulo,
                     'dinamica':p.dinamica,
                     'media':{'firstimg':p.img,'imglg':p.imglg},
                     'status':p.status,
@@ -496,12 +549,14 @@ class allPromos(View,TimeMets):
                     'minfinal':p.finalimg_min(host),
                     'galeria':p.galeria(host),
                     'matrix':p.tablero(),
-                    'premioterms':p.premioterms
+                    'premioterms':p.premioterms,
+                    'numero_ganadores':p.numero_ganadores,
+                    'premio_frase':p.premio_frase
                    }
 
             return JsonResponse({'promocion':promo})
         else:
-            prms = Promocion.objects.all().order_by('-destacado','orden','vigencia')
+            prms = Promocion.objects.all().order_by('-destacado','-vigencia')
         
         promos = [ {'pk':p.pk,
                     'titulo':p.titulo,
@@ -515,7 +570,7 @@ class allPromos(View,TimeMets):
                     'color':p.color,
                     'dinamica':p.dinamica,
                     'media':{'firstimg':p.img,'imglg':p.imglg},
-                    'status':p.status,
+                    'status':p.estatus_admin(),
                     'likes':p.delikes_set.all().count(),
                     'bases':p.bases,
                     'terms':p.terms,
@@ -548,11 +603,25 @@ class allPromos(View,TimeMets):
             ventajas.append(ven)
 
 
-        promos = {'dinamicas':promos,'totales':len(promos),'ventajas':ventajas}
 
+        try: 
+            terminostemplate = Terminos.objects.all().first()
+            terminos = terminostemplate.texto
+            texto_recogerprovincia = terminostemplate.texto_recogerprovincia
+            texto_recogercdmx = terminostemplate.texto_recogercdmx
+            texto_recogerterceros = terminostemplate.texto_recogerterceros
+        except: 
+            terminos = ''
+            texto_recogerprovincia = ''
+            texto_recogercdmx = ''
+            texto_recogerterceros = ''
 
-
-
+        promos = {'dinamicas':promos,'totales':len(promos),'ventajas':ventajas,
+                  'terminos':terminos,
+                  'texto_recogerprovincia':texto_recogerprovincia,
+                  'texto_recogercdmx':texto_recogercdmx,
+                  'texto_recogerterceros':texto_recogerterceros
+                  }
 
         return JsonResponse(promos)
 allPromos = allPromos.as_view()
@@ -590,3 +659,41 @@ class rmParti(View):
 
 
 rmParti = rmParti.as_view()
+
+
+
+class addFeriado(View):
+
+    template = 'frontapp/index.html'
+
+    def post(self, request,pks=None):
+        context = {}
+        data = request.POST.copy()
+        context = data
+        fecha = datetime.datetime.strptime(data['diaferiado'],'%d/%m/%Y')
+        cal,fail = Calendariotelcel.objects.get_or_create(fecha_completa=fecha,mes=fecha.month)
+        cal.save()
+
+        response = JsonResponse({'fecha':cal.fecha_completa,'dia':fecha.day,'mes':fecha.month,'year':fecha.year})
+        return response
+
+addFeriado = addFeriado.as_view()
+
+
+class rmFeriado(View):
+
+
+    def get(self, request,pks=None):
+        context = {}
+        data = request.GET.copy()
+
+        context = data
+        fecha = datetime.datetime.strptime(data['fecha'],'%d/%m/%Y')
+        
+        cal = Calendariotelcel.objects.filter(fecha_completa=fecha,mes=fecha.month)
+        cal.delete()
+
+        response = JsonResponse({'deleted':'ok'})
+        return response
+
+rmFeriado = rmFeriado.as_view()

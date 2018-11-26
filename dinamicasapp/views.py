@@ -61,6 +61,7 @@ class addPromo(View):
     categorias = request.POST.getlist('categorias[]')
     data['segmentos'] = simplejson.dumps(segmentos)
     data['categorias'] = simplejson.dumps(categorias)
+    data['slug_titulo'] = slugify(data.get('slug_titulo','telcel es la red'))
 
 
     pk = data.get('pk','0')
@@ -833,9 +834,34 @@ class saveDinTer(View):
       dinter,fail = Dinamicaterminos.objects.get_or_create(dinamicaslug=data.get('slug'))
       dinter.terminos = data.get('terms')
       dinter.descp = data.get('descp')
+      dinter.instructivo = data.get('instructivo')
+      dinter.textoganadoresdinamica = data.get('textoganadoresdinamica','')
       dinter.save()
       response['pk']=dinter.pk
     return JsonResponse(response)
 
 
 saveDinTer = saveDinTer.as_view()
+
+
+
+
+@csrf_exempt
+def saveTermstxt(request):
+  response = {}
+  data = request.POST.copy()
+  if data.get('mensaje',None):
+    
+    term = Terminos.objects.all()
+    term.delete()
+
+    terminos_data = data.get('mensaje')
+    terminos = Terminos(texto = terminos_data)
+    terminos.texto_recogerprovincia = data.get('texto_recogerprovincia','')
+    terminos.texto_recogercdmx = data.get('texto_recogercdmx','')
+    terminos.texto_recogerterceros = data.get('texto_recogerterceros','')
+    terminos.save()
+    response['pk']=terminos.pk
+  return JsonResponse(response)
+
+
